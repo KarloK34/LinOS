@@ -1,0 +1,25 @@
+import 'package:flutter/material.dart';
+import 'package:linos/l10n/app_localizations.dart';
+
+extension ContextExtensions on BuildContext {
+  ThemeData get theme => Theme.of(this);
+
+  TextDirection get textDirection => Directionality.of(this);
+
+  MediaQueryData get mediaQuery => MediaQuery.of(this);
+
+  AppLocalizations get l10n => AppLocalizations.of(this)!;
+  Locale get locale => Localizations.localeOf(this);
+  List<Locale> get supportedLocales => AppLocalizations.supportedLocales;
+  String get localeCode => locale.languageCode;
+  String get localeCountryCode => locale.countryCode ?? '';
+  String get localeLanguageCode => locale.languageCode;
+
+  void pop() {
+    Navigator.of(this).pop();
+  }
+
+  void pushReplacementNamed(String routeName, {Object? arguments}) {
+    Navigator.of(this).pushReplacementNamed(routeName, arguments: arguments);
+  }
+}
