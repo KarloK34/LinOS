@@ -8,7 +8,11 @@ import GoogleMaps
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
-    GMSServices.provideAPIKey("AIzaSyAazqNhgAn0e1Ip3wlSqK43E_qDYdp4swk")
+    if let googleMapsApiKey = Bundle.main.object(forInfoDictionaryKey: "GoogleMapsAPIKey") as? String {
+      GMSServices.provideAPIKey(googleMapsApiKey)
+    } else {
+      print("Error: Google Maps API Key not found in Info.plist")
+    }
     GeneratedPluginRegistrant.register(with: self)
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
