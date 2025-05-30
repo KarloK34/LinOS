@@ -9,6 +9,15 @@
 .vscode/
 .idea/
 
+# Firebase
+google-services.json
+GoogleService-Info.plist
+firebase_options.dart
+firebase-debug.log
+.firebase/
+firebase.json
+.firebaserc
+
 # Flutter repo-specific
 /bin/cache/
 /bin/internal/bootstrap.bat

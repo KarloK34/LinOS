@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:linos/core/navigation/app_routes.dart';
+import 'package:linos/core/navigation/app_router_config.dart';
 import 'package:linos/core/utils/context_extensions.dart';
 import 'package:linos/core/utils/request_state.dart';
 import 'package:linos/core/widgets/custom_email_field.dart';
 import 'package:linos/core/widgets/custom_password_field.dart';
-import 'package:linos/features/login/cubit/login_form_cubit.dart';
-import 'package:linos/features/login/cubit/login_form_state.dart';
+import 'package:linos/features/auth/presentation/login/cubit/login_form_cubit.dart';
+import 'package:linos/features/auth/presentation/login/cubit/login_form_state.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -46,7 +46,7 @@ class _LoginFormState extends State<LoginForm> {
         if (state.submissionStatus is RequestSuccess<bool>) {
           final success = (state.submissionStatus as RequestSuccess<bool>).data;
           if (success) {
-            context.go(AppRoutes.mainPage);
+            context.go(AppRouterConfig.mainPage);
             return;
           }
         }

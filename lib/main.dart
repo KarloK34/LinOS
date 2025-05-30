@@ -1,13 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:linos/core/app_theme/app_theme.dart';
+import 'package:linos/core/di/injection.dart';
 import 'package:linos/core/locale/cubit/locale_cubit.dart';
-import 'package:linos/core/navigation/app_routes.dart';
+import 'package:linos/core/navigation/app_router_config.dart';
+import 'package:linos/features/auth/cubit/auth_cubit.dart';
 import 'package:linos/l10n/app_localizations.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(BlocProvider(create: (context) => LocaleCubit(), child: const MyApp()));
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  configureDependencies();
+
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => LocaleCubit()),
+        BlocProvider(create: (context) => getIt<AuthCubit>()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -16,15 +31,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LocaleCubit, Locale>(
-      builder: (context, state) {
+      builder: (context, locale) {
         return MaterialApp.router(
           title: 'LinOS',
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
-          locale: state,
+          locale: locale,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
-          routerConfig: AppRoutes.router,
+          routerConfig: getIt<AppRouterConfig>().router,
         );
       },
     );

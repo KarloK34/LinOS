@@ -81,5 +81,13 @@
     "validation_confirmPasswordCannotBeEmpty": "Confirm Password cannot be empty.",
     "validation_passwordsDoNotMatch": "Passwords do not match.",
     "validation_fixFormErrors": "Please fix the form errors.",
-    "validation_unexpectedErrorPrefix": "An unexpected error occurred: "
+    "validation_unexpectedErrorPrefix": "An unexpected error occurred: ",
+    "auth_error_userNotFound": "No user found with this email.",
+    "auth_error_wrongPassword": "Wrong password provided.",
+    "auth_error_emailAlreadyInUse": "Email is already in use.",
+    "auth_error_invalidEmail": "Email address is invalid.",
+    "auth_error_weakPassword": "Password is too weak.",
+    "auth_error_userDisabled": "This user has been disabled.",
+    "auth_error_tooManyRequests": "Too many attempts. Please try again later.",
+    "auth_error_default": "An error occurred. Please try again."
 }

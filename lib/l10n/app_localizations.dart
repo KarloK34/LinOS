@@ -589,6 +589,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'An unexpected error occurred: '**
   String get validation_unexpectedErrorPrefix;
+
+  /// No description provided for @auth_error_userNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No user found with this email.'**
+  String get auth_error_userNotFound;
+
+  /// No description provided for @auth_error_wrongPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong password provided.'**
+  String get auth_error_wrongPassword;
+
+  /// No description provided for @auth_error_emailAlreadyInUse.
+  ///
+  /// In en, this message translates to:
+  /// **'Email is already in use.'**
+  String get auth_error_emailAlreadyInUse;
+
+  /// No description provided for @auth_error_invalidEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Email address is invalid.'**
+  String get auth_error_invalidEmail;
+
+  /// No description provided for @auth_error_weakPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is too weak.'**
+  String get auth_error_weakPassword;
+
+  /// No description provided for @auth_error_userDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'This user has been disabled.'**
+  String get auth_error_userDisabled;
+
+  /// No description provided for @auth_error_tooManyRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many attempts. Please try again later.'**
+  String get auth_error_tooManyRequests;
+
+  /// No description provided for @auth_error_default.
+  ///
+  /// In en, this message translates to:
+  /// **'An error occurred. Please try again.'**
+  String get auth_error_default;
 }
 
 class _AppLocalizationsDelegate

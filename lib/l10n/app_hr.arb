@@ -81,5 +81,13 @@
     "validation_confirmPasswordCannotBeEmpty": "Potvrda lozinke ne smije biti prazna.",
     "validation_passwordsDoNotMatch": "Lozinke se ne podudaraju.",
     "validation_fixFormErrors": "Molimo ispravite pogreške u obrascu.",
-    "validation_unexpectedErrorPrefix": "Došlo je do neočekivane pogreške: "
+    "validation_unexpectedErrorPrefix": "Došlo je do neočekivane pogreške: ",
+    "auth_error_userNotFound": "Nije pronađen korisnik s ovom e-poštom.",
+    "auth_error_wrongPassword": "Pogrešna lozinka.",
+    "auth_error_emailAlreadyInUse": "E-pošta se već koristi.",
+    "auth_error_invalidEmail": "Adresa e-pošte nije valjana.",
+    "auth_error_weakPassword": "Lozinka je previše slaba.",
+    "auth_error_userDisabled": "Ovaj korisnik je onemogućen.",
+    "auth_error_tooManyRequests": "Previše pokušaja. Molimo pokušajte kasnije.",
+    "auth_error_default": "Došlo je do pogreške. Molimo pokušajte ponovno."
 }

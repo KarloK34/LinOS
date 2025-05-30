@@ -268,4 +268,29 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get validation_unexpectedErrorPrefix =>
       'An unexpected error occurred: ';
+
+  @override
+  String get auth_error_userNotFound => 'No user found with this email.';
+
+  @override
+  String get auth_error_wrongPassword => 'Wrong password provided.';
+
+  @override
+  String get auth_error_emailAlreadyInUse => 'Email is already in use.';
+
+  @override
+  String get auth_error_invalidEmail => 'Email address is invalid.';
+
+  @override
+  String get auth_error_weakPassword => 'Password is too weak.';
+
+  @override
+  String get auth_error_userDisabled => 'This user has been disabled.';
+
+  @override
+  String get auth_error_tooManyRequests =>
+      'Too many attempts. Please try again later.';
+
+  @override
+  String get auth_error_default => 'An error occurred. Please try again.';
 }

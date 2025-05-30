@@ -270,4 +270,31 @@ class AppLocalizationsHr extends AppLocalizations {
   @override
   String get validation_unexpectedErrorPrefix =>
       'Došlo je do neočekivane pogreške: ';
+
+  @override
+  String get auth_error_userNotFound =>
+      'Nije pronađen korisnik s ovom e-poštom.';
+
+  @override
+  String get auth_error_wrongPassword => 'Pogrešna lozinka.';
+
+  @override
+  String get auth_error_emailAlreadyInUse => 'E-pošta se već koristi.';
+
+  @override
+  String get auth_error_invalidEmail => 'Adresa e-pošte nije valjana.';
+
+  @override
+  String get auth_error_weakPassword => 'Lozinka je previše slaba.';
+
+  @override
+  String get auth_error_userDisabled => 'Ovaj korisnik je onemogućen.';
+
+  @override
+  String get auth_error_tooManyRequests =>
+      'Previše pokušaja. Molimo pokušajte kasnije.';
+
+  @override
+  String get auth_error_default =>
+      'Došlo je do pogreške. Molimo pokušajte ponovno.';
 }
