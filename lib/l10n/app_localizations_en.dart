@@ -21,7 +21,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loginPage_forgotPasswordButton => 'Forgot Password?';
 
   @override
-  String get loginPage_createAccountButton => 'Create Account';
+  String get loginPage_createAccountButton =>
+      'Don\'t have an account? Register';
 
   @override
   String get loginPage_error_invalidCredentials => 'Invalid email or password.';
@@ -293,4 +294,21 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get auth_error_default => 'An error occurred. Please try again.';
+
+  @override
+  String get forgotPassword_title => 'Forgot Password';
+
+  @override
+  String get forgotPassword_description =>
+      'Enter your email to reset your password.';
+
+  @override
+  String get forgotPassword_successMessage =>
+      'Password reset successful. Please check your email for a new login link.';
+
+  @override
+  String get forgotPassword_resetButton => 'Reset Password';
+
+  @override
+  String get registerPage_loginButton => 'Already have an account? Login';
 }

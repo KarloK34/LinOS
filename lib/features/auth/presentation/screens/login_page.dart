@@ -43,15 +43,28 @@ class LoginPage extends StatelessWidget {
                 BlocProvider(create: (context) => LoginFormCubit(), child: const LoginForm()),
                 const SizedBox(height: 16.0),
                 TextButton(
-                  onPressed: () {
-                    // Handle forgot password logic here
-                  },
-                  child: Text(context.l10n.loginPage_forgotPasswordButton),
-                ),
-                const SizedBox(height: 16.0),
-                FilledButton(
                   onPressed: () => context.go(AppRouterConfig.register),
-                  child: Text(context.l10n.loginPage_createAccountButton),
+                  child: Text(
+                    context.l10n.loginPage_createAccountButton,
+                    style: context.theme.textTheme.titleSmall?.copyWith(
+                      color: context.theme.colorScheme.primary,
+                      decoration: TextDecoration.underline,
+                      decorationColor: context.theme.colorScheme.primary,
+                    ),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    context.push(AppRouterConfig.forgotPassword);
+                  },
+                  child: Text(
+                    context.l10n.loginPage_forgotPasswordButton,
+                    style: context.theme.textTheme.titleSmall?.copyWith(
+                      color: context.theme.colorScheme.primary,
+                      decoration: TextDecoration.underline,
+                      decorationColor: context.theme.colorScheme.primary,
+                    ),
+                  ),
                 ),
                 const Spacer(),
               ],

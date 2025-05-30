@@ -21,7 +21,7 @@ class AppLocalizationsHr extends AppLocalizations {
   String get loginPage_forgotPasswordButton => 'Zaboravljena lozinka?';
 
   @override
-  String get loginPage_createAccountButton => 'Registriraj se';
+  String get loginPage_createAccountButton => 'Nemate račun? Registriraj se';
 
   @override
   String get loginPage_error_invalidCredentials =>
@@ -297,4 +297,21 @@ class AppLocalizationsHr extends AppLocalizations {
   @override
   String get auth_error_default =>
       'Došlo je do pogreške. Molimo pokušajte ponovno.';
+
+  @override
+  String get forgotPassword_title => 'Zaboravljena lozinka';
+
+  @override
+  String get forgotPassword_description =>
+      'Unesite svoju e-poštu da biste resetirali lozinku.';
+
+  @override
+  String get forgotPassword_successMessage =>
+      'Lozinka je resetirana. Molimo provjerite svoju e-poštu za novi link za prijavu.';
+
+  @override
+  String get forgotPassword_resetButton => 'Resetiraj lozinku';
+
+  @override
+  String get registerPage_loginButton => 'Već imate račun? Prijavite se';
 }

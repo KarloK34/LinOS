@@ -4,7 +4,7 @@
     "loginPage_title": "Prijava",
     "loginPage_loginButton": "Prijavi se",
     "loginPage_forgotPasswordButton": "Zaboravljena lozinka?",
-    "loginPage_createAccountButton": "Registriraj se",
+    "loginPage_createAccountButton": "Nemate račun? Registriraj se",
     "loginPage_error_invalidCredentials": "Nevažeća e-pošta ili lozinka.",
     "mainPage_unknownPage": "Nepoznata stranica",
     "mainPage_homeLabel": "Početna",
@@ -89,5 +89,10 @@
     "auth_error_weakPassword": "Lozinka je previše slaba.",
     "auth_error_userDisabled": "Ovaj korisnik je onemogućen.",
     "auth_error_tooManyRequests": "Previše pokušaja. Molimo pokušajte kasnije.",
-    "auth_error_default": "Došlo je do pogreške. Molimo pokušajte ponovno."
+    "auth_error_default": "Došlo je do pogreške. Molimo pokušajte ponovno.",
+    "forgotPassword_title": "Zaboravljena lozinka",
+    "forgotPassword_description": "Unesite svoju e-poštu da biste resetirali lozinku.",
+    "forgotPassword_successMessage": "Lozinka je resetirana. Molimo provjerite svoju e-poštu za novi link za prijavu.",
+    "forgotPassword_resetButton": "Resetiraj lozinku",
+    "registerPage_loginButton": "Već imate račun? Prijavite se"
 }

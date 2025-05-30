@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:linos/core/navigation/app_router_config.dart';
 import 'package:linos/core/utils/app_images.dart';
 import 'package:linos/core/utils/context_extensions.dart';
-import 'package:linos/core/widgets/app_bar_back_button.dart';
 import 'package:linos/features/auth/cubit/auth_cubit.dart';
 import 'package:linos/features/auth/cubit/auth_state.dart';
 import 'package:linos/features/auth/presentation/register/cubit/register_from_cubit.dart';
@@ -28,14 +27,12 @@ class RegisterPage extends StatelessWidget {
       },
       child: Scaffold(
         backgroundColor: context.theme.colorScheme.secondaryContainer,
-        appBar: AppBar(
-          leading: AppBarBackButton(onPressed: () => context.go(AppRouterConfig.login)),
-          backgroundColor: context.theme.colorScheme.secondaryContainer,
-        ),
+
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
+              const SizedBox(height: 70.0),
               Image.asset(AppImages.logo, height: 100, width: 100),
               const SizedBox(height: 16.0),
               Text(
@@ -44,6 +41,19 @@ class RegisterPage extends StatelessWidget {
               ),
               const SizedBox(height: 32.0),
               BlocProvider(create: (context) => RegisterFormCubit(), child: const RegisterForm()),
+              const SizedBox(height: 16.0),
+              TextButton(
+                onPressed: () => context.go(AppRouterConfig.login),
+                child: Text(
+                  context.l10n.registerPage_loginButton,
+                  style: context.theme.textTheme.titleSmall?.copyWith(
+                    color: context.theme.colorScheme.primary,
+                    decoration: TextDecoration.underline,
+                    decorationColor: context.theme.colorScheme.primary,
+                  ),
+                ),
+              ),
+              const Spacer(),
             ],
           ),
         ),

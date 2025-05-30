@@ -125,7 +125,7 @@ abstract class AppLocalizations {
   /// No description provided for @loginPage_createAccountButton.
   ///
   /// In en, this message translates to:
-  /// **'Create Account'**
+  /// **'Don\'t have an account? Register'**
   String get loginPage_createAccountButton;
 
   /// No description provided for @loginPage_error_invalidCredentials.
@@ -637,6 +637,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'An error occurred. Please try again.'**
   String get auth_error_default;
+
+  /// No description provided for @forgotPassword_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password'**
+  String get forgotPassword_title;
+
+  /// No description provided for @forgotPassword_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email to reset your password.'**
+  String get forgotPassword_description;
+
+  /// No description provided for @forgotPassword_successMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Password reset successful. Please check your email for a new login link.'**
+  String get forgotPassword_successMessage;
+
+  /// No description provided for @forgotPassword_resetButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Password'**
+  String get forgotPassword_resetButton;
+
+  /// No description provided for @registerPage_loginButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account? Login'**
+  String get registerPage_loginButton;
 }
 
 class _AppLocalizationsDelegate
