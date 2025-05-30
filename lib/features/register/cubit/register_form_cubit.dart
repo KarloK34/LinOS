@@ -1,11 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:linos/core/utils/request_state.dart';
 import 'package:linos/core/utils/validation_utils.dart';
-import 'package:linos/features/login/cubit/login_form_state.dart';
+import 'package:linos/features/register/cubit/register_form_state.dart';
 import 'package:linos/l10n/app_localizations.dart'; // Import AppLocalizations
 
-class LoginFormCubit extends Cubit<LoginFormState> {
-  LoginFormCubit() : super(LoginFormState.initial());
+class RegisterFormCubit extends Cubit<RegisterFormState> {
+  RegisterFormCubit() : super(RegisterFormState.initial());
 
   void emailChanged(String value, AppLocalizations l10n) {
     // Add l10n parameter
@@ -19,38 +19,41 @@ class LoginFormCubit extends Cubit<LoginFormState> {
     emit(state.copyWith(password: value, passwordError: passwordError));
   }
 
-  Future<void> processLogin(AppLocalizations l10n) async {
+  void confirmPasswordChanged(String value, AppLocalizations l10n) {
+    // Add l10n parameter
+    final confirmPasswordError = ValidationUtils.validateConfirmPassword(state.password, value, l10n); // Pass l10n
+    emit(state.copyWith(confirmPassword: value, confirmPasswordError: confirmPasswordError));
+  }
+
+  void processRegistration(AppLocalizations l10n) {
     // Add l10n parameter
     final emailError = ValidationUtils.validateEmail(state.email, l10n); // Pass l10n
     final passwordError = ValidationUtils.validatePassword(state.password, l10n); // Pass l10n
+    final confirmPasswordError = ValidationUtils.validateConfirmPassword(
+      state.password,
+      state.confirmPassword,
+      l10n,
+    ); // Pass l10n
 
-    if (emailError != null || passwordError != null) {
+    if (emailError != null || passwordError != null || confirmPasswordError != null) {
       emit(
         state.copyWith(
           emailError: emailError,
           passwordError: passwordError,
+          confirmPasswordError: confirmPasswordError,
           submissionStatus: RequestError<bool>(l10n.validation_fixFormErrors), // Use localized string
         ),
       );
       return;
     }
-
     emit(state.copyWith(submissionStatus: const RequestLoading<bool>()));
-
     try {
-      // Simulate an API call for login
+      // Simulate an API call for registration
       // In a real app, you'd call your AuthRepository here
-      await Future.delayed(const Duration(seconds: 2)); // Simulate network delay
-
-      // Simulate successful login for specific credentials
-      if (state.email == 'test@example.com' && state.password == 'password123') {
+      Future.delayed(const Duration(seconds: 2), () {
+        // Simulate successful registration
         emit(state.copyWith(submissionStatus: const RequestSuccess<bool>(true)));
-      } else {
-        // Simulate incorrect credentials
-        emit(
-          state.copyWith(submissionStatus: RequestError<bool>(l10n.loginPage_error_invalidCredentials)),
-        ); // Use localized string
-      }
+      });
     } catch (e) {
       // Handle any unexpected errors during the submission
       emit(

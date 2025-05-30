@@ -15,12 +15,6 @@ class AppLocalizationsHr extends AppLocalizations {
   String get loginPage_title => 'Prijava';
 
   @override
-  String get loginPage_usernameHint => 'Korisničko ime';
-
-  @override
-  String get loginPage_passwordHint => 'Lozinka';
-
-  @override
   String get loginPage_loginButton => 'Prijavi se';
 
   @override
@@ -31,7 +25,7 @@ class AppLocalizationsHr extends AppLocalizations {
 
   @override
   String get loginPage_error_invalidCredentials =>
-      'Nevažeće korisničko ime ili lozinka.';
+      'Nevažeća e-pošta ili lozinka.';
 
   @override
   String get mainPage_unknownPage => 'Nepoznata stranica';
@@ -110,7 +104,7 @@ class AppLocalizationsHr extends AppLocalizations {
   String get schedulePage_selectStopLabel => 'Odaberi stanicu';
 
   @override
-  String get schedulePage_tramLineColumn => 'Tramvajska linija';
+  String get schedulePage_tramLineColumn => 'Linija';
 
   @override
   String get schedulePage_destinationColumn => 'Odredište';
@@ -233,4 +227,47 @@ class AppLocalizationsHr extends AppLocalizations {
 
   @override
   String get confirmButton => 'Potvrdi';
+
+  @override
+  String get emailHint => 'E-pošta';
+
+  @override
+  String get passwordHint => 'Lozinka';
+
+  @override
+  String get confirmPasswordHint => 'Potvrdi lozinku';
+
+  @override
+  String get registerButton => 'Registriraj se';
+
+  @override
+  String get registerPage_title => 'Registracija';
+
+  @override
+  String get validation_emailCannotBeEmpty => 'E-pošta ne smije biti prazna.';
+
+  @override
+  String get validation_enterValidEmail => 'Unesite valjanu adresu e-pošte.';
+
+  @override
+  String get validation_passwordCannotBeEmpty =>
+      'Lozinka ne smije biti prazna.';
+
+  @override
+  String get validation_passwordTooShort =>
+      'Lozinka mora imati najmanje 6 znakova.';
+
+  @override
+  String get validation_confirmPasswordCannotBeEmpty =>
+      'Potvrda lozinke ne smije biti prazna.';
+
+  @override
+  String get validation_passwordsDoNotMatch => 'Lozinke se ne podudaraju.';
+
+  @override
+  String get validation_fixFormErrors => 'Molimo ispravite pogreške u obrascu.';
+
+  @override
+  String get validation_unexpectedErrorPrefix =>
+      'Došlo je do neočekivane pogreške: ';
 }

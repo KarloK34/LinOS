@@ -84,7 +84,7 @@ abstract class AppTheme {
       style: ElevatedButton.styleFrom(
         backgroundColor: lightColorScheme.primary,
         foregroundColor: lightColorScheme.onPrimary,
-        textStyle: textTheme.labelLarge,
+        textStyle: textTheme.titleLarge?.copyWith(color: lightColorScheme.onPrimary),
       ),
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
@@ -188,7 +188,7 @@ abstract class AppTheme {
       style: ElevatedButton.styleFrom(
         backgroundColor: darkColorScheme.primary,
         foregroundColor: darkColorScheme.onPrimary,
-        textStyle: textTheme.labelLarge,
+        textStyle: textTheme.titleLarge?.copyWith(color: darkColorScheme.onPrimary),
       ),
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(

@@ -15,12 +15,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loginPage_title => 'Login';
 
   @override
-  String get loginPage_usernameHint => 'Username';
-
-  @override
-  String get loginPage_passwordHint => 'Password';
-
-  @override
   String get loginPage_loginButton => 'Login';
 
   @override
@@ -30,8 +24,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loginPage_createAccountButton => 'Create Account';
 
   @override
-  String get loginPage_error_invalidCredentials =>
-      'Invalid username or password.';
+  String get loginPage_error_invalidCredentials => 'Invalid email or password.';
 
   @override
   String get mainPage_unknownPage => 'Unknown Page';
@@ -233,4 +226,46 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get confirmButton => 'Confirm';
+
+  @override
+  String get emailHint => 'Email';
+
+  @override
+  String get passwordHint => 'Password';
+
+  @override
+  String get confirmPasswordHint => 'Confirm Password';
+
+  @override
+  String get registerButton => 'Register';
+
+  @override
+  String get registerPage_title => 'Create Account';
+
+  @override
+  String get validation_emailCannotBeEmpty => 'Email cannot be empty.';
+
+  @override
+  String get validation_enterValidEmail => 'Enter a valid email address.';
+
+  @override
+  String get validation_passwordCannotBeEmpty => 'Password cannot be empty.';
+
+  @override
+  String get validation_passwordTooShort =>
+      'Password must be at least 6 characters long.';
+
+  @override
+  String get validation_confirmPasswordCannotBeEmpty =>
+      'Confirm Password cannot be empty.';
+
+  @override
+  String get validation_passwordsDoNotMatch => 'Passwords do not match.';
+
+  @override
+  String get validation_fixFormErrors => 'Please fix the form errors.';
+
+  @override
+  String get validation_unexpectedErrorPrefix =>
+      'An unexpected error occurred: ';
 }

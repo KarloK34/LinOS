@@ -14,12 +14,4 @@ extension ContextExtensions on BuildContext {
   String get localeCode => locale.languageCode;
   String get localeCountryCode => locale.countryCode ?? '';
   String get localeLanguageCode => locale.languageCode;
-
-  void pop() {
-    Navigator.of(this).pop();
-  }
-
-  void pushReplacementNamed(String routeName, {Object? arguments}) {
-    Navigator.of(this).pushReplacementNamed(routeName, arguments: arguments);
-  }
 }

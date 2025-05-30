@@ -110,18 +110,6 @@ abstract class AppLocalizations {
   /// **'Login'**
   String get loginPage_title;
 
-  /// No description provided for @loginPage_usernameHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Username'**
-  String get loginPage_usernameHint;
-
-  /// No description provided for @loginPage_passwordHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Password'**
-  String get loginPage_passwordHint;
-
   /// No description provided for @loginPage_loginButton.
   ///
   /// In en, this message translates to:
@@ -143,7 +131,7 @@ abstract class AppLocalizations {
   /// No description provided for @loginPage_error_invalidCredentials.
   ///
   /// In en, this message translates to:
-  /// **'Invalid username or password.'**
+  /// **'Invalid email or password.'**
   String get loginPage_error_invalidCredentials;
 
   /// No description provided for @mainPage_unknownPage.
@@ -523,6 +511,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Confirm'**
   String get confirmButton;
+
+  /// No description provided for @emailHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get emailHint;
+
+  /// No description provided for @passwordHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get passwordHint;
+
+  /// No description provided for @confirmPasswordHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get confirmPasswordHint;
+
+  /// No description provided for @registerButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Register'**
+  String get registerButton;
+
+  /// No description provided for @registerPage_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Account'**
+  String get registerPage_title;
+
+  /// No description provided for @validation_emailCannotBeEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Email cannot be empty.'**
+  String get validation_emailCannotBeEmpty;
+
+  /// No description provided for @validation_enterValidEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid email address.'**
+  String get validation_enterValidEmail;
+
+  /// No description provided for @validation_passwordCannotBeEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Password cannot be empty.'**
+  String get validation_passwordCannotBeEmpty;
+
+  /// No description provided for @validation_passwordTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 6 characters long.'**
+  String get validation_passwordTooShort;
+
+  /// No description provided for @validation_confirmPasswordCannotBeEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password cannot be empty.'**
+  String get validation_confirmPasswordCannotBeEmpty;
+
+  /// No description provided for @validation_passwordsDoNotMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match.'**
+  String get validation_passwordsDoNotMatch;
+
+  /// No description provided for @validation_fixFormErrors.
+  ///
+  /// In en, this message translates to:
+  /// **'Please fix the form errors.'**
+  String get validation_fixFormErrors;
+
+  /// No description provided for @validation_unexpectedErrorPrefix.
+  ///
+  /// In en, this message translates to:
+  /// **'An unexpected error occurred: '**
+  String get validation_unexpectedErrorPrefix;
 }
 
 class _AppLocalizationsDelegate
