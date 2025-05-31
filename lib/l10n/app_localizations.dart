@@ -230,6 +230,12 @@ abstract class AppLocalizations {
   /// **'Start Navigation'**
   String get homePage_startNavigationButton;
 
+  /// No description provided for @homePage_noSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'No suggestions available.'**
+  String get homePage_noSuggestions;
+
   /// No description provided for @linesPage_tramLinesTitle.
   ///
   /// In en, this message translates to:
@@ -667,6 +673,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Already have an account? Login'**
   String get registerPage_loginButton;
+
+  /// No description provided for @searchBar_startSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Start typing to search...'**
+  String get searchBar_startSearchHint;
+
+  /// No description provided for @searchBar_searching.
+  ///
+  /// In en, this message translates to:
+  /// **'Searching...'**
+  String get searchBar_searching;
+
+  /// No description provided for @searchBar_error.
+  ///
+  /// In en, this message translates to:
+  /// **'An error occurred while searching. Please try again.'**
+  String get searchBar_error;
 }
 
 class _AppLocalizationsDelegate

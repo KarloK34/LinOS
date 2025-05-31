@@ -22,6 +22,7 @@
     "homePage_shoppingCenterTitle": "Trgovački centar",
     "homePage_shoppingCenterSubtitle": "Lokalne trgovine i restorani",
     "homePage_startNavigationButton": "Pokreni navigaciju",
+    "homePage_noSuggestions": "Nema dostupnih prijedloga.",
     "linesPage_tramLinesTitle": "Tramvajske linije",
     "linesPage_busLinesTitle": "Autobusne linije",
     "linesPage_realTimeButton": "Položaji u stvarnom vremenu",
@@ -94,5 +95,8 @@
     "forgotPassword_description": "Unesite svoju e-poštu da biste resetirali lozinku.",
     "forgotPassword_successMessage": "Lozinka je resetirana. Molimo provjerite svoju e-poštu za novi link za prijavu.",
     "forgotPassword_resetButton": "Resetiraj lozinku",
-    "registerPage_loginButton": "Već imate račun? Prijavite se"
+    "registerPage_loginButton": "Već imate račun? Prijavite se",
+    "searchBar_startSearchHint": "Počnite tipkati za pretraživanje...",
+    "searchBar_searching": "Traženje...",
+    "searchBar_error": "Došlo je do pogreške prilikom pretraživanja. Molimo pokušajte ponovno."
 }

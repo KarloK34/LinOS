@@ -77,6 +77,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homePage_startNavigationButton => 'Start Navigation';
 
   @override
+  String get homePage_noSuggestions => 'No suggestions available.';
+
+  @override
   String get linesPage_tramLinesTitle => 'Tram Lines';
 
   @override
@@ -311,4 +314,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get registerPage_loginButton => 'Already have an account? Login';
+
+  @override
+  String get searchBar_startSearchHint => 'Start typing to search...';
+
+  @override
+  String get searchBar_searching => 'Searching...';
+
+  @override
+  String get searchBar_error =>
+      'An error occurred while searching. Please try again.';
 }

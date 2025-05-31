@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:linos/core/app_theme/app_theme.dart';
 import 'package:linos/core/di/injection.dart';
 import 'package:linos/core/locale/cubit/locale_cubit.dart';
@@ -12,8 +13,8 @@ import 'firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await dotenv.load(fileName: ".env");
   configureDependencies();
-
   runApp(
     MultiBlocProvider(
       providers: [

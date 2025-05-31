@@ -43,6 +43,12 @@
 		</array>
 		<key>GoogleMapsAPIKey</key>
     	<string>$(GOOGLE_MAPS_API_KEY)</string>
+		<key>NSLocationWhenInUseUsageDescription</key>
+		<string>This app needs access to your location to show it on the map and provide relevant information.</string>
+		<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+		<string>This app needs access to your location to show it on the map and provide relevant information even when the app is in the background (if applicable).</string>
+		<key>NSLocationUsageDescription</key>
+		<string>This app needs access to your location to show it on the map and provide relevant information.</string>
 		<key>CADisableMinimumFrameDurationOnPhone</key>
 		<true/>
 		<key>UIApplicationSupportsIndirectInputEvents</key>

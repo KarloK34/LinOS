@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:linos/core/di/injection.dart';
 import 'package:linos/core/utils/context_extensions.dart';
+import 'package:linos/features/home/data/services/google_places_api_service.dart';
+import 'package:linos/features/home/presentation/cubit/home_map_cubit.dart';
+import 'package:linos/features/home/presentation/cubit/search_destination_cubit.dart';
 import 'package:linos/features/home/presentation/screens/home_page.dart';
 import 'package:linos/features/lines/presentation/screens/lines_page.dart';
 import 'package:linos/features/schedule/presentation/screens/schedule_page.dart';
@@ -19,7 +24,13 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: switch (_selectedIndex) {
-        0 => HomePage(),
+        0 => MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (context) => HomeMapCubit()),
+            BlocProvider(create: (context) => SearchDestinationCubit(getIt<GooglePlacesApiService>())),
+          ],
+          child: HomePage(),
+        ),
         1 => TicketsPage(),
         2 => LinesPage(),
         3 => SchedulePage(),

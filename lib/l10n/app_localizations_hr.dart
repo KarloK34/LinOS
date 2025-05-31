@@ -77,6 +77,9 @@ class AppLocalizationsHr extends AppLocalizations {
   String get homePage_startNavigationButton => 'Pokreni navigaciju';
 
   @override
+  String get homePage_noSuggestions => 'Nema dostupnih prijedloga.';
+
+  @override
   String get linesPage_tramLinesTitle => 'Tramvajske linije';
 
   @override
@@ -314,4 +317,14 @@ class AppLocalizationsHr extends AppLocalizations {
 
   @override
   String get registerPage_loginButton => 'Već imate račun? Prijavite se';
+
+  @override
+  String get searchBar_startSearchHint => 'Počnite tipkati za pretraživanje...';
+
+  @override
+  String get searchBar_searching => 'Traženje...';
+
+  @override
+  String get searchBar_error =>
+      'Došlo je do pogreške prilikom pretraživanja. Molimo pokušajte ponovno.';
 }

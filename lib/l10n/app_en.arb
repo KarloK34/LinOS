@@ -22,6 +22,7 @@
     "homePage_shoppingCenterTitle": "Shopping Center",
     "homePage_shoppingCenterSubtitle": "Local shops and restaurants",
     "homePage_startNavigationButton": "Start Navigation",
+    "homePage_noSuggestions": "No suggestions available.",
     "linesPage_tramLinesTitle": "Tram Lines",
     "linesPage_busLinesTitle": "Bus Lines",
     "linesPage_realTimeButton": "Real-time Positions",
@@ -94,5 +95,8 @@
     "forgotPassword_description": "Enter your email to reset your password.",
     "forgotPassword_successMessage": "Password reset successful. Please check your email for a new login link.",
     "forgotPassword_resetButton": "Reset Password",
-    "registerPage_loginButton": "Already have an account? Login"
+    "registerPage_loginButton": "Already have an account? Login",
+    "searchBar_startSearchHint": "Start typing to search...",
+    "searchBar_searching": "Searching...",
+    "searchBar_error": "An error occurred while searching. Please try again."
 }

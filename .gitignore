@@ -130,3 +130,6 @@ app.*.symbols
 
 # FVM Version Cache
 .fvm/
+
+# Environment variables
+.env
