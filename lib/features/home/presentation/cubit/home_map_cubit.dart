@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:linos/features/home/presentation/cubit/home_map_state.dart';
+import 'package:linos/features/home/data/models/transit_route.dart';
 
 class HomeMapCubit extends Cubit<HomeMapState> {
   HomeMapCubit() : super(HomeMapInitial()) {
@@ -62,7 +64,7 @@ class HomeMapCubit extends Cubit<HomeMapState> {
       emit(HomeMapLocationLoaded(userLocation: userLocation, initialCameraPosition: userCameraPosition));
     } catch (e) {
       if (isClosed) return;
-      emit(HomeMapLocationError('Failed to get location: \${e.toString()}'));
+      emit(HomeMapLocationError('Failed to get location: ${e.toString()}'));
     }
   }
 
@@ -72,6 +74,113 @@ class HomeMapCubit extends Cubit<HomeMapState> {
       animateCameraToLocation(loadedState.userLocation);
     } else {
       fetchUserLocation();
+    }
+  }
+
+  void updateTransitRoute(TransitRoute route) {
+    if (state is HomeMapLocationLoaded) {
+      final currentState = state as HomeMapLocationLoaded;
+
+      final clearedPolylines = currentState.polylines.where((p) => !p.polylineId.value.startsWith('route_')).toList();
+
+      final routePolylines = <Polyline>[];
+
+      for (int i = 0; i < route.segments.length; i++) {
+        final segment = route.segments[i];
+
+        if (segment.polylinePoints.isNotEmpty) {
+          Color polylineColor;
+          int width;
+
+          switch (segment.type) {
+            case RouteSegmentType.walking:
+              polylineColor = Colors.green;
+              width = 4;
+              break;
+            case RouteSegmentType.transit:
+              switch (segment.vehicleType?.toUpperCase()) {
+                case 'BUS':
+                  polylineColor = Colors.blue;
+                  break;
+                case 'TRAM':
+                case 'LIGHT_RAIL':
+                  polylineColor = Colors.red;
+                  break;
+                case 'SUBWAY':
+                case 'RAIL':
+                  polylineColor = Colors.purple;
+                  break;
+                default:
+                  polylineColor = Colors.orange;
+              }
+              width = 6;
+              break;
+          }
+
+          routePolylines.add(
+            Polyline(
+              polylineId: PolylineId('route_segment_$i'),
+              points: segment.polylinePoints,
+              color: polylineColor,
+              width: width,
+              patterns: segment.type == RouteSegmentType.walking ? [PatternItem.dash(10), PatternItem.gap(5)] : [],
+            ),
+          );
+        }
+      }
+
+      final updatedPolylines = [...clearedPolylines, ...routePolylines];
+
+      emit(
+        HomeMapLocationLoaded(
+          userLocation: currentState.userLocation,
+          initialCameraPosition: currentState.initialCameraPosition,
+          markers: currentState.markers,
+          polylines: updatedPolylines,
+        ),
+      );
+    }
+  }
+
+  void addDestinationMarker(LatLng destination, String title) {
+    if (state is HomeMapLocationLoaded) {
+      final currentState = state as HomeMapLocationLoaded;
+      final destinationMarker = Marker(
+        markerId: const MarkerId('destination'),
+        position: destination,
+        infoWindow: InfoWindow(title: title),
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+      );
+
+      final updatedMarkers = List<Marker>.from(currentState.markers)
+        ..removeWhere((m) => m.markerId.value == 'destination')
+        ..add(destinationMarker);
+
+      emit(
+        HomeMapLocationLoaded(
+          userLocation: currentState.userLocation,
+          initialCameraPosition: currentState.initialCameraPosition,
+          markers: updatedMarkers,
+          polylines: currentState.polylines,
+        ),
+      );
+    }
+  }
+
+  void clearRoute() {
+    if (state is HomeMapLocationLoaded) {
+      final currentState = state as HomeMapLocationLoaded;
+      final updatedPolylines = currentState.polylines.where((p) => !p.polylineId.value.startsWith('route_')).toList();
+      final updatedMarkers = currentState.markers.where((m) => m.markerId.value != 'destination').toList();
+
+      emit(
+        HomeMapLocationLoaded(
+          userLocation: currentState.userLocation,
+          initialCameraPosition: currentState.initialCameraPosition,
+          markers: updatedMarkers,
+          polylines: updatedPolylines,
+        ),
+      );
     }
   }
 }

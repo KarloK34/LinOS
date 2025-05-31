@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:linos/core/di/injection.dart';
 import 'package:linos/core/utils/context_extensions.dart';
+import 'package:linos/features/home/data/services/google_directions_api_service.dart';
 import 'package:linos/features/home/data/services/google_places_api_service.dart';
 import 'package:linos/features/home/presentation/cubit/home_map_cubit.dart';
 import 'package:linos/features/home/presentation/cubit/search_destination_cubit.dart';
+import 'package:linos/features/home/presentation/cubit/transit_route_cubit.dart';
 import 'package:linos/features/home/presentation/screens/home_page.dart';
 import 'package:linos/features/lines/presentation/screens/lines_page.dart';
 import 'package:linos/features/schedule/presentation/screens/schedule_page.dart';
@@ -28,6 +30,13 @@ class _MainPageState extends State<MainPage> {
           providers: [
             BlocProvider(create: (context) => HomeMapCubit()),
             BlocProvider(create: (context) => SearchDestinationCubit(getIt<GooglePlacesApiService>())),
+            BlocProvider(
+              create: (context) => TransitRouteCubit(
+                getIt<GoogleDirectionsApiService>(),
+                context.read<SearchDestinationCubit>(),
+                context.read<HomeMapCubit>(),
+              ),
+            ),
           ],
           child: HomePage(),
         ),

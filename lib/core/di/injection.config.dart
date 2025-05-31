@@ -16,6 +16,8 @@ import 'package:linos/core/navigation/app_router_config.dart' as _i494;
 import 'package:linos/features/auth/cubit/auth_cubit.dart' as _i53;
 import 'package:linos/features/auth/data/repositories/auth_repository.dart'
     as _i376;
+import 'package:linos/features/home/data/services/google_directions_api_service.dart'
+    as _i189;
 import 'package:linos/features/home/data/services/google_places_api_service.dart'
     as _i423;
 
@@ -27,6 +29,9 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     gh.singleton<_i494.AppRouterConfig>(() => _i494.AppRouterConfig());
+    gh.singleton<_i189.GoogleDirectionsApiService>(
+      () => _i189.GoogleDirectionsApiService(),
+    );
     gh.singleton<_i423.GooglePlacesApiService>(
       () => _i423.GooglePlacesApiService(),
     );

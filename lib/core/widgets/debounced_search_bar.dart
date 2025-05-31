@@ -126,11 +126,11 @@ class _DebouncedSearchBarState extends State<DebouncedSearchBar> {
                       leading: const Icon(Icons.place),
                       title: Text(place.description),
                       onTap: () {
-                        controller.closeView(place.description);
                         if (_sessionToken != null) {
                           context.read<SearchDestinationCubit>().selectPlace(place, _sessionToken!);
                           _sessionToken = null;
                         }
+                        controller.closeView(place.description);
                         _searchController.text = place.description;
                       },
                     );

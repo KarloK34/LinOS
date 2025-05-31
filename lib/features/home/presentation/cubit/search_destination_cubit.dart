@@ -30,7 +30,6 @@ class SearchDestinationCubit extends Cubit<SearchDestinationState> {
     emit(SearchDestinationLoading());
     try {
       final placeDetails = await _placesApiService.getPlaceDetails(suggestion.placeId, sessionToken: sessionToken);
-      await Future.delayed(const Duration(milliseconds: 300));
       final selectedPlace = SelectedPlace(
         placeId: suggestion.placeId,
         name: suggestion.description,
