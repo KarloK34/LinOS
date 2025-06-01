@@ -24,14 +24,20 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: switch (_selectedIndex) {
-        0 => MultiBlocProvider(
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => HomeMapCubit()..fetchUserLocation()),
+        BlocProvider(create: (context) => SearchDestinationCubit(getIt<GooglePlacesApiService>())),
+        BlocProvider(
+          create: (context) => PopularDestinationsCubit(getIt<SearchHistoryRepository>())..loadPopularDestinations(),
+        ),
+      ],
+      child: Builder(
+        builder: (context) => MultiBlocProvider(
           providers: [
-            BlocProvider(create: (context) => HomeMapCubit()..fetchUserLocation()),
-            BlocProvider(create: (context) => SearchDestinationCubit(getIt<GooglePlacesApiService>())),
             BlocProvider(
               create: (context) => TransitRouteCubit(
                 getIt<GoogleDirectionsApiService>(),
@@ -39,50 +45,53 @@ class _MainPageState extends State<MainPage> {
                 context.read<HomeMapCubit>(),
               ),
             ),
-            BlocProvider(create: (context) => PopularDestinationsCubit(getIt<SearchHistoryRepository>())),
           ],
-          child: HomePage(),
+          child: Scaffold(
+            body: switch (_selectedIndex) {
+              0 => HomePage(),
+              1 => TicketsPage(),
+              2 => LinesPage(),
+              3 => SchedulePage(),
+              4 => SettingsPage(),
+              _ => Center(child: Text(context.l10n.mainPage_unknownPage)),
+            },
+            bottomNavigationBar: BottomNavigationBar(
+              items: [
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  label: context.l10n.mainPage_homeLabel,
+                  backgroundColor: context.theme.colorScheme.primary,
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.confirmation_number_outlined),
+                  label: context.l10n.mainPage_ticketsLabel,
+                  backgroundColor: context.theme.colorScheme.primary,
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.directions),
+                  label: context.l10n.mainPage_linesLabel,
+                  backgroundColor: context.theme.colorScheme.primary,
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.schedule),
+                  label: context.l10n.mainPage_scheduleLabel,
+                  backgroundColor: context.theme.colorScheme.primary,
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.settings),
+                  label: context.l10n.mainPage_settingsLabel,
+                  backgroundColor: context.theme.colorScheme.primary,
+                ),
+              ],
+              currentIndex: _selectedIndex,
+              onTap: (index) {
+                setState(() {
+                  _selectedIndex = index;
+                });
+              },
+            ),
+          ),
         ),
-        1 => TicketsPage(),
-        2 => LinesPage(),
-        3 => SchedulePage(),
-        4 => SettingsPage(),
-        _ => Center(child: Text(context.l10n.mainPage_unknownPage)),
-      },
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: context.l10n.mainPage_homeLabel,
-            backgroundColor: context.theme.colorScheme.primary,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.confirmation_number_outlined),
-            label: context.l10n.mainPage_ticketsLabel,
-            backgroundColor: context.theme.colorScheme.primary,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.directions),
-            label: context.l10n.mainPage_linesLabel,
-            backgroundColor: context.theme.colorScheme.primary,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.schedule),
-            label: context.l10n.mainPage_scheduleLabel,
-            backgroundColor: context.theme.colorScheme.primary,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: context.l10n.mainPage_settingsLabel,
-            backgroundColor: context.theme.colorScheme.primary,
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
       ),
     );
   }

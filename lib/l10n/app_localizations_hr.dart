@@ -84,6 +84,18 @@ class AppLocalizationsHr extends AppLocalizations {
       'Nema dostupnih popularnih odredišta.';
 
   @override
+  String get homePage_navigationError =>
+      'Došlo je do pogreške prilikom pokretanja navigacije.';
+
+  @override
+  String get homePage_noDestinationError =>
+      'Molimo odaberite odredište za pokretanje navigacije.';
+
+  @override
+  String get homePage_locationError =>
+      'Nije moguće pristupiti vašoj lokaciji. Provjerite postavke uređaja.';
+
+  @override
   String get linesPage_tramLinesTitle => 'Tramvajske linije';
 
   @override

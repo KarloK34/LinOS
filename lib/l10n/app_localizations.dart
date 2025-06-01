@@ -242,6 +242,24 @@ abstract class AppLocalizations {
   /// **'No popular destinations available.'**
   String get homePage_noPopularDestinations;
 
+  /// No description provided for @homePage_navigationError.
+  ///
+  /// In en, this message translates to:
+  /// **'An error occurred while starting navigation.'**
+  String get homePage_navigationError;
+
+  /// No description provided for @homePage_noDestinationError.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a destination to start navigation.'**
+  String get homePage_noDestinationError;
+
+  /// No description provided for @homePage_locationError.
+  ///
+  /// In en, this message translates to:
+  /// **'Unable to access your location. Please check your device settings.'**
+  String get homePage_locationError;
+
   /// No description provided for @linesPage_tramLinesTitle.
   ///
   /// In en, this message translates to:

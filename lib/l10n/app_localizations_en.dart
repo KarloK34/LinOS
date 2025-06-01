@@ -84,6 +84,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'No popular destinations available.';
 
   @override
+  String get homePage_navigationError =>
+      'An error occurred while starting navigation.';
+
+  @override
+  String get homePage_noDestinationError =>
+      'Please select a destination to start navigation.';
+
+  @override
+  String get homePage_locationError =>
+      'Unable to access your location. Please check your device settings.';
+
+  @override
   String get linesPage_tramLinesTitle => 'Tram Lines';
 
   @override
