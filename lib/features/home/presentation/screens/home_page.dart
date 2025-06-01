@@ -10,12 +10,17 @@ import 'package:linos/features/home/presentation/cubit/search_destination_cubit.
 import 'package:linos/features/home/presentation/cubit/search_destination_state.dart';
 import 'package:linos/features/home/presentation/cubit/transit_route_cubit.dart';
 import 'package:linos/features/home/presentation/cubit/transit_route_state.dart';
-import 'package:linos/features/home/presentation/widgets/map_view.dart';
+import 'package:linos/features/home/presentation/widgets/expandable_map_view.dart';
 import 'package:linos/features/home/presentation/widgets/popular_destinations.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   Future<void> _startNavigation(BuildContext context) async {
     final searchState = context.read<SearchDestinationCubit>().state;
     final mapState = context.read<HomeMapCubit>().state;
@@ -74,21 +79,27 @@ class HomePage extends StatelessWidget {
             },
           ),
         ],
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              MapView(),
-              SizedBox(height: 16.0),
-              DebouncedSearchBar(),
-              SizedBox(height: 16.0),
-              Expanded(child: PopularDestinations()),
-              SizedBox(height: 16.0),
-              _buildStartNavigationButton(),
-              SizedBox(height: 16.0),
-            ],
-          ),
+        child: Column(
+          children: [
+            ExpandableMapView(),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 16.0),
+                    DebouncedSearchBar(),
+                    SizedBox(height: 16.0),
+                    Expanded(child: PopularDestinations()),
+                    SizedBox(height: 16.0),
+                    _buildStartNavigationButton(),
+                    SizedBox(height: 16.0),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

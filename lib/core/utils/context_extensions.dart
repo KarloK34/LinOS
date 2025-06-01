@@ -8,6 +8,8 @@ extension ContextExtensions on BuildContext {
 
   MediaQueryData get mediaQuery => MediaQuery.of(this);
 
+  Size get screenSize => mediaQuery.size;
+
   AppLocalizations get l10n => AppLocalizations.of(this)!;
   Locale get locale => Localizations.localeOf(this);
   List<Locale> get supportedLocales => AppLocalizations.supportedLocales;
