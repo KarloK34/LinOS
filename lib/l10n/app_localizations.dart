@@ -236,6 +236,12 @@ abstract class AppLocalizations {
   /// **'No suggestions available.'**
   String get homePage_noSuggestions;
 
+  /// No description provided for @homePage_noPopularDestinations.
+  ///
+  /// In en, this message translates to:
+  /// **'No popular destinations available.'**
+  String get homePage_noPopularDestinations;
+
   /// No description provided for @linesPage_tramLinesTitle.
   ///
   /// In en, this message translates to:

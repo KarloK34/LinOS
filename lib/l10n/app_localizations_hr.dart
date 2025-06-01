@@ -80,6 +80,10 @@ class AppLocalizationsHr extends AppLocalizations {
   String get homePage_noSuggestions => 'Nema dostupnih prijedloga.';
 
   @override
+  String get homePage_noPopularDestinations =>
+      'Nema dostupnih popularnih odredišta.';
+
+  @override
   String get linesPage_tramLinesTitle => 'Tramvajske linije';
 
   @override

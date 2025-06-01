@@ -80,6 +80,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homePage_noSuggestions => 'No suggestions available.';
 
   @override
+  String get homePage_noPopularDestinations =>
+      'No popular destinations available.';
+
+  @override
   String get linesPage_tramLinesTitle => 'Tram Lines';
 
   @override

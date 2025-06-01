@@ -44,6 +44,15 @@ class SearchDestinationCubit extends Cubit<SearchDestinationState> {
     }
   }
 
+  Future<void> selectPopularDestination(SelectedPlace selectedPlace) async {
+    emit(SearchDestinationLoading());
+    try {
+      emit(SearchDestinationSelected(selectedPlace: selectedPlace));
+    } catch (e) {
+      emit(SearchDestinationError(message: e.toString()));
+    }
+  }
+
   void clearSearch() {
     emit(SearchDestinationInitial());
   }

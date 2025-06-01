@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:linos/core/di/injection.dart';
 import 'package:linos/core/utils/context_extensions.dart';
+import 'package:linos/features/home/data/repositories/search_history_repository.dart';
 import 'package:linos/features/home/data/services/google_directions_api_service.dart';
 import 'package:linos/features/home/data/services/google_places_api_service.dart';
 import 'package:linos/features/home/presentation/cubit/home_map_cubit.dart';
+import 'package:linos/features/home/presentation/cubit/popular_destinations_cubit.dart';
 import 'package:linos/features/home/presentation/cubit/search_destination_cubit.dart';
 import 'package:linos/features/home/presentation/cubit/transit_route_cubit.dart';
 import 'package:linos/features/home/presentation/screens/home_page.dart';
@@ -28,7 +30,7 @@ class _MainPageState extends State<MainPage> {
       body: switch (_selectedIndex) {
         0 => MultiBlocProvider(
           providers: [
-            BlocProvider(create: (context) => HomeMapCubit()),
+            BlocProvider(create: (context) => HomeMapCubit()..fetchUserLocation()),
             BlocProvider(create: (context) => SearchDestinationCubit(getIt<GooglePlacesApiService>())),
             BlocProvider(
               create: (context) => TransitRouteCubit(
@@ -37,6 +39,7 @@ class _MainPageState extends State<MainPage> {
                 context.read<HomeMapCubit>(),
               ),
             ),
+            BlocProvider(create: (context) => PopularDestinationsCubit(getIt<SearchHistoryRepository>())),
           ],
           child: HomePage(),
         ),
