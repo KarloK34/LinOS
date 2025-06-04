@@ -506,29 +506,398 @@ abstract class AppLocalizations {
   /// **'Buy Digital Ticket'**
   String get ticketsPage_buyDigitalTicketButton;
 
-  /// No description provided for @ticketsPage_topUpBalanceButton.
-  ///
-  /// In en, this message translates to:
-  /// **'Top Up Balance'**
-  String get ticketsPage_topUpBalanceButton;
-
-  /// No description provided for @ticketsPage_purchasedTicketsTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Purchased Tickets'**
-  String get ticketsPage_purchasedTicketsTitle;
-
   /// No description provided for @ticketsPage_purchasedTicketsSubtitle.
   ///
   /// In en, this message translates to:
   /// **'Your purchased tickets will appear here.'**
   String get ticketsPage_purchasedTicketsSubtitle;
 
-  /// No description provided for @ticketsPage_viewTicketHistoryButton.
+  /// No description provided for @ticketsPage_title.
   ///
   /// In en, this message translates to:
-  /// **'View Ticket History'**
-  String get ticketsPage_viewTicketHistoryButton;
+  /// **'Tickets'**
+  String get ticketsPage_title;
+
+  /// No description provided for @ticketsPage_activeTicketsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Tickets'**
+  String get ticketsPage_activeTicketsTitle;
+
+  /// No description provided for @ticketsPage_purchaseTicketsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase Tickets'**
+  String get ticketsPage_purchaseTicketsTitle;
+
+  /// No description provided for @ticketsPage_purchasedTicketsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Purchases'**
+  String get ticketsPage_purchasedTicketsTitle;
+
+  /// No description provided for @ticketsPage_noActiveTickets.
+  ///
+  /// In en, this message translates to:
+  /// **'No active tickets'**
+  String get ticketsPage_noActiveTickets;
+
+  /// No description provided for @ticketsPage_purchasePrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase a ticket to get started'**
+  String get ticketsPage_purchasePrompt;
+
+  /// No description provided for @ticketsPage_viewTicketHistoryLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'View All History ({count} more)'**
+  String ticketsPage_viewTicketHistoryLabel(Object count);
+
+  /// No description provided for @ticketsPage_refresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get ticketsPage_refresh;
+
+  /// No description provided for @activeTicketCard_validUntilLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid until:'**
+  String get activeTicketCard_validUntilLabel;
+
+  /// No description provided for @activeTicketCard_ticketIdLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Ticket ID:'**
+  String get activeTicketCard_ticketIdLabel;
+
+  /// No description provided for @activeTicketCard_tapToEnlarge.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to enlarge'**
+  String get activeTicketCard_tapToEnlarge;
+
+  /// No description provided for @activeTicketCard_expired.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get activeTicketCard_expired;
+
+  /// No description provided for @activeTicketCard_active.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get activeTicketCard_active;
+
+  /// No description provided for @qrCodeModal_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Ticket QR Code'**
+  String get qrCodeModal_title;
+
+  /// No description provided for @qrCodeModal_instructions.
+  ///
+  /// In en, this message translates to:
+  /// **'Show this code to the conductor when boarding'**
+  String get qrCodeModal_instructions;
+
+  /// No description provided for @qrCodeModal_ticketIdPrefix.
+  ///
+  /// In en, this message translates to:
+  /// **'Ticket ID:'**
+  String get qrCodeModal_ticketIdPrefix;
+
+  /// No description provided for @balanceCard_topUpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Up Balance'**
+  String get balanceCard_topUpTitle;
+
+  /// No description provided for @balanceCard_selectAmountMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Select amount to add to your balance:'**
+  String get balanceCard_selectAmountMessage;
+
+  /// No description provided for @balanceCard_balanceAddedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Added {amount} € to your balance'**
+  String balanceCard_balanceAddedMessage(Object amount);
+
+  /// No description provided for @purchaseButtons_confirmPurchaseTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Purchase'**
+  String get purchaseButtons_confirmPurchaseTitle;
+
+  /// No description provided for @purchaseButtons_confirmPurchaseMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase {ticketType} for {price} €?'**
+  String purchaseButtons_confirmPurchaseMessage(
+    Object price,
+    Object ticketType,
+  );
+
+  /// No description provided for @purchaseButtons_purchaseSuccessMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Ticket purchased successfully!'**
+  String get purchaseButtons_purchaseSuccessMessage;
+
+  /// No description provided for @purchaseButtons_validForDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid for {days} day'**
+  String purchaseButtons_validForDays(Object days);
+
+  /// No description provided for @purchaseButtons_validForDaysPlural.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid for {days} days'**
+  String purchaseButtons_validForDaysPlural(Object days);
+
+  /// No description provided for @purchaseButtons_validForHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid for {hours} hour'**
+  String purchaseButtons_validForHours(Object hours);
+
+  /// No description provided for @purchaseButtons_validForHoursPlural.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid for {hours} hours'**
+  String purchaseButtons_validForHoursPlural(Object hours);
+
+  /// No description provided for @purchaseButtons_validForMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid for {minutes} minutes'**
+  String purchaseButtons_validForMinutes(Object minutes);
+
+  /// No description provided for @ticketHistory_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Ticket History'**
+  String get ticketHistory_title;
+
+  /// No description provided for @ticketHistory_noTicketHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'No ticket history'**
+  String get ticketHistory_noTicketHistory;
+
+  /// No description provided for @ticketHistory_errorLoadingHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading history'**
+  String get ticketHistory_errorLoadingHistory;
+
+  /// No description provided for @ticketHistory_loading.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading...'**
+  String get ticketHistory_loading;
+
+  /// No description provided for @ticketHistoryPage_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Ticket History'**
+  String get ticketHistoryPage_title;
+
+  /// No description provided for @ticketHistoryPage_filterLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter:'**
+  String get ticketHistoryPage_filterLabel;
+
+  /// No description provided for @ticketHistoryPage_sortNewest.
+  ///
+  /// In en, this message translates to:
+  /// **'Newest First'**
+  String get ticketHistoryPage_sortNewest;
+
+  /// No description provided for @ticketHistoryPage_sortOldest.
+  ///
+  /// In en, this message translates to:
+  /// **'Oldest First'**
+  String get ticketHistoryPage_sortOldest;
+
+  /// No description provided for @ticketHistoryPage_sortPriceHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'Price: High to Low'**
+  String get ticketHistoryPage_sortPriceHigh;
+
+  /// No description provided for @ticketHistoryPage_sortPriceLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Price: Low to High'**
+  String get ticketHistoryPage_sortPriceLow;
+
+  /// No description provided for @ticketHistoryPage_ticketsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} ticket'**
+  String ticketHistoryPage_ticketsCount(Object count);
+
+  /// No description provided for @ticketHistoryPage_ticketsCountPlural.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} tickets'**
+  String ticketHistoryPage_ticketsCountPlural(Object count);
+
+  /// No description provided for @ticketHistoryPage_totalSpent.
+  ///
+  /// In en, this message translates to:
+  /// **'Total spent: {amount} €'**
+  String ticketHistoryPage_totalSpent(Object amount);
+
+  /// No description provided for @ticketHistoryPage_noTicketsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No tickets found'**
+  String get ticketHistoryPage_noTicketsFound;
+
+  /// No description provided for @ticketHistoryPage_adjustFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Try adjusting your filters'**
+  String get ticketHistoryPage_adjustFilters;
+
+  /// No description provided for @ticketHistoryPage_clearFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Filters'**
+  String get ticketHistoryPage_clearFilters;
+
+  /// No description provided for @ticketHistoryPage_purchased.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchased: '**
+  String get ticketHistoryPage_purchased;
+
+  /// No description provided for @ticketHistoryPage_validUntil.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid Until: '**
+  String get ticketHistoryPage_validUntil;
+
+  /// No description provided for @ticketHistoryPage_duration.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration'**
+  String get ticketHistoryPage_duration;
+
+  /// No description provided for @ticketHistoryPage_status.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get ticketHistoryPage_status;
+
+  /// No description provided for @ticketHistoryPage_used.
+  ///
+  /// In en, this message translates to:
+  /// **'Used'**
+  String get ticketHistoryPage_used;
+
+  /// No description provided for @timeFormat_days.
+  ///
+  /// In en, this message translates to:
+  /// **'{days}d {hours}h'**
+  String timeFormat_days(Object days, Object hours);
+
+  /// No description provided for @timeFormat_hours.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours}h {minutes}m'**
+  String timeFormat_hours(Object hours, Object minutes);
+
+  /// No description provided for @timeFormat_minutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes}m'**
+  String timeFormat_minutes(Object minutes);
+
+  /// No description provided for @timeFormat_seconds.
+  ///
+  /// In en, this message translates to:
+  /// **'{seconds}s'**
+  String timeFormat_seconds(Object seconds);
+
+  /// No description provided for @timeFormat_daysSingle.
+  ///
+  /// In en, this message translates to:
+  /// **'{days} day'**
+  String timeFormat_daysSingle(Object days);
+
+  /// No description provided for @timeFormat_daysPlural.
+  ///
+  /// In en, this message translates to:
+  /// **'{days} days'**
+  String timeFormat_daysPlural(Object days);
+
+  /// No description provided for @timeFormat_hoursSingle.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours} hour'**
+  String timeFormat_hoursSingle(Object hours);
+
+  /// No description provided for @timeFormat_hoursPlural.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours} hours'**
+  String timeFormat_hoursPlural(Object hours);
+
+  /// No description provided for @error_insufficientBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Insufficient balance. Please add funds to your account.'**
+  String get error_insufficientBalance;
+
+  /// No description provided for @error_purchaseTicketFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to purchase ticket: {error}'**
+  String error_purchaseTicketFailed(Object error);
+
+  /// No description provided for @error_addBalanceFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to add balance: {error}'**
+  String error_addBalanceFailed(Object error);
+
+  /// No description provided for @error_loadUserDataFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load user data: {error}'**
+  String error_loadUserDataFailed(Object error);
+
+  /// No description provided for @error_loadingTickets.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading tickets'**
+  String get error_loadingTickets;
+
+  /// No description provided for @error_useTicketFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to use ticket: {error}'**
+  String error_useTicketFailed(Object error);
+
+  /// No description provided for @button_close.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get button_close;
+
+  /// No description provided for @button_retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get button_retry;
 
   /// No description provided for @cancelButton.
   ///
@@ -715,6 +1084,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'An error occurred while searching. Please try again.'**
   String get searchBar_error;
+
+  /// No description provided for @topUpBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Up Balance'**
+  String get topUpBalance;
+
+  /// No description provided for @singleRide.
+  ///
+  /// In en, this message translates to:
+  /// **'Single Ride'**
+  String get singleRide;
+
+  /// No description provided for @dailyPass.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Pass'**
+  String get dailyPass;
+
+  /// No description provided for @weeklyPass.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly Pass'**
+  String get weeklyPass;
+
+  /// No description provided for @monthlyPass.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly Pass'**
+  String get monthlyPass;
+
+  /// No description provided for @all.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get all;
 }
 
 class _AppLocalizationsDelegate

@@ -33,6 +33,11 @@ abstract class AppTheme {
     secondaryContainer: Color(0xFFD6E4F0),
     onSecondaryContainer: Color(0xFF1B2E3A),
 
+    tertiary: Color(0xFF6B5B95),
+    onTertiary: Colors.white,
+    tertiaryContainer: Color(0xFFE1D7F0),
+    onTertiaryContainer: Color(0xFF251431),
+
     surface: Color(0xFFFFFFFF),
     onSurface: Color(0xFF1A1C1E),
     surfaceContainer: Color(0xFFF5F5F5),
@@ -55,6 +60,11 @@ abstract class AppTheme {
     onSecondary: Color(0xFF263A47),
     secondaryContainer: Color(0xFF3E5364),
     onSecondaryContainer: Color(0xFFD6E4F0),
+
+    tertiary: Color(0xFFC4B5E8),
+    onTertiary: Color(0xFF2A1E42),
+    tertiaryContainer: Color(0xFF413468),
+    onTertiaryContainer: Color(0xFFE1D7F0),
 
     surface: Color(0xFF1C1F23),
     onSurface: Color(0xFFE1E1E5),
@@ -93,10 +103,16 @@ abstract class AppTheme {
       extendedTextStyle: textTheme.labelLarge?.copyWith(color: lightColorScheme.onPrimary),
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      selectedItemColor: lightColorScheme.onPrimary,
-      unselectedItemColor: lightColorScheme.onSurface,
-      selectedLabelStyle: textTheme.labelLarge?.copyWith(color: lightColorScheme.primary),
-      unselectedLabelStyle: textTheme.labelLarge?.copyWith(color: lightColorScheme.onSurface),
+      backgroundColor: lightColorScheme.surface,
+      selectedItemColor: lightColorScheme.tertiary, // Use tertiary for selected
+      unselectedItemColor: lightColorScheme.onSurface.withValues(alpha: 0.6),
+      selectedLabelStyle: textTheme.labelMedium?.copyWith(
+        color: lightColorScheme.tertiary,
+        fontWeight: FontWeight.w600,
+      ),
+      unselectedLabelStyle: textTheme.labelMedium?.copyWith(color: lightColorScheme.onSurface.withValues(alpha: 0.6)),
+      type: BottomNavigationBarType.fixed,
+      elevation: 8,
     ),
     searchBarTheme: SearchBarThemeData(
       backgroundColor: WidgetStateProperty.all(lightColorScheme.surfaceContainer),
@@ -197,10 +213,13 @@ abstract class AppTheme {
       extendedTextStyle: textTheme.labelLarge?.copyWith(color: darkColorScheme.onPrimary),
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      selectedItemColor: darkColorScheme.onPrimary,
-      unselectedItemColor: darkColorScheme.onSurface,
-      selectedLabelStyle: textTheme.labelLarge?.copyWith(color: darkColorScheme.primary),
-      unselectedLabelStyle: textTheme.labelLarge?.copyWith(color: darkColorScheme.onSurface),
+      backgroundColor: darkColorScheme.surface,
+      selectedItemColor: darkColorScheme.tertiary, // Use tertiary for selected
+      unselectedItemColor: darkColorScheme.onSurface.withValues(alpha: 0.6),
+      selectedLabelStyle: textTheme.labelMedium?.copyWith(color: darkColorScheme.tertiary, fontWeight: FontWeight.w600),
+      unselectedLabelStyle: textTheme.labelMedium?.copyWith(color: darkColorScheme.onSurface.withValues(alpha: 0.6)),
+      type: BottomNavigationBarType.fixed,
+      elevation: 8,
     ),
     searchBarTheme: SearchBarThemeData(
       backgroundColor: WidgetStateProperty.all(darkColorScheme.surfaceContainer),

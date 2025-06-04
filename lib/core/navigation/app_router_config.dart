@@ -7,6 +7,8 @@ import 'package:linos/features/auth/cubit/auth_state.dart';
 import 'package:linos/features/auth/presentation/screens/forgot_password_page.dart';
 import 'package:linos/features/auth/presentation/screens/login_page.dart';
 import 'package:linos/features/auth/presentation/screens/register_page.dart';
+import 'package:linos/features/tickets/data/models/ticket.dart';
+import 'package:linos/features/tickets/presentation/screens/ticket_history_page.dart';
 
 @singleton
 class AppRouterConfig {
@@ -14,11 +16,21 @@ class AppRouterConfig {
   static const String login = '/login';
   static const String register = '/register';
   static const String forgotPassword = '$login/forgot_password';
+  static const String ticketsHistory = '$mainPage/tickets_history';
 
   GoRouter get router => GoRouter(
     initialLocation: login,
     routes: [
-      GoRoute(path: mainPage, builder: (context, state) => const MainPage()),
+      GoRoute(
+        path: mainPage,
+        builder: (context, state) => const MainPage(),
+        routes: [
+          GoRoute(
+            path: 'tickets_history',
+            builder: (context, state) => TicketHistoryPage(tickets: state.extra as List<Ticket>? ?? []),
+          ),
+        ],
+      ),
       GoRoute(
         path: login,
         builder: (context, state) => const LoginPage(),

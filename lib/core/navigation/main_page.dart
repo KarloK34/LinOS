@@ -13,6 +13,8 @@ import 'package:linos/features/home/presentation/screens/home_page.dart';
 import 'package:linos/features/lines/presentation/screens/lines_page.dart';
 import 'package:linos/features/schedule/presentation/screens/schedule_page.dart';
 import 'package:linos/features/settings/presentation/screens/settings_page.dart';
+import 'package:linos/features/tickets/data/repositories/tickets_repository.dart';
+import 'package:linos/features/tickets/presentation/cubit/tickets_cubit.dart';
 import 'package:linos/features/tickets/presentation/screens/tickets_page.dart';
 
 class MainPage extends StatefulWidget {
@@ -22,8 +24,11 @@ class MainPage extends StatefulWidget {
   State<MainPage> createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage> with WidgetsBindingObserver {
-  int _selectedIndex = 0;
+class _MainPageState extends State<MainPage> with WidgetsBindingObserver, AutomaticKeepAliveClientMixin {
+  static int _selectedIndex = 0;
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -49,6 +54,8 @@ class _MainPageState extends State<MainPage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => HomeMapCubit()..fetchUserLocation()),
@@ -56,6 +63,7 @@ class _MainPageState extends State<MainPage> with WidgetsBindingObserver {
         BlocProvider(
           create: (context) => PopularDestinationsCubit(getIt<SearchHistoryRepository>())..loadPopularDestinations(),
         ),
+        BlocProvider(create: (context) => TicketsCubit(getIt<TicketsRepository>())..loadUserData()),
       ],
       child: Builder(
         builder: (context) => MultiBlocProvider(
@@ -82,27 +90,27 @@ class _MainPageState extends State<MainPage> with WidgetsBindingObserver {
                 BottomNavigationBarItem(
                   icon: Icon(Icons.home),
                   label: context.l10n.mainPage_homeLabel,
-                  backgroundColor: context.theme.colorScheme.primary,
+                  backgroundColor: context.theme.colorScheme.primaryContainer,
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.confirmation_number_outlined),
                   label: context.l10n.mainPage_ticketsLabel,
-                  backgroundColor: context.theme.colorScheme.primary,
+                  backgroundColor: context.theme.colorScheme.primaryContainer,
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.directions),
                   label: context.l10n.mainPage_linesLabel,
-                  backgroundColor: context.theme.colorScheme.primary,
+                  backgroundColor: context.theme.colorScheme.primaryContainer,
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.schedule),
                   label: context.l10n.mainPage_scheduleLabel,
-                  backgroundColor: context.theme.colorScheme.primary,
+                  backgroundColor: context.theme.colorScheme.primaryContainer,
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.settings),
                   label: context.l10n.mainPage_settingsLabel,
-                  backgroundColor: context.theme.colorScheme.primary,
+                  backgroundColor: context.theme.colorScheme.primaryContainer,
                 ),
               ],
               currentIndex: _selectedIndex,

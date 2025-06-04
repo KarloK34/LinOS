@@ -229,17 +229,253 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ticketsPage_buyDigitalTicketButton => 'Buy Digital Ticket';
 
   @override
-  String get ticketsPage_topUpBalanceButton => 'Top Up Balance';
-
-  @override
-  String get ticketsPage_purchasedTicketsTitle => 'Purchased Tickets';
-
-  @override
   String get ticketsPage_purchasedTicketsSubtitle =>
       'Your purchased tickets will appear here.';
 
   @override
-  String get ticketsPage_viewTicketHistoryButton => 'View Ticket History';
+  String get ticketsPage_title => 'Tickets';
+
+  @override
+  String get ticketsPage_activeTicketsTitle => 'Active Tickets';
+
+  @override
+  String get ticketsPage_purchaseTicketsTitle => 'Purchase Tickets';
+
+  @override
+  String get ticketsPage_purchasedTicketsTitle => 'Recent Purchases';
+
+  @override
+  String get ticketsPage_noActiveTickets => 'No active tickets';
+
+  @override
+  String get ticketsPage_purchasePrompt => 'Purchase a ticket to get started';
+
+  @override
+  String ticketsPage_viewTicketHistoryLabel(Object count) {
+    return 'View All History ($count more)';
+  }
+
+  @override
+  String get ticketsPage_refresh => 'Refresh';
+
+  @override
+  String get activeTicketCard_validUntilLabel => 'Valid until:';
+
+  @override
+  String get activeTicketCard_ticketIdLabel => 'Ticket ID:';
+
+  @override
+  String get activeTicketCard_tapToEnlarge => 'Tap to enlarge';
+
+  @override
+  String get activeTicketCard_expired => 'Expired';
+
+  @override
+  String get activeTicketCard_active => 'Active';
+
+  @override
+  String get qrCodeModal_title => 'Ticket QR Code';
+
+  @override
+  String get qrCodeModal_instructions =>
+      'Show this code to the conductor when boarding';
+
+  @override
+  String get qrCodeModal_ticketIdPrefix => 'Ticket ID:';
+
+  @override
+  String get balanceCard_topUpTitle => 'Top Up Balance';
+
+  @override
+  String get balanceCard_selectAmountMessage =>
+      'Select amount to add to your balance:';
+
+  @override
+  String balanceCard_balanceAddedMessage(Object amount) {
+    return 'Added $amount € to your balance';
+  }
+
+  @override
+  String get purchaseButtons_confirmPurchaseTitle => 'Confirm Purchase';
+
+  @override
+  String purchaseButtons_confirmPurchaseMessage(
+    Object price,
+    Object ticketType,
+  ) {
+    return 'Purchase $ticketType for $price €?';
+  }
+
+  @override
+  String get purchaseButtons_purchaseSuccessMessage =>
+      'Ticket purchased successfully!';
+
+  @override
+  String purchaseButtons_validForDays(Object days) {
+    return 'Valid for $days day';
+  }
+
+  @override
+  String purchaseButtons_validForDaysPlural(Object days) {
+    return 'Valid for $days days';
+  }
+
+  @override
+  String purchaseButtons_validForHours(Object hours) {
+    return 'Valid for $hours hour';
+  }
+
+  @override
+  String purchaseButtons_validForHoursPlural(Object hours) {
+    return 'Valid for $hours hours';
+  }
+
+  @override
+  String purchaseButtons_validForMinutes(Object minutes) {
+    return 'Valid for $minutes minutes';
+  }
+
+  @override
+  String get ticketHistory_title => 'Ticket History';
+
+  @override
+  String get ticketHistory_noTicketHistory => 'No ticket history';
+
+  @override
+  String get ticketHistory_errorLoadingHistory => 'Error loading history';
+
+  @override
+  String get ticketHistory_loading => 'Loading...';
+
+  @override
+  String get ticketHistoryPage_title => 'Ticket History';
+
+  @override
+  String get ticketHistoryPage_filterLabel => 'Filter:';
+
+  @override
+  String get ticketHistoryPage_sortNewest => 'Newest First';
+
+  @override
+  String get ticketHistoryPage_sortOldest => 'Oldest First';
+
+  @override
+  String get ticketHistoryPage_sortPriceHigh => 'Price: High to Low';
+
+  @override
+  String get ticketHistoryPage_sortPriceLow => 'Price: Low to High';
+
+  @override
+  String ticketHistoryPage_ticketsCount(Object count) {
+    return '$count ticket';
+  }
+
+  @override
+  String ticketHistoryPage_ticketsCountPlural(Object count) {
+    return '$count tickets';
+  }
+
+  @override
+  String ticketHistoryPage_totalSpent(Object amount) {
+    return 'Total spent: $amount €';
+  }
+
+  @override
+  String get ticketHistoryPage_noTicketsFound => 'No tickets found';
+
+  @override
+  String get ticketHistoryPage_adjustFilters => 'Try adjusting your filters';
+
+  @override
+  String get ticketHistoryPage_clearFilters => 'Clear Filters';
+
+  @override
+  String get ticketHistoryPage_purchased => 'Purchased: ';
+
+  @override
+  String get ticketHistoryPage_validUntil => 'Valid Until: ';
+
+  @override
+  String get ticketHistoryPage_duration => 'Duration';
+
+  @override
+  String get ticketHistoryPage_status => 'Status';
+
+  @override
+  String get ticketHistoryPage_used => 'Used';
+
+  @override
+  String timeFormat_days(Object days, Object hours) {
+    return '${days}d ${hours}h';
+  }
+
+  @override
+  String timeFormat_hours(Object hours, Object minutes) {
+    return '${hours}h ${minutes}m';
+  }
+
+  @override
+  String timeFormat_minutes(Object minutes) {
+    return '${minutes}m';
+  }
+
+  @override
+  String timeFormat_seconds(Object seconds) {
+    return '${seconds}s';
+  }
+
+  @override
+  String timeFormat_daysSingle(Object days) {
+    return '$days day';
+  }
+
+  @override
+  String timeFormat_daysPlural(Object days) {
+    return '$days days';
+  }
+
+  @override
+  String timeFormat_hoursSingle(Object hours) {
+    return '$hours hour';
+  }
+
+  @override
+  String timeFormat_hoursPlural(Object hours) {
+    return '$hours hours';
+  }
+
+  @override
+  String get error_insufficientBalance =>
+      'Insufficient balance. Please add funds to your account.';
+
+  @override
+  String error_purchaseTicketFailed(Object error) {
+    return 'Failed to purchase ticket: $error';
+  }
+
+  @override
+  String error_addBalanceFailed(Object error) {
+    return 'Failed to add balance: $error';
+  }
+
+  @override
+  String error_loadUserDataFailed(Object error) {
+    return 'Failed to load user data: $error';
+  }
+
+  @override
+  String get error_loadingTickets => 'Error loading tickets';
+
+  @override
+  String error_useTicketFailed(Object error) {
+    return 'Failed to use ticket: $error';
+  }
+
+  @override
+  String get button_close => 'Close';
+
+  @override
+  String get button_retry => 'Retry';
 
   @override
   String get cancelButton => 'Cancel';
@@ -340,4 +576,22 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get searchBar_error =>
       'An error occurred while searching. Please try again.';
+
+  @override
+  String get topUpBalance => 'Top Up Balance';
+
+  @override
+  String get singleRide => 'Single Ride';
+
+  @override
+  String get dailyPass => 'Daily Pass';
+
+  @override
+  String get weeklyPass => 'Weekly Pass';
+
+  @override
+  String get monthlyPass => 'Monthly Pass';
+
+  @override
+  String get all => 'All';
 }

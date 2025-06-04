@@ -229,20 +229,257 @@ class AppLocalizationsHr extends AppLocalizations {
   String get ticketsPage_buyDigitalTicketButton => 'Kupi digitalnu kartu';
 
   @override
-  String get ticketsPage_topUpBalanceButton => 'Nadoplati stanje';
-
-  @override
-  String get ticketsPage_purchasedTicketsTitle => 'Kupljene karte';
-
-  @override
   String get ticketsPage_purchasedTicketsSubtitle =>
-      'Vaše kupljene karte pojavit će se ovdje.';
+      'Vaše kupljene karte će se pojaviti ovdje.';
 
   @override
-  String get ticketsPage_viewTicketHistoryButton => 'Pogledaj povijest karata';
+  String get ticketsPage_title => 'Karte';
 
   @override
-  String get cancelButton => 'Otkaži';
+  String get ticketsPage_activeTicketsTitle => 'Aktivne karte';
+
+  @override
+  String get ticketsPage_purchaseTicketsTitle => 'Kupi karte';
+
+  @override
+  String get ticketsPage_purchasedTicketsTitle => 'Nedavne kupnje';
+
+  @override
+  String get ticketsPage_noActiveTickets => 'Nema aktivnih karata';
+
+  @override
+  String get ticketsPage_purchasePrompt => 'Kupite kartu za početak';
+
+  @override
+  String ticketsPage_viewTicketHistoryLabel(Object count) {
+    return 'Prikaži svu povijest (još $count)';
+  }
+
+  @override
+  String get ticketsPage_refresh => 'Osvježi';
+
+  @override
+  String get activeTicketCard_validUntilLabel => 'Vrijedi do:';
+
+  @override
+  String get activeTicketCard_ticketIdLabel => 'ID karte:';
+
+  @override
+  String get activeTicketCard_tapToEnlarge => 'Dodirnite za povećanje';
+
+  @override
+  String get activeTicketCard_expired => 'Istekla';
+
+  @override
+  String get activeTicketCard_active => 'Aktivna';
+
+  @override
+  String get qrCodeModal_title => 'QR kod karte';
+
+  @override
+  String get qrCodeModal_instructions =>
+      'Pokažite ovaj kod kondukteru pri ukrcaju';
+
+  @override
+  String get qrCodeModal_ticketIdPrefix => 'ID karte:';
+
+  @override
+  String get balanceCard_topUpTitle => 'Top Up Balance';
+
+  @override
+  String get balanceCard_selectAmountMessage =>
+      'Odaberite iznos za dodavanje na stanje:';
+
+  @override
+  String balanceCard_balanceAddedMessage(Object amount) {
+    return 'Dodano $amount € na vaše stanje';
+  }
+
+  @override
+  String get purchaseButtons_confirmPurchaseTitle => 'Potvrdi kupnju';
+
+  @override
+  String purchaseButtons_confirmPurchaseMessage(
+    Object price,
+    Object ticketType,
+  ) {
+    return 'Kupiti $ticketType za $price €?';
+  }
+
+  @override
+  String get purchaseButtons_purchaseSuccessMessage =>
+      'Karta je uspješno kupljena!';
+
+  @override
+  String purchaseButtons_validForDays(Object days) {
+    return 'Vrijedi $days dan';
+  }
+
+  @override
+  String purchaseButtons_validForDaysPlural(Object days) {
+    return 'Vrijedi $days dana';
+  }
+
+  @override
+  String purchaseButtons_validForHours(Object hours) {
+    return 'Vrijedi $hours sat';
+  }
+
+  @override
+  String purchaseButtons_validForHoursPlural(Object hours) {
+    return 'Vrijedi $hours sati';
+  }
+
+  @override
+  String purchaseButtons_validForMinutes(Object minutes) {
+    return 'Vrijedi $minutes minuta';
+  }
+
+  @override
+  String get ticketHistory_title => 'Povijest karata';
+
+  @override
+  String get ticketHistory_noTicketHistory => 'Niste kupili nijednu kartu';
+
+  @override
+  String get ticketHistory_errorLoadingHistory =>
+      'Greška pri učitavanju povijesti';
+
+  @override
+  String get ticketHistory_loading => 'Učitavanje...';
+
+  @override
+  String get ticketHistoryPage_title => 'Povijest karata';
+
+  @override
+  String get ticketHistoryPage_filterLabel => 'Filter:';
+
+  @override
+  String get ticketHistoryPage_sortNewest => 'Najnovije prvo';
+
+  @override
+  String get ticketHistoryPage_sortOldest => 'Najstarije prvo';
+
+  @override
+  String get ticketHistoryPage_sortPriceHigh => 'Cijena: Visoka prema niskoj';
+
+  @override
+  String get ticketHistoryPage_sortPriceLow => 'Cijena: Niska prema visokoj';
+
+  @override
+  String ticketHistoryPage_ticketsCount(Object count) {
+    return '$count karta';
+  }
+
+  @override
+  String ticketHistoryPage_ticketsCountPlural(Object count) {
+    return '$count karata';
+  }
+
+  @override
+  String ticketHistoryPage_totalSpent(Object amount) {
+    return 'Ukupno potrošeno: $amount €';
+  }
+
+  @override
+  String get ticketHistoryPage_noTicketsFound => 'Nema pronađenih karata';
+
+  @override
+  String get ticketHistoryPage_adjustFilters => 'Pokušajte prilagoditi filtere';
+
+  @override
+  String get ticketHistoryPage_clearFilters => 'Očisti filtere';
+
+  @override
+  String get ticketHistoryPage_purchased => 'Kupljeno: ';
+
+  @override
+  String get ticketHistoryPage_validUntil => 'Vrijedi do: ';
+
+  @override
+  String get ticketHistoryPage_duration => 'Trajanje';
+
+  @override
+  String get ticketHistoryPage_status => 'Status';
+
+  @override
+  String get ticketHistoryPage_used => 'Iskorištena';
+
+  @override
+  String timeFormat_days(Object days, Object hours) {
+    return '${days}d ${hours}h';
+  }
+
+  @override
+  String timeFormat_hours(Object hours, Object minutes) {
+    return '${hours}h ${minutes}m';
+  }
+
+  @override
+  String timeFormat_minutes(Object minutes) {
+    return '${minutes}m';
+  }
+
+  @override
+  String timeFormat_seconds(Object seconds) {
+    return '${seconds}s';
+  }
+
+  @override
+  String timeFormat_daysSingle(Object days) {
+    return '$days dan';
+  }
+
+  @override
+  String timeFormat_daysPlural(Object days) {
+    return '$days dana';
+  }
+
+  @override
+  String timeFormat_hoursSingle(Object hours) {
+    return '$hours sat';
+  }
+
+  @override
+  String timeFormat_hoursPlural(Object hours) {
+    return '$hours sati';
+  }
+
+  @override
+  String get error_insufficientBalance =>
+      'Nedovoljno sredstava. Molimo dodajte sredstva na vaš račun.';
+
+  @override
+  String error_purchaseTicketFailed(Object error) {
+    return 'Neuspješna kupnja karte: $error';
+  }
+
+  @override
+  String error_addBalanceFailed(Object error) {
+    return 'Neuspješno dodavanje sredstava: $error';
+  }
+
+  @override
+  String error_loadUserDataFailed(Object error) {
+    return 'Neuspješno učitavanje korisničkih podataka: $error';
+  }
+
+  @override
+  String get error_loadingTickets => 'Greška pri učitavanju karata';
+
+  @override
+  String error_useTicketFailed(Object error) {
+    return 'Neuspješno korištenje karte: $error';
+  }
+
+  @override
+  String get button_close => 'Zatvori';
+
+  @override
+  String get button_retry => 'Pokušaj ponovno';
+
+  @override
+  String get cancelButton => 'Odustani';
 
   @override
   String get confirmButton => 'Potvrdi';
@@ -343,4 +580,22 @@ class AppLocalizationsHr extends AppLocalizations {
   @override
   String get searchBar_error =>
       'Došlo je do pogreške prilikom pretraživanja. Molimo pokušajte ponovno.';
+
+  @override
+  String get topUpBalance => 'Nadoplati stanje';
+
+  @override
+  String get singleRide => 'Jednokratna vožnja';
+
+  @override
+  String get dailyPass => 'Dnevna karta';
+
+  @override
+  String get weeklyPass => 'Tjedna karta';
+
+  @override
+  String get monthlyPass => 'Mjesečna karta';
+
+  @override
+  String get all => 'Sve';
 }
