@@ -1,5 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:linos/core/utils/app_error_handler.dart';
 import 'package:linos/core/utils/context_extensions.dart';
 import 'package:linos/features/home/data/services/navigation_service.dart';
 import 'package:linos/features/home/presentation/cubit/home_map_state.dart';
@@ -54,6 +56,21 @@ class _HomePageState extends State<HomePage> {
     return SafeArea(
       child: MultiBlocListener(
         listeners: [
+          BlocListener<HomeMapCubit, HomeMapState>(
+            listener: (context, state) {
+              if (state is HomeMapLocationError) {
+                final errorMessage = AppErrorHandler.getLocalizedMessage(context, state.errorKey);
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(errorMessage),
+                    backgroundColor: Colors.orange,
+                    action: _getSnackBarAction(context, state.errorKey),
+                  ),
+                );
+              }
+            },
+          ),
           BlocListener<SearchDestinationCubit, SearchDestinationState>(
             listener: (context, state) {
               if (state is SearchDestinationSelected) {
@@ -105,6 +122,22 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  SnackBarAction? _getSnackBarAction(BuildContext context, String errorKey) {
+    if (errorKey == 'location_services_disabled' || errorKey == 'location_permissions_denied_forever') {
+      return SnackBarAction(
+        label: context.l10n.button_settings,
+        textColor: Colors.white,
+        onPressed: () => Geolocator.openAppSettings(),
+      );
+    } else {
+      return SnackBarAction(
+        label: context.l10n.button_retry,
+        textColor: Colors.white,
+        onPressed: () => context.read<HomeMapCubit>().fetchUserLocation(),
+      );
+    }
+  }
+
   BlocBuilder<SearchDestinationCubit, SearchDestinationState> _buildStartNavigationButton() {
     return BlocBuilder<SearchDestinationCubit, SearchDestinationState>(
       builder: (context, searchState) {
@@ -112,17 +145,39 @@ class _HomePageState extends State<HomePage> {
           builder: (context, mapState) {
             final isDestinationSelected = searchState is SearchDestinationSelected;
             final isLocationLoaded = mapState is HomeMapLocationLoaded;
+            final hasLocationError = mapState is HomeMapLocationError;
             final isNavigationReady = isDestinationSelected && isLocationLoaded;
+
+            String buttonText;
+            VoidCallback? onPressed;
+
+            if (hasLocationError) {
+              buttonText = context.l10n.homePage_fixLocationFirst;
+              onPressed = () => context.read<HomeMapCubit>().fetchUserLocation();
+            } else if (!isDestinationSelected) {
+              buttonText = context.l10n.homePage_selectDestinationFirst;
+              onPressed = null;
+            } else if (!isLocationLoaded) {
+              buttonText = context.l10n.homePage_loadingLocation;
+              onPressed = null;
+            } else {
+              buttonText = context.l10n.homePage_startNavigationButton;
+              onPressed = () => _startNavigation(context);
+            }
 
             return SizedBox(
               width: double.infinity,
               height: 50,
               child: ElevatedButton.icon(
-                onPressed: isNavigationReady ? () => _startNavigation(context) : null,
-                icon: Icon(Icons.navigation),
-                label: Text(context.l10n.homePage_startNavigationButton),
+                onPressed: onPressed,
+                icon: Icon(hasLocationError ? Icons.location_off : Icons.navigation),
+                label: Text(buttonText),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: isNavigationReady ? null : Colors.grey,
+                  backgroundColor: isNavigationReady
+                      ? null
+                      : hasLocationError
+                      ? Colors.orange
+                      : Colors.grey,
                   foregroundColor: isNavigationReady ? null : Colors.white70,
                 ),
               ),

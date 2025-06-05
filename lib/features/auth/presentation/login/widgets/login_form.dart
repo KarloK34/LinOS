@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:linos/core/navigation/app_router_config.dart';
 import 'package:linos/core/utils/context_extensions.dart';
 import 'package:linos/core/utils/request_state.dart';
+import 'package:linos/core/utils/request_state_extensions.dart';
 import 'package:linos/core/widgets/custom_email_field.dart';
 import 'package:linos/core/widgets/custom_password_field.dart';
 import 'package:linos/features/auth/presentation/login/cubit/login_form_cubit.dart';
@@ -51,9 +52,7 @@ class _LoginFormState extends State<LoginForm> {
           }
         }
         if (state.submissionStatus is RequestError<bool>) {
-          final errorMessage = (state.submissionStatus as RequestError<bool>).message;
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(errorMessage)));
-          return;
+          state.submissionStatus.showErrorSnackBar(context);
         }
       },
       builder: (context, state) {

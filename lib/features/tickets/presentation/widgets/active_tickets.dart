@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:linos/core/utils/app_error_handler.dart';
 import 'package:linos/core/utils/context_extensions.dart';
 import 'package:linos/core/widgets/dots_indicator.dart';
 import 'package:linos/features/tickets/presentation/cubit/tickets_cubit.dart';
@@ -71,7 +72,8 @@ class _ActiveTicketsState extends State<ActiveTickets> {
         }
 
         if (state is TicketsError) {
-          return _ErrorCard(message: state.message);
+          final errorMessage = AppErrorHandler.getLocalizedMessage(context, state.originalError ?? state.errorKey);
+          return _ErrorCard(message: errorMessage);
         }
 
         return SizedBox(height: 120, child: Center(child: CircularProgressIndicator()));
@@ -100,21 +102,6 @@ class _ErrorCard extends StatelessWidget {
                 style: context.theme.textTheme.titleMedium?.copyWith(color: Colors.red),
               ),
               Text(message, style: TextStyle(color: Colors.red, fontSize: 12)),
-              SizedBox(height: 8),
-              BlocBuilder<TicketsCubit, TicketsState>(
-                builder: (context, state) {
-                  if (state is TicketsLoading) {
-                    return CircularProgressIndicator();
-                  }
-                  return ElevatedButton(
-                    onPressed: () => context.read<TicketsCubit>().loadUserData(),
-                    child: Text(
-                      context.l10n.button_retry,
-                      style: context.theme.textTheme.labelLarge?.copyWith(color: Colors.white),
-                    ),
-                  );
-                },
-              ),
             ],
           ),
         ),

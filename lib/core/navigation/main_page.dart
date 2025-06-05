@@ -13,7 +13,7 @@ import 'package:linos/features/home/presentation/screens/home_page.dart';
 import 'package:linos/features/lines/presentation/screens/lines_page.dart';
 import 'package:linos/features/schedule/presentation/screens/schedule_page.dart';
 import 'package:linos/features/settings/presentation/screens/settings_page.dart';
-import 'package:linos/features/tickets/data/repositories/tickets_repository.dart';
+import 'package:linos/features/tickets/data/repositories/firebase_tickets_repository.dart';
 import 'package:linos/features/tickets/presentation/cubit/tickets_cubit.dart';
 import 'package:linos/features/tickets/presentation/screens/tickets_page.dart';
 
@@ -63,7 +63,7 @@ class _MainPageState extends State<MainPage> with WidgetsBindingObserver, Automa
         BlocProvider(
           create: (context) => PopularDestinationsCubit(getIt<SearchHistoryRepository>())..loadPopularDestinations(),
         ),
-        BlocProvider(create: (context) => TicketsCubit(getIt<TicketsRepository>())..loadUserData()),
+        BlocProvider(create: (context) => TicketsCubit(getIt<FirebaseTicketsRepository>())),
       ],
       child: Builder(
         builder: (context) => MultiBlocProvider(

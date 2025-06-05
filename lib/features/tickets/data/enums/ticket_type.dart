@@ -11,4 +11,15 @@ enum TicketType {
   final TicketTypeName typeName;
   final double price;
   final Duration validity;
+
+  Map<String, dynamic> toJson() {
+    return {'typeName': typeName.name, 'price': price, 'validity': validity.inSeconds};
+  }
+
+  factory TicketType.fromJson(Map<String, dynamic> json) {
+    return TicketType.values.firstWhere(
+      (type) => type.typeName.name == json['typeName'],
+      orElse: () => throw ArgumentError('Invalid ticket type: ${json['typeName']}'),
+    );
+  }
 }

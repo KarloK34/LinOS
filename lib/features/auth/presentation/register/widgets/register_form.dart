@@ -4,10 +4,11 @@ import 'package:go_router/go_router.dart';
 import 'package:linos/core/navigation/app_router_config.dart';
 import 'package:linos/core/utils/context_extensions.dart';
 import 'package:linos/core/utils/request_state.dart';
+import 'package:linos/core/utils/request_state_extensions.dart';
 import 'package:linos/core/widgets/custom_email_field.dart';
 import 'package:linos/core/widgets/custom_password_field.dart';
 import 'package:linos/features/auth/presentation/register/cubit/register_form_state.dart';
-import 'package:linos/features/auth/presentation/register/cubit/register_from_cubit.dart';
+import 'package:linos/features/auth/presentation/register/cubit/register_form_cubit.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key});
@@ -45,9 +46,7 @@ class _RegisterFormState extends State<RegisterForm> {
           }
         }
         if (state.submissionStatus is RequestError<bool>) {
-          final errorMessage = (state.submissionStatus as RequestError<bool>).message;
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(errorMessage)));
-          return;
+          state.submissionStatus.showErrorSnackBar(context);
         }
       },
       builder: (context, state) {

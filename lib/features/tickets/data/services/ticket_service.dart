@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:linos/features/tickets/data/enums/ticket_status.dart';
 import 'package:linos/features/tickets/data/enums/ticket_type.dart';
@@ -63,6 +64,7 @@ class TicketService {
 
     final ticket = Ticket(
       id: id,
+      userId: FirebaseAuth.instance.currentUser?.uid ?? '',
       type: type,
       purchaseDate: now,
       validFrom: from,
@@ -70,6 +72,7 @@ class TicketService {
       status: TicketStatus.active,
       qrCode: '',
       pricePaid: type.price,
+      usedAt: null,
     );
 
     return ticket.copyWith(qrCode: generateQRCode(ticket));

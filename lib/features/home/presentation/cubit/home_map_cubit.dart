@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:linos/core/utils/app_error_handler.dart';
+import 'package:linos/core/utils/app_error_logger.dart';
 import 'package:linos/features/home/presentation/cubit/home_map_state.dart';
 import 'package:linos/features/home/data/models/transit_route.dart';
 
@@ -32,7 +34,7 @@ class HomeMapCubit extends Cubit<HomeMapState> {
       serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {
         if (isClosed) return;
-        emit(const HomeMapLocationError('Location services are disabled. Please enable them.'));
+        emit(const HomeMapLocationError('location_services_disabled'));
         return;
       }
 
@@ -43,14 +45,14 @@ class HomeMapCubit extends Cubit<HomeMapState> {
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied) {
           if (isClosed) return;
-          emit(const HomeMapLocationError('Location permissions are denied.'));
+          emit(const HomeMapLocationError('location_permissions_denied'));
           return;
         }
       }
 
       if (permission == LocationPermission.deniedForever) {
         if (isClosed) return;
-        emit(const HomeMapLocationError('Location permissions are permanently denied, we cannot request permissions.'));
+        emit(const HomeMapLocationError('location_permissions_denied_forever'));
         return;
       }
 
@@ -62,9 +64,11 @@ class HomeMapCubit extends Cubit<HomeMapState> {
 
       if (isClosed) return;
       emit(HomeMapLocationLoaded(userLocation: userLocation, initialCameraPosition: userCameraPosition));
-    } catch (e) {
+    } catch (e, stackTrace) {
       if (isClosed) return;
-      emit(HomeMapLocationError('Failed to get location: ${e.toString()}'));
+      final errorKey = AppErrorHandler.getErrorKey(e);
+      emit(HomeMapLocationError(errorKey, originalError: e));
+      AppErrorLogger.handleError(e, stackTrace);
     }
   }
 

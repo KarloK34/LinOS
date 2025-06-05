@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:linos/core/utils/context_extensions.dart';
-import 'package:linos/core/utils/error_message_helper.dart';
 import 'package:linos/core/utils/request_state.dart';
+import 'package:linos/core/utils/request_state_extensions.dart';
 import 'package:linos/features/tickets/data/enums/ticket_type.dart';
 import 'package:linos/features/tickets/presentation/cubit/tickets_cubit.dart';
 import 'package:linos/features/tickets/presentation/cubit/tickets_state.dart';
@@ -28,13 +28,7 @@ class PurchaseButtons extends StatelessWidget {
             return;
           }
           if (purchaseStatus is RequestError) {
-            final errorStatus = purchaseStatus as RequestError;
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(ErrorMessageHelper.getLocalizedErrorMessage(context, errorStatus.message)),
-                backgroundColor: Colors.red,
-              ),
-            );
+            state.purchaseStatus.showErrorSnackBar(context);
             context.read<TicketsCubit>().clearPurchaseStatus();
           }
         }
@@ -144,7 +138,7 @@ class PurchaseButtons extends StatelessWidget {
           : context.l10n.purchaseButtons_validForDays(validity.inDays);
     }
     if (validity.inHours > 0) {
-      validity.inHours > 1
+      return validity.inHours > 1
           ? context.l10n.purchaseButtons_validForHoursPlural(validity.inHours)
           : context.l10n.purchaseButtons_validForHours(validity.inHours);
     }

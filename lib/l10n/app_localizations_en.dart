@@ -284,9 +284,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get qrCodeModal_ticketIdPrefix => 'Ticket ID:';
 
   @override
-  String get balanceCard_topUpTitle => 'Top Up Balance';
-
-  @override
   String get balanceCard_selectAmountMessage =>
       'Select amount to add to your balance:';
 
@@ -594,4 +591,58 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get all => 'All';
+
+  @override
+  String get error_connectionTimeout =>
+      'Connection timeout. Please check your internet connection.';
+
+  @override
+  String get error_noInternet =>
+      'No internet connection. Please check your network settings.';
+
+  @override
+  String get error_sessionExpired => 'Session expired. Please log in again.';
+
+  @override
+  String get error_accessDenied =>
+      'Access denied. You don\'t have permission for this action.';
+
+  @override
+  String get error_resourceNotFound => 'Resource not found.';
+
+  @override
+  String get error_serverError => 'Server error. Please try again later.';
+
+  @override
+  String get error_requestFailed => 'Request failed. Please try again.';
+
+  @override
+  String get error_title => 'Error';
+
+  @override
+  String get location_services_disabled =>
+      'Location services are disabled. Please enable them.';
+
+  @override
+  String get location_permissions_denied => 'Location permissions are denied.';
+
+  @override
+  String get location_permissions_denied_forever =>
+      'Location permissions are permanently denied, we cannot request permissions.';
+
+  @override
+  String get location_failed_to_get =>
+      'Failed to get location. Please check your device settings.';
+
+  @override
+  String get homePage_fixLocationFirst => 'Fix Location Error';
+
+  @override
+  String get homePage_selectDestinationFirst => 'Select Destination First';
+
+  @override
+  String get homePage_loadingLocation => 'Loading Location...';
+
+  @override
+  String get button_settings => 'Settings';
 }

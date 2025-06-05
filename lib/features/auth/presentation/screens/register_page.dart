@@ -6,7 +6,7 @@ import 'package:linos/core/utils/app_images.dart';
 import 'package:linos/core/utils/context_extensions.dart';
 import 'package:linos/features/auth/cubit/auth_cubit.dart';
 import 'package:linos/features/auth/cubit/auth_state.dart';
-import 'package:linos/features/auth/presentation/register/cubit/register_from_cubit.dart';
+import 'package:linos/features/auth/presentation/register/cubit/register_form_cubit.dart';
 import 'package:linos/features/auth/presentation/register/widgets/register_form.dart';
 
 class RegisterPage extends StatelessWidget {

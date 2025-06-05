@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -6,6 +8,7 @@ import 'package:linos/core/app_theme/app_theme.dart';
 import 'package:linos/core/di/injection.dart';
 import 'package:linos/core/locale/cubit/locale_cubit.dart';
 import 'package:linos/core/navigation/app_router_config.dart';
+import 'package:linos/core/utils/app_error_logger.dart';
 import 'package:linos/features/auth/cubit/auth_cubit.dart';
 import 'package:linos/l10n/app_localizations.dart';
 import 'firebase_options.dart';
@@ -15,6 +18,13 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await dotenv.load(fileName: ".env");
   configureDependencies();
+  FlutterError.onError = (FlutterErrorDetails details) {
+    AppErrorLogger.handleError(details.exception, details.stack ?? StackTrace.empty);
+  };
+  PlatformDispatcher.instance.onError = (error, stack) {
+    AppErrorLogger.handleError(error, stack);
+    return true;
+  };
   runApp(
     MultiBlocProvider(
       providers: [

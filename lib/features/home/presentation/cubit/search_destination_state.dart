@@ -32,10 +32,11 @@ class SearchDestinationSelected extends SearchDestinationState {
 }
 
 class SearchDestinationError extends SearchDestinationState {
-  final String message;
+  final String errorKey;
+  final dynamic originalError;
 
-  const SearchDestinationError({required this.message});
+  const SearchDestinationError({required this.errorKey, this.originalError});
 
   @override
-  List<Object?> get props => [message];
+  List<Object?> get props => [errorKey, originalError];
 }

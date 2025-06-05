@@ -1,5 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:linos/core/utils/app_error_handler.dart';
+import 'package:linos/core/utils/app_error_logger.dart';
 import 'package:linos/features/home/data/models/place_suggestion.dart';
 import 'package:linos/features/home/data/models/selected_place.dart';
 import 'package:linos/features/home/data/services/google_places_api_service.dart';
@@ -20,8 +22,10 @@ class SearchDestinationCubit extends Cubit<SearchDestinationState> {
       final suggestions = await _placesApiService.getPlaceAutocomplete(query, sessionToken: sessionToken);
       emit(SearchDestinationSuggestionsLoaded(suggestions: suggestions));
       return suggestions;
-    } catch (e) {
-      emit(SearchDestinationError(message: e.toString()));
+    } catch (e, stackTrace) {
+      final errorKey = AppErrorHandler.getErrorKey(e);
+      emit(SearchDestinationError(errorKey: errorKey, originalError: e));
+      AppErrorLogger.handleError(e, stackTrace);
       return [];
     }
   }
@@ -39,8 +43,10 @@ class SearchDestinationCubit extends Cubit<SearchDestinationState> {
         ),
       );
       emit(SearchDestinationSelected(selectedPlace: selectedPlace));
-    } catch (e) {
-      emit(SearchDestinationError(message: e.toString()));
+    } catch (e, stackTrace) {
+      final errorKey = AppErrorHandler.getErrorKey(e);
+      emit(SearchDestinationError(errorKey: errorKey, originalError: e));
+      AppErrorLogger.handleError(e, stackTrace);
     }
   }
 
@@ -48,8 +54,10 @@ class SearchDestinationCubit extends Cubit<SearchDestinationState> {
     emit(SearchDestinationLoading());
     try {
       emit(SearchDestinationSelected(selectedPlace: selectedPlace));
-    } catch (e) {
-      emit(SearchDestinationError(message: e.toString()));
+    } catch (e, stackTrace) {
+      final errorKey = AppErrorHandler.getErrorKey(e);
+      emit(SearchDestinationError(errorKey: errorKey, originalError: e));
+      AppErrorLogger.handleError(e, stackTrace);
     }
   }
 

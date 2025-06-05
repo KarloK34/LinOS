@@ -19,12 +19,14 @@ class TicketsLoaded extends TicketsState {
   final List<Ticket> activeTickets;
   final UserBalance userBalance;
   final RequestState<bool> purchaseStatus;
+  final RequestState<bool> useTicketStatus;
 
   const TicketsLoaded({
     required this.allTickets,
     required this.activeTickets,
     required this.userBalance,
     this.purchaseStatus = const RequestInitial(),
+    this.useTicketStatus = const RequestInitial(),
   });
 
   TicketsLoaded copyWith({
@@ -32,24 +34,27 @@ class TicketsLoaded extends TicketsState {
     List<Ticket>? activeTickets,
     UserBalance? userBalance,
     RequestState<bool>? purchaseStatus,
+    RequestState<bool>? useTicketStatus,
   }) {
     return TicketsLoaded(
       allTickets: allTickets ?? this.allTickets,
       activeTickets: activeTickets ?? this.activeTickets,
       userBalance: userBalance ?? this.userBalance,
       purchaseStatus: purchaseStatus ?? this.purchaseStatus,
+      useTicketStatus: useTicketStatus ?? this.useTicketStatus,
     );
   }
 
   @override
-  List<Object?> get props => [allTickets, activeTickets, userBalance, purchaseStatus];
+  List<Object?> get props => [allTickets, activeTickets, userBalance, purchaseStatus, useTicketStatus];
 }
 
 class TicketsError extends TicketsState {
-  final String message;
+  final String errorKey;
+  final dynamic originalError;
 
-  const TicketsError(this.message);
+  const TicketsError(this.errorKey, {this.originalError});
 
   @override
-  List<Object> get props => [message];
+  List<Object?> get props => [errorKey, originalError];
 }

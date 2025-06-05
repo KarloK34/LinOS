@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:linos/core/utils/app_error_handler.dart';
+import 'package:linos/core/utils/app_error_logger.dart';
 import 'package:linos/core/utils/request_state.dart';
 import 'package:linos/core/utils/validation_utils.dart';
 import 'package:linos/features/auth/data/repositories/auth_repository.dart';
@@ -39,7 +41,7 @@ class RegisterFormCubit extends Cubit<RegisterFormState> {
           emailError: emailError,
           passwordError: passwordError,
           confirmPasswordError: confirmPasswordError,
-          submissionStatus: RequestError<bool>(l10n.validation_fixFormErrors),
+          submissionStatus: RequestError.withMessage(l10n.validation_fixFormErrors),
         ),
       );
       return;
@@ -50,8 +52,10 @@ class RegisterFormCubit extends Cubit<RegisterFormState> {
     try {
       await _authRepository.createUserWithEmailAndPassword(email: state.email, password: state.password);
       emit(state.copyWith(submissionStatus: const RequestSuccess<bool>(true)));
-    } catch (e) {
-      emit(state.copyWith(submissionStatus: RequestError<bool>(e.toString())));
+    } catch (e, stackTrace) {
+      final errorKey = AppErrorHandler.getErrorKey(e);
+      emit(state.copyWith(submissionStatus: RequestError<bool>(errorKey, originalError: e)));
+      AppErrorLogger.handleError(e, stackTrace);
     }
   }
 }

@@ -284,9 +284,6 @@ class AppLocalizationsHr extends AppLocalizations {
   String get qrCodeModal_ticketIdPrefix => 'ID karte:';
 
   @override
-  String get balanceCard_topUpTitle => 'Top Up Balance';
-
-  @override
   String get balanceCard_selectAmountMessage =>
       'Odaberite iznos za dodavanje na stanje:';
 
@@ -598,4 +595,63 @@ class AppLocalizationsHr extends AppLocalizations {
 
   @override
   String get all => 'Sve';
+
+  @override
+  String get error_connectionTimeout =>
+      'Veza je istekla. Molimo provjerite svoju internetsku vezu i pokušajte ponovno.';
+
+  @override
+  String get error_noInternet =>
+      'Nema internetske veze. Molimo provjerite svoju vezu i pokušajte ponovno.';
+
+  @override
+  String get error_sessionExpired =>
+      'Vaša sesija je istekla. Molimo se prijavite ponovno.';
+
+  @override
+  String get error_accessDenied =>
+      'Pristup odbijen. Molimo provjerite svoje ovlasti.';
+
+  @override
+  String get error_resourceNotFound =>
+      'Resurs nije pronađen. Molimo provjerite URL ili ID resursa.';
+
+  @override
+  String get error_serverError =>
+      'Došlo je do greške na poslužitelju. Molimo pokušajte ponovno kasnije.';
+
+  @override
+  String get error_requestFailed =>
+      'Neuspješan zahtjev. Molimo provjerite svoje podatke i pokušajte ponovno.';
+
+  @override
+  String get error_title => 'Greška';
+
+  @override
+  String get location_services_disabled =>
+      'Usluge lokacije su onemogućene. Molimo omogućite usluge lokacije u postavkama uređaja.';
+
+  @override
+  String get location_permissions_denied =>
+      'Dozvole za lokaciju su odbijene. Molimo omogućite dozvole za lokaciju u postavkama uređaja.';
+
+  @override
+  String get location_permissions_denied_forever =>
+      'Dozvole za lokaciju su trajno odbijene. Molimo omogućite dozvole za lokaciju u postavkama uređaja.';
+
+  @override
+  String get location_failed_to_get =>
+      'Neuspjelo dobivanje lokacije. Molimo provjerite postavke uređaja i pokušajte ponovno.';
+
+  @override
+  String get homePage_fixLocationFirst => 'Popravite Grešku Lokacije';
+
+  @override
+  String get homePage_selectDestinationFirst => 'Prvo Odaberite Odredište';
+
+  @override
+  String get homePage_loadingLocation => 'Učitavanje Lokacije...';
+
+  @override
+  String get button_settings => 'Postavke';
 }

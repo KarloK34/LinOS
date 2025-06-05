@@ -608,12 +608,6 @@ abstract class AppLocalizations {
   /// **'Ticket ID:'**
   String get qrCodeModal_ticketIdPrefix;
 
-  /// No description provided for @balanceCard_topUpTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Top Up Balance'**
-  String get balanceCard_topUpTitle;
-
   /// No description provided for @balanceCard_selectAmountMessage.
   ///
   /// In en, this message translates to:
@@ -1120,6 +1114,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'All'**
   String get all;
+
+  /// No description provided for @error_connectionTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection timeout. Please check your internet connection.'**
+  String get error_connectionTimeout;
+
+  /// No description provided for @error_noInternet.
+  ///
+  /// In en, this message translates to:
+  /// **'No internet connection. Please check your network settings.'**
+  String get error_noInternet;
+
+  /// No description provided for @error_sessionExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Session expired. Please log in again.'**
+  String get error_sessionExpired;
+
+  /// No description provided for @error_accessDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Access denied. You don\'t have permission for this action.'**
+  String get error_accessDenied;
+
+  /// No description provided for @error_resourceNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Resource not found.'**
+  String get error_resourceNotFound;
+
+  /// No description provided for @error_serverError.
+  ///
+  /// In en, this message translates to:
+  /// **'Server error. Please try again later.'**
+  String get error_serverError;
+
+  /// No description provided for @error_requestFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Request failed. Please try again.'**
+  String get error_requestFailed;
+
+  /// No description provided for @error_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get error_title;
+
+  /// No description provided for @location_services_disabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Location services are disabled. Please enable them.'**
+  String get location_services_disabled;
+
+  /// No description provided for @location_permissions_denied.
+  ///
+  /// In en, this message translates to:
+  /// **'Location permissions are denied.'**
+  String get location_permissions_denied;
+
+  /// No description provided for @location_permissions_denied_forever.
+  ///
+  /// In en, this message translates to:
+  /// **'Location permissions are permanently denied, we cannot request permissions.'**
+  String get location_permissions_denied_forever;
+
+  /// No description provided for @location_failed_to_get.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to get location. Please check your device settings.'**
+  String get location_failed_to_get;
+
+  /// No description provided for @homePage_fixLocationFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Fix Location Error'**
+  String get homePage_fixLocationFirst;
+
+  /// No description provided for @homePage_selectDestinationFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Destination First'**
+  String get homePage_selectDestinationFirst;
+
+  /// No description provided for @homePage_loadingLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading Location...'**
+  String get homePage_loadingLocation;
+
+  /// No description provided for @button_settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get button_settings;
 }
 
 class _AppLocalizationsDelegate

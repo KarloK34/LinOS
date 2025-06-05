@@ -24,9 +24,14 @@ class RequestSuccess<T> extends RequestState<T> {
 }
 
 class RequestError<T> extends RequestState<T> {
-  final String message;
-  const RequestError(this.message);
+  final String errorKey;
+  final dynamic originalError;
+  final String? message;
+
+  const RequestError(this.errorKey, {this.originalError}) : message = null;
+
+  const RequestError.withMessage(String this.message) : errorKey = 'error_generic', originalError = null;
 
   @override
-  List<Object?> get props => [message];
+  List<Object?> get props => [errorKey, originalError, message];
 }

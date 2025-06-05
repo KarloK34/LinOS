@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:linos/core/navigation/app_router_config.dart';
 import 'package:linos/core/utils/context_extensions.dart';
-import 'package:linos/core/utils/error_message_helper.dart';
+import 'package:linos/core/utils/app_error_handler.dart';
 import 'package:linos/features/tickets/presentation/cubit/tickets_cubit.dart';
 import 'package:linos/features/tickets/presentation/cubit/tickets_state.dart';
-import 'package:linos/features/tickets/presentation/widgets/history_ticket_card.dart';
+import 'package:linos/features/tickets/presentation/widgets/purchased_ticket_card.dart';
 
 class TicketHistorySection extends StatelessWidget {
   const TicketHistorySection({super.key});
@@ -16,18 +16,9 @@ class TicketHistorySection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              context.l10n.ticketsPage_purchasedTicketsTitle,
-              style: context.theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
-            ),
-            TextButton(
-              onPressed: () => context.read<TicketsCubit>().refreshTickets(),
-              child: Text(context.l10n.ticketsPage_refresh),
-            ),
-          ],
+        Text(
+          context.l10n.ticketsPage_purchasedTicketsTitle,
+          style: context.theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 8),
         BlocBuilder<TicketsCubit, TicketsState>(
@@ -61,7 +52,7 @@ class TicketHistorySection extends StatelessWidget {
             }
 
             if (state is TicketsError) {
-              return _buildErrorState(context, state.message);
+              return _buildErrorState(context, state.errorKey);
             }
 
             return _buildLoadingState();
@@ -107,13 +98,8 @@ class TicketHistorySection extends StatelessWidget {
               style: context.theme.textTheme.titleMedium?.copyWith(color: Colors.red),
             ),
             Text(
-              ErrorMessageHelper.getLocalizedErrorMessage(context, message),
+              AppErrorHandler.getLocalizedMessage(context, message),
               style: context.theme.textTheme.bodyMedium?.copyWith(color: Colors.red, fontSize: 12),
-            ),
-            SizedBox(height: 8),
-            ElevatedButton(
-              onPressed: () => context.read<TicketsCubit>().loadUserData(),
-              child: Text(context.l10n.button_retry),
             ),
           ],
         ),

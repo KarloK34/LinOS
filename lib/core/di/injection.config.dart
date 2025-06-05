@@ -22,8 +22,8 @@ import 'package:linos/features/home/data/services/google_directions_api_service.
     as _i189;
 import 'package:linos/features/home/data/services/google_places_api_service.dart'
     as _i423;
-import 'package:linos/features/tickets/data/repositories/tickets_repository.dart'
-    as _i426;
+import 'package:linos/features/tickets/data/repositories/firebase_tickets_repository.dart'
+    as _i854;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -42,7 +42,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i423.GooglePlacesApiService>(
       () => _i423.GooglePlacesApiService(),
     );
-    gh.lazySingleton<_i426.TicketsRepository>(() => _i426.TicketsRepository());
+    gh.lazySingleton<_i854.FirebaseTicketsRepository>(
+      () => _i854.FirebaseTicketsRepository(),
+    );
     gh.factoryParam<_i376.AuthRepository, _i59.FirebaseAuth?, dynamic>(
       (firebaseAuth, _) => _i376.AuthRepository(firebaseAuth),
     );

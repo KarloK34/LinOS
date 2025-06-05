@@ -13,6 +13,10 @@ class UserBalance extends Equatable {
     );
   }
 
+  factory UserBalance.empty() {
+    return UserBalance(currentBalance: 0.0, lastUpdated: DateTime.now());
+  }
+
   @override
   List<Object?> get props => [currentBalance, lastUpdated];
 }
