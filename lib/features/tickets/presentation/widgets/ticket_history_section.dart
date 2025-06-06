@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:linos/core/navigation/app_router_config.dart';
 import 'package:linos/core/utils/context_extensions.dart';
 import 'package:linos/core/utils/app_error_handler.dart';
+import 'package:linos/core/widgets/error_state.dart';
 import 'package:linos/features/tickets/presentation/cubit/tickets_cubit.dart';
 import 'package:linos/features/tickets/presentation/cubit/tickets_state.dart';
 import 'package:linos/features/tickets/presentation/widgets/purchased_ticket_card.dart';
@@ -21,48 +22,65 @@ class TicketHistorySection extends StatelessWidget {
           style: context.theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 8),
-        BlocBuilder<TicketsCubit, TicketsState>(
-          builder: (context, state) {
-            if (state is TicketsLoaded) {
-              final sortedPurchasedTickets = state.allTickets..sort((a, b) => b.purchaseDate.compareTo(a.purchaseDate));
-
-              if (sortedPurchasedTickets.isEmpty) {
-                return _buildEmptyState(context);
-              }
-
-              final recentTickets = sortedPurchasedTickets.take(5).toList();
-              final hasMoreTickets = sortedPurchasedTickets.length > 5;
-              return Column(
-                children: [
-                  ...recentTickets.map((ticket) => PurchasedTicketCard(ticket: ticket)),
-                  if (hasMoreTickets) ...[
-                    SizedBox(height: 8),
-                    SizedBox(
-                      width: double.infinity,
-                      child: OutlinedButton.icon(
-                        onPressed: () => context.go(AppRouterConfig.ticketsHistory, extra: sortedPurchasedTickets),
-                        icon: Icon(Icons.history),
-                        label: Text(context.l10n.ticketsPage_viewTicketHistoryLabel(sortedPurchasedTickets.length - 5)),
-                        style: OutlinedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 12)),
-                      ),
-                    ),
-                  ],
-                ],
-              );
-            }
-
-            if (state is TicketsError) {
-              return _buildErrorState(context, state.errorKey);
-            }
-
-            return _buildLoadingState();
-          },
-        ),
+        _PurchasedTicketsList(),
       ],
     );
   }
+}
 
-  Widget _buildEmptyState(BuildContext context) {
+class _PurchasedTicketsList extends StatelessWidget {
+  const _PurchasedTicketsList();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<TicketsCubit, TicketsState>(
+      builder: (context, state) {
+        if (state is TicketsError) {
+          return ErrorState(
+            title: context.l10n.ticketHistory_errorLoadingHistory,
+            message: AppErrorHandler.getLocalizedMessage(context, state.errorKey),
+          );
+        }
+
+        if (state is TicketsLoaded) {
+          final sortedPurchasedTickets = state.allTickets..sort((a, b) => b.purchaseDate.compareTo(a.purchaseDate));
+
+          if (sortedPurchasedTickets.isEmpty) {
+            return _EmptyState();
+          }
+
+          final recentTickets = sortedPurchasedTickets.take(5).toList();
+          final hasMoreTickets = sortedPurchasedTickets.length > 5;
+          return Column(
+            children: [
+              ...recentTickets.map((ticket) => PurchasedTicketCard(ticket: ticket)),
+              if (hasMoreTickets) ...[
+                SizedBox(height: 8),
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton.icon(
+                    onPressed: () => context.go(AppRouterConfig.ticketsHistory, extra: sortedPurchasedTickets),
+                    icon: Icon(Icons.history),
+                    label: Text(context.l10n.ticketsPage_viewTicketHistoryLabel(sortedPurchasedTickets.length - 5)),
+                    style: OutlinedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 12)),
+                  ),
+                ),
+              ],
+            ],
+          );
+        }
+
+        return Center(child: CircularProgressIndicator());
+      },
+    );
+  }
+}
+
+class _EmptyState extends StatelessWidget {
+  const _EmptyState();
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(32),
       child: Center(
@@ -82,35 +100,6 @@ class TicketHistorySection extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildErrorState(BuildContext context, String message) {
-    return Container(
-      padding: EdgeInsets.all(32),
-      child: Center(
-        child: Column(
-          children: [
-            Icon(Icons.error_outline, size: 48, color: Colors.red),
-            SizedBox(height: 8),
-            Text(
-              context.l10n.ticketHistory_errorLoadingHistory,
-              style: context.theme.textTheme.titleMedium?.copyWith(color: Colors.red),
-            ),
-            Text(
-              AppErrorHandler.getLocalizedMessage(context, message),
-              style: context.theme.textTheme.bodyMedium?.copyWith(color: Colors.red, fontSize: 12),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildLoadingState() {
-    return Container(
-      padding: EdgeInsets.all(32),
-      child: Center(child: CircularProgressIndicator()),
     );
   }
 }

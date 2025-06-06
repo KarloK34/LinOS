@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:linos/core/utils/app_error_handler.dart';
 import 'package:linos/core/utils/context_extensions.dart';
 import 'package:linos/core/widgets/dots_indicator.dart';
+import 'package:linos/core/widgets/error_state.dart';
 import 'package:linos/features/tickets/presentation/cubit/tickets_cubit.dart';
 import 'package:linos/features/tickets/presentation/cubit/tickets_state.dart';
 import 'package:linos/features/tickets/presentation/widgets/active_ticket_card.dart';
@@ -28,6 +29,11 @@ class _ActiveTicketsState extends State<ActiveTickets> {
   Widget build(BuildContext context) {
     return BlocBuilder<TicketsCubit, TicketsState>(
       builder: (context, state) {
+        if (state is TicketsError) {
+          final errorMessage = AppErrorHandler.getLocalizedMessage(context, state.originalError ?? state.errorKey);
+          return _ErrorCard(message: errorMessage);
+        }
+
         if (state is TicketsLoaded) {
           final activeTickets = state.activeTickets;
 
@@ -71,11 +77,6 @@ class _ActiveTicketsState extends State<ActiveTickets> {
           );
         }
 
-        if (state is TicketsError) {
-          final errorMessage = AppErrorHandler.getLocalizedMessage(context, state.originalError ?? state.errorKey);
-          return _ErrorCard(message: errorMessage);
-        }
-
         return SizedBox(height: 120, child: Center(child: CircularProgressIndicator()));
       },
     );
@@ -91,20 +92,7 @@ class _ErrorCard extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: Card(
-        child: Padding(
-          padding: EdgeInsets.all(16),
-          child: Column(
-            children: [
-              Icon(Icons.error_outline, size: 48, color: Colors.red),
-              SizedBox(height: 8),
-              Text(
-                context.l10n.error_loadingTickets,
-                style: context.theme.textTheme.titleMedium?.copyWith(color: Colors.red),
-              ),
-              Text(message, style: TextStyle(color: Colors.red, fontSize: 12)),
-            ],
-          ),
-        ),
+        child: ErrorState(title: context.l10n.error_loadingTickets, message: message),
       ),
     );
   }
