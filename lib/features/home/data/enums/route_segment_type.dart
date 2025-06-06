@@ -1,0 +1,1 @@
+enum RouteSegmentType { walking, transit }

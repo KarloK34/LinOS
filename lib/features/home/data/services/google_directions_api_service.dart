@@ -3,6 +3,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
+import 'package:linos/features/home/data/enums/route_segment_type.dart';
+import 'package:linos/features/home/data/models/route_segment.dart';
 import 'package:linos/features/home/data/models/transit_details.dart';
 import 'package:linos/features/home/data/models/transit_route.dart';
 import 'package:linos/features/home/data/models/transit_step.dart';

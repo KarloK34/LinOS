@@ -129,13 +129,12 @@ class _HomePageState extends State<HomePage> {
         textColor: Colors.white,
         onPressed: () => Geolocator.openAppSettings(),
       );
-    } else {
-      return SnackBarAction(
-        label: context.l10n.button_retry,
-        textColor: Colors.white,
-        onPressed: () => context.read<HomeMapCubit>().fetchUserLocation(),
-      );
     }
+    return SnackBarAction(
+      label: context.l10n.button_retry,
+      textColor: Colors.white,
+      onPressed: () => context.read<HomeMapCubit>().fetchUserLocation(),
+    );
   }
 
   BlocBuilder<SearchDestinationCubit, SearchDestinationState> _buildStartNavigationButton() {

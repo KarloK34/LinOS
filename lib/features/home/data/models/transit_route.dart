@@ -1,4 +1,5 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:linos/features/home/data/models/route_segment.dart';
 import 'package:linos/features/home/data/models/transit_step.dart';
 
 class TransitRoute {
@@ -20,14 +21,3 @@ class TransitRoute {
     required this.endLocation,
   });
 }
-
-class RouteSegment {
-  final List<LatLng> polylinePoints;
-  final RouteSegmentType type;
-  final String? lineName;
-  final String? vehicleType;
-
-  const RouteSegment({required this.polylinePoints, required this.type, this.lineName, this.vehicleType});
-}
-
-enum RouteSegmentType { walking, transit }

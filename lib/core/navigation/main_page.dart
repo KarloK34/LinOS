@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:linos/core/di/injection.dart';
+import 'package:linos/core/utils/app_error_handler.dart';
+import 'package:linos/core/utils/app_error_logger.dart';
 import 'package:linos/core/utils/context_extensions.dart';
 import 'package:linos/features/home/data/repositories/search_history_repository.dart';
 import 'package:linos/features/home/data/services/google_directions_api_service.dart';
@@ -10,6 +12,7 @@ import 'package:linos/features/home/presentation/cubit/popular_destinations_cubi
 import 'package:linos/features/home/presentation/cubit/search_destination_cubit.dart';
 import 'package:linos/features/home/presentation/cubit/transit_route_cubit.dart';
 import 'package:linos/features/home/presentation/screens/home_page.dart';
+import 'package:linos/features/lines/presentation/cubit/lines_map_cubit.dart';
 import 'package:linos/features/lines/presentation/screens/lines_page.dart';
 import 'package:linos/features/schedule/presentation/screens/schedule_page.dart';
 import 'package:linos/features/settings/presentation/screens/settings_page.dart';
@@ -34,6 +37,19 @@ class _MainPageState extends State<MainPage> with WidgetsBindingObserver, Automa
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    _preloadLinesData();
+  }
+
+  void _preloadLinesData() {
+    Future.microtask(() async {
+      try {
+        final linesMapCubit = getIt<LinesMapCubit>();
+        await linesMapCubit.preloadLines();
+      } catch (e, stackTrace) {
+        final errorKey = AppErrorHandler.getErrorKey(e);
+        AppErrorLogger.handleError(errorKey, stackTrace);
+      }
+    });
   }
 
   @override
@@ -64,6 +80,7 @@ class _MainPageState extends State<MainPage> with WidgetsBindingObserver, Automa
           create: (context) => PopularDestinationsCubit(getIt<SearchHistoryRepository>())..loadPopularDestinations(),
         ),
         BlocProvider(create: (context) => TicketsCubit(getIt<FirebaseTicketsRepository>())),
+        BlocProvider(create: (context) => getIt<LinesMapCubit>()),
       ],
       child: Builder(
         builder: (context) => MultiBlocProvider(

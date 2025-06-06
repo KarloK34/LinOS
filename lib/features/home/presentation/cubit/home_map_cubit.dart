@@ -4,6 +4,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:linos/core/utils/app_error_handler.dart';
 import 'package:linos/core/utils/app_error_logger.dart';
+import 'package:linos/features/home/data/enums/route_segment_type.dart';
 import 'package:linos/features/home/presentation/cubit/home_map_state.dart';
 import 'package:linos/features/home/data/models/transit_route.dart';
 
