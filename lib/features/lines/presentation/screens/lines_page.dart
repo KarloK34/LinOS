@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:linos/core/utils/app_error_handler.dart';
 import 'package:linos/core/utils/context_extensions.dart';
 import 'package:linos/features/lines/data/enums/line_type.dart';
 import 'package:linos/features/lines/presentation/cubit/lines_map_cubit.dart';
 import 'package:linos/features/lines/presentation/cubit/lines_map_state.dart';
+import 'package:linos/features/lines/presentation/widgets/lines_page_map.dart';
 
 class LinesPage extends StatefulWidget {
   const LinesPage({super.key});
@@ -26,153 +25,130 @@ class _LinesPageState extends State<LinesPage> {
     });
   }
 
+  void _onLineTypeSelected(LineType lineType) {
+    setState(() {
+      _selectedLineType = lineType;
+    });
+
+    final cubit = context.read<LinesMapCubit>();
+    switch (lineType) {
+      case LineType.tram:
+        cubit.showTramLines();
+      case LineType.bus:
+        cubit.showBusLines();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    const CameraPosition osijekCoordinates = CameraPosition(target: LatLng(45.55111, 18.69389), zoom: 12);
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _selectedLineType = LineType.tram;
-                      });
-                      context.read<LinesMapCubit>().showTramLines();
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(12.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                        border: Border.all(color: context.theme.colorScheme.primaryContainer, width: 1.0),
-                        color: _selectedLineType == LineType.tram
-                            ? context.theme.colorScheme.primaryContainer
-                            : context.theme.colorScheme.surface,
-                      ),
-                      child: Column(
-                        children: [
-                          Icon(Icons.train, size: 32, color: context.theme.colorScheme.onPrimaryContainer),
-                          Text(
-                            context.l10n.linesPage_tramLinesTitle,
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: context.theme.colorScheme.onPrimaryContainer,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(width: 8.0),
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _selectedLineType = LineType.bus;
-                      });
-                      context.read<LinesMapCubit>().showBusLines();
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(12.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                        border: Border.all(color: context.theme.colorScheme.primaryContainer, width: 1.0),
-                        color: _selectedLineType == LineType.bus
-                            ? context.theme.colorScheme.primaryContainer
-                            : context.theme.colorScheme.surface,
-                      ),
-                      child: Column(
-                        children: [
-                          Icon(Icons.directions_bus, size: 32, color: context.theme.colorScheme.onPrimaryContainer),
-                          Text(
-                            context.l10n.linesPage_busLinesTitle,
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: context.theme.colorScheme.onPrimaryContainer,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            _buildLineTypeSelector(),
             SizedBox(height: 16.0),
-            Expanded(
-              child: BlocBuilder<LinesMapCubit, LinesMapState>(
-                builder: (context, state) {
-                  if (state is LinesMapLoading) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-
-                  if (state is LinesMapError) {
-                    final errorMessage = AppErrorHandler.getLocalizedMessage(context, state.errorKey);
-                    return Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(Icons.error, size: 48, color: Colors.red),
-                          const SizedBox(height: 16),
-                          Text(errorMessage, textAlign: TextAlign.center),
-                          const SizedBox(height: 16),
-                          ElevatedButton(
-                            onPressed: () {
-                              if (_selectedLineType == LineType.tram) {
-                                context.read<LinesMapCubit>().showTramLines();
-                              } else {
-                                context.read<LinesMapCubit>().showBusLines();
-                              }
-                            },
-                            child: const Text('Retry'),
-                          ),
-                        ],
-                      ),
-                    );
-                  }
-
-                  return GoogleMap(
-                    initialCameraPosition: osijekCoordinates,
-                    mapType: MapType.normal,
-                    myLocationButtonEnabled: false,
-                    zoomControlsEnabled: false,
-                    mapToolbarEnabled: false,
-                    onMapCreated: (GoogleMapController controller) {
-                      context.read<LinesMapCubit>().onMapCreated(controller);
-                    },
-                    polylines: state is LinesMapLoaded ? state.polylines.toSet() : {},
-                    markers: state is LinesMapLoaded ? state.vehicleMarkers.toSet() : {},
-                  );
-                },
-              ),
-            ),
+            LinesPageMap(selectedLineType: _selectedLineType),
             SizedBox(height: 16.0),
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: BlocBuilder<LinesMapCubit, LinesMapState>(
-                builder: (context, state) {
-                  final showingVehicles = state is LinesMapLoaded ? state.showVehicles : false;
+            _buildVehicleToggleButton(),
+          ],
+        ),
+      ),
+    );
+  }
 
-                  return ElevatedButton.icon(
-                    onPressed: () {
-                      context.read<LinesMapCubit>().toggleVehiclePositions();
-                    },
-                    icon: Icon(showingVehicles ? Icons.visibility_off : Icons.directions_bus),
-                    label: Text(
-                      showingVehicles ? context.l10n.linesPage_hideVehicles : context.l10n.linesPage_showVehicles,
-                    ),
-                    style: ElevatedButton.styleFrom(backgroundColor: showingVehicles ? Colors.orange : Colors.green),
-                  );
-                },
+  Row _buildLineTypeSelector() {
+    return Row(
+      children: [
+        Expanded(
+          child: _LineTypeTab(
+            lineType: LineType.tram,
+            icon: Icons.train,
+            title: context.l10n.linesPage_tramLinesTitle,
+            isSelected: _selectedLineType == LineType.tram,
+            onTap: () => _onLineTypeSelected(LineType.tram),
+          ),
+        ),
+        const SizedBox(width: 8.0),
+        Expanded(
+          child: _LineTypeTab(
+            lineType: LineType.bus,
+            icon: Icons.directions_bus,
+            title: context.l10n.linesPage_busLinesTitle,
+            isSelected: _selectedLineType == LineType.bus,
+            onTap: () => _onLineTypeSelected(LineType.bus),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildVehicleToggleButton() {
+    return SizedBox(
+      width: double.infinity,
+      height: 50.0,
+      child: BlocBuilder<LinesMapCubit, LinesMapState>(
+        builder: (context, state) {
+          final showingVehicles = state is LinesMapLoaded ? state.showVehicles : false;
+
+          return ElevatedButton.icon(
+            onPressed: () => context.read<LinesMapCubit>().toggleVehiclePositions(),
+            icon: Icon(_getVehicleButtonIcon(showingVehicles)),
+            label: Text(_getVehicleButtonText(context, showingVehicles)),
+            style: ElevatedButton.styleFrom(backgroundColor: showingVehicles ? Colors.orange : Colors.green),
+          );
+        },
+      ),
+    );
+  }
+
+  IconData _getVehicleButtonIcon(bool showingVehicles) {
+    if (showingVehicles) return Icons.visibility_off;
+    return _selectedLineType == LineType.bus ? Icons.directions_bus : Icons.train;
+  }
+
+  String _getVehicleButtonText(BuildContext context, bool showingVehicles) {
+    return showingVehicles ? context.l10n.linesPage_hideVehicles : context.l10n.linesPage_showVehicles;
+  }
+}
+
+class _LineTypeTab extends StatelessWidget {
+  const _LineTypeTab({
+    required this.lineType,
+    required this.icon,
+    required this.title,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  final LineType lineType;
+  final IconData icon;
+  final String title;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = context.theme.colorScheme;
+
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(12.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8.0),
+          border: Border.all(color: colorScheme.primaryContainer, width: 1.0),
+          color: isSelected ? colorScheme.primaryContainer : colorScheme.surface,
+        ),
+        child: Column(
+          children: [
+            Icon(icon, size: 32, color: colorScheme.onPrimaryContainer),
+            Text(
+              title,
+              style: context.theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: colorScheme.onPrimaryContainer,
               ),
             ),
           ],
