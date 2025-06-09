@@ -184,5 +184,7 @@
     "homePage_fixLocationFirst": "Popravite Grešku Lokacije",
     "homePage_selectDestinationFirst": "Prvo Odaberite Odredište",
     "homePage_loadingLocation": "Učitavanje Lokacije...",
-    "button_settings": "Postavke"
+    "button_settings": "Postavke",
+    "linesPage_showVehicles": "Prikaži Vozila",
+    "linesPage_hideVehicles": " Sakrij Vozila"
 }

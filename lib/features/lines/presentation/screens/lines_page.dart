@@ -28,7 +28,7 @@ class _LinesPageState extends State<LinesPage> {
 
   @override
   Widget build(BuildContext context) {
-    const CameraPosition osijekCoordinates = CameraPosition(target: LatLng(45.55111, 18.69389), zoom: 11);
+    const CameraPosition osijekCoordinates = CameraPosition(target: LatLng(45.55111, 18.69389), zoom: 12);
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
@@ -142,13 +142,14 @@ class _LinesPageState extends State<LinesPage> {
                   return GoogleMap(
                     initialCameraPosition: osijekCoordinates,
                     mapType: MapType.normal,
-                    myLocationEnabled: false,
                     myLocationButtonEnabled: false,
-                    zoomControlsEnabled: true,
+                    zoomControlsEnabled: false,
+                    mapToolbarEnabled: false,
                     onMapCreated: (GoogleMapController controller) {
                       context.read<LinesMapCubit>().onMapCreated(controller);
                     },
                     polylines: state is LinesMapLoaded ? state.polylines.toSet() : {},
+                    markers: state is LinesMapLoaded ? state.vehicleMarkers.toSet() : {},
                   );
                 },
               ),
@@ -157,7 +158,22 @@ class _LinesPageState extends State<LinesPage> {
             SizedBox(
               width: double.infinity,
               height: 50,
-              child: FloatingActionButton(onPressed: () {}, child: Text(context.l10n.linesPage_realTimeButton)),
+              child: BlocBuilder<LinesMapCubit, LinesMapState>(
+                builder: (context, state) {
+                  final showingVehicles = state is LinesMapLoaded ? state.showVehicles : false;
+
+                  return ElevatedButton.icon(
+                    onPressed: () {
+                      context.read<LinesMapCubit>().toggleVehiclePositions();
+                    },
+                    icon: Icon(showingVehicles ? Icons.visibility_off : Icons.directions_bus),
+                    label: Text(
+                      showingVehicles ? context.l10n.linesPage_hideVehicles : context.l10n.linesPage_showVehicles,
+                    ),
+                    style: ElevatedButton.styleFrom(backgroundColor: showingVehicles ? Colors.orange : Colors.green),
+                  );
+                },
+              ),
             ),
           ],
         ),

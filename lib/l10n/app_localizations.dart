@@ -1210,6 +1210,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Settings'**
   String get button_settings;
+
+  /// No description provided for @linesPage_showVehicles.
+  ///
+  /// In en, this message translates to:
+  /// **'Show Live Vehicles'**
+  String get linesPage_showVehicles;
+
+  /// No description provided for @linesPage_hideVehicles.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide Vehicles'**
+  String get linesPage_hideVehicles;
 }
 
 class _AppLocalizationsDelegate

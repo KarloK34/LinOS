@@ -654,4 +654,10 @@ class AppLocalizationsHr extends AppLocalizations {
 
   @override
   String get button_settings => 'Postavke';
+
+  @override
+  String get linesPage_showVehicles => 'Prikaži Vozila';
+
+  @override
+  String get linesPage_hideVehicles => ' Sakrij Vozila';
 }

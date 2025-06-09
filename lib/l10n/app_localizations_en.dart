@@ -645,4 +645,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get button_settings => 'Settings';
+
+  @override
+  String get linesPage_showVehicles => 'Show Live Vehicles';
+
+  @override
+  String get linesPage_hideVehicles => 'Hide Vehicles';
 }
