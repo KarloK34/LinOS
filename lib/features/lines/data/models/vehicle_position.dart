@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:linos/features/lines/data/enums/line_type.dart';
+import 'package:linos/core/data/enums/vehicle_type.dart';
 import 'package:linos/features/lines/data/enums/vehicle_direction.dart';
 
 class VehiclePosition {
@@ -11,7 +11,7 @@ class VehiclePosition {
   int currentRouteIndex;
   VehicleDirection direction;
   double speed;
-  final LineType lineType;
+  final VehicleType lineType;
   DateTime lastUpdate;
 
   VehiclePosition({
@@ -28,27 +28,27 @@ class VehiclePosition {
 
   String get displayName {
     switch (lineType) {
-      case LineType.tram:
+      case VehicleType.tram:
         return 'Tramvaj $lineId';
-      case LineType.bus:
+      case VehicleType.bus:
         return 'Autobus $lineId';
     }
   }
 
   Future<BitmapDescriptor> get markerIcon async {
     switch (lineType) {
-      case LineType.tram:
+      case VehicleType.tram:
         return await BitmapDescriptor.asset(const ImageConfiguration(size: Size(24, 24)), 'assets/png/tram_icon.png');
-      case LineType.bus:
+      case VehicleType.bus:
         return await BitmapDescriptor.asset(const ImageConfiguration(size: Size(24, 24)), 'assets/png/bus_icon.png');
     }
   }
 
   BitmapDescriptor get fallbackMarkerIcon {
     switch (lineType) {
-      case LineType.tram:
+      case VehicleType.tram:
         return BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed);
-      case LineType.bus:
+      case VehicleType.bus:
         return BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue);
     }
   }

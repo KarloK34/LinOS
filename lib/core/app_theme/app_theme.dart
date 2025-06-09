@@ -33,7 +33,7 @@ abstract class AppTheme {
     secondaryContainer: Color(0xFFD6E4F0),
     onSecondaryContainer: Color(0xFF1B2E3A),
 
-    tertiary: Color(0xFF6B5B95),
+    tertiary: Color.fromARGB(255, 50, 116, 238),
     onTertiary: Colors.white,
     tertiaryContainer: Color(0xFFE1D7F0),
     onTertiaryContainer: Color(0xFF251431),
@@ -61,7 +61,7 @@ abstract class AppTheme {
     secondaryContainer: Color(0xFF3E5364),
     onSecondaryContainer: Color(0xFFD6E4F0),
 
-    tertiary: Color(0xFFC4B5E8),
+    tertiary: Color.fromARGB(255, 98, 143, 249),
     onTertiary: Color(0xFF2A1E42),
     tertiaryContainer: Color(0xFF413468),
     onTertiaryContainer: Color(0xFFE1D7F0),

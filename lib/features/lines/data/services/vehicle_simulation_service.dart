@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:math';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:injectable/injectable.dart';
+import 'package:linos/core/data/enums/vehicle_type.dart';
 import 'package:linos/features/lines/data/enums/vehicle_direction.dart';
 import 'package:linos/features/lines/data/models/vehicle_position.dart';
-import 'package:linos/features/lines/data/enums/line_type.dart';
 
 @singleton
 class VehicleSimulationService {
@@ -15,7 +15,7 @@ class VehicleSimulationService {
   Stream<Map<String, List<VehiclePosition>>> get vehiclePositionsStream => _vehicleController.stream;
   final StreamController<Map<String, List<VehiclePosition>>> _vehicleController = StreamController.broadcast();
 
-  void startSimulation(Map<String, List<LatLng>> routes, LineType lineType) {
+  void startSimulation(Map<String, List<LatLng>> routes, VehicleType lineType) {
     stopSimulation();
 
     routes.forEach((lineId, routePoints) {
@@ -27,7 +27,7 @@ class VehicleSimulationService {
     _broadcastPositions();
   }
 
-  void _createVehiclesForLine(String lineId, List<LatLng> routePoints, LineType lineType) {
+  void _createVehiclesForLine(String lineId, List<LatLng> routePoints, VehicleType lineType) {
     final vehicleCount = _getVehicleCountForLine(lineId, lineType);
     final vehicles = <VehiclePosition>[];
 
@@ -93,20 +93,20 @@ class VehicleSimulationService {
     }
   }
 
-  int _getVehicleCountForLine(String lineId, LineType lineType) {
+  int _getVehicleCountForLine(String lineId, VehicleType lineType) {
     switch (lineType) {
-      case LineType.tram:
+      case VehicleType.tram:
         return _random.nextInt(3) + 2;
-      case LineType.bus:
+      case VehicleType.bus:
         return _random.nextInt(4) + 3;
     }
   }
 
-  double _getRandomSpeed(LineType lineType) {
+  double _getRandomSpeed(VehicleType lineType) {
     switch (lineType) {
-      case LineType.tram:
+      case VehicleType.tram:
         return 15.0 + _random.nextDouble() * 10;
-      case LineType.bus:
+      case VehicleType.bus:
         return 20.0 + _random.nextDouble() * 15;
     }
   }

@@ -1,5 +1,5 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:linos/features/lines/data/enums/line_type.dart';
+import 'package:linos/core/data/enums/vehicle_type.dart';
 
 abstract class LinesMapState {}
 
@@ -9,7 +9,7 @@ class LinesMapLoading extends LinesMapState {}
 
 class LinesMapLoaded extends LinesMapState {
   final List<Polyline> polylines;
-  final LineType selectedType;
+  final VehicleType selectedType;
   final bool showVehicles;
   final List<Marker> vehicleMarkers;
 

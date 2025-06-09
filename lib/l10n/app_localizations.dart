@@ -314,11 +314,11 @@ abstract class AppLocalizations {
   /// **'Select Stop'**
   String get schedulePage_selectStopLabel;
 
-  /// No description provided for @schedulePage_tramLineColumn.
+  /// No description provided for @schedulePage_originColumn.
   ///
   /// In en, this message translates to:
-  /// **'Tram Line'**
-  String get schedulePage_tramLineColumn;
+  /// **'Origin'**
+  String get schedulePage_originColumn;
 
   /// No description provided for @schedulePage_destinationColumn.
   ///
@@ -1222,6 +1222,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Hide Vehicles'**
   String get linesPage_hideVehicles;
+
+  /// No description provided for @schedulePage_errorLoadingSchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading schedule. Please try again.'**
+  String get schedulePage_errorLoadingSchedule;
+
+  /// No description provided for @schedulePage_selectStopToViewSchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a stop to view the schedule.'**
+  String get schedulePage_selectStopToViewSchedule;
 }
 
 class _AppLocalizationsDelegate

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:linos/core/data/enums/vehicle_type.dart';
 import 'package:linos/core/utils/app_error_handler.dart';
-import 'package:linos/features/lines/data/enums/line_type.dart';
 import 'package:linos/features/lines/presentation/cubit/lines_map_cubit.dart';
 import 'package:linos/features/lines/presentation/cubit/lines_map_state.dart';
 
 class LinesPageMap extends StatelessWidget {
-  LinesPageMap({super.key, required LineType selectedLineType}) : _selectedLineType = selectedLineType;
+  LinesPageMap({super.key, required VehicleType selectedLineType}) : _selectedLineType = selectedLineType;
 
-  final LineType _selectedLineType;
+  final VehicleType _selectedLineType;
   final CameraPosition osijekCoordinates = CameraPosition(target: LatLng(45.55111, 18.69389), zoom: 12);
 
   @override
@@ -33,7 +33,7 @@ class LinesPageMap extends StatelessWidget {
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () {
-                      if (_selectedLineType == LineType.tram) {
+                      if (_selectedLineType == VehicleType.tram) {
                         context.read<LinesMapCubit>().showTramLines();
                       } else {
                         context.read<LinesMapCubit>().showBusLines();

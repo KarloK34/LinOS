@@ -36,7 +36,7 @@
     "schedulePage_favoriteStopsTitle": "Favorite Stops",
     "schedulePage_addFavoriteButton": "Add Favorite",
     "schedulePage_selectStopLabel": "Select Stop",
-    "schedulePage_tramLineColumn": "Tram Line",
+    "schedulePage_originColumn": "Origin",
     "schedulePage_destinationColumn": "Destination",
     "schedulePage_departureTimeColumn": "Departure Time",
     "settingsPage_myProfileTitle": "My Profile",
@@ -186,5 +186,7 @@
     "homePage_loadingLocation": "Loading Location...",
     "button_settings": "Settings",
     "linesPage_showVehicles": "Show Live Vehicles",
-    "linesPage_hideVehicles": "Hide Vehicles"
+    "linesPage_hideVehicles": "Hide Vehicles",
+    "schedulePage_errorLoadingSchedule": "Error loading schedule. Please try again.",
+    "schedulePage_selectStopToViewSchedule": "Select a stop to view the schedule."
 }

@@ -14,6 +14,8 @@ import 'package:linos/features/home/presentation/cubit/transit_route_cubit.dart'
 import 'package:linos/features/home/presentation/screens/home_page.dart';
 import 'package:linos/features/lines/presentation/cubit/lines_map_cubit.dart';
 import 'package:linos/features/lines/presentation/screens/lines_page.dart';
+import 'package:linos/features/schedule/data/repositories/firebase_favorite_stops_repository.dart';
+import 'package:linos/features/schedule/presentation/cubit/schedule_cubit.dart';
 import 'package:linos/features/schedule/presentation/screens/schedule_page.dart';
 import 'package:linos/features/settings/presentation/screens/settings_page.dart';
 import 'package:linos/features/tickets/data/repositories/firebase_tickets_repository.dart';
@@ -81,6 +83,7 @@ class _MainPageState extends State<MainPage> with WidgetsBindingObserver, Automa
         ),
         BlocProvider(create: (context) => TicketsCubit(getIt<FirebaseTicketsRepository>())),
         BlocProvider(create: (context) => getIt<LinesMapCubit>()),
+        BlocProvider(create: (context) => ScheduleCubit(getIt<FirebaseFavoriteStopsRepository>())..loadStops()),
       ],
       child: Builder(
         builder: (context) => MultiBlocProvider(

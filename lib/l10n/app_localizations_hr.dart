@@ -123,7 +123,7 @@ class AppLocalizationsHr extends AppLocalizations {
   String get schedulePage_selectStopLabel => 'Odaberi stanicu';
 
   @override
-  String get schedulePage_tramLineColumn => 'Linija';
+  String get schedulePage_originColumn => 'Polazište';
 
   @override
   String get schedulePage_destinationColumn => 'Odredište';
@@ -660,4 +660,12 @@ class AppLocalizationsHr extends AppLocalizations {
 
   @override
   String get linesPage_hideVehicles => ' Sakrij Vozila';
+
+  @override
+  String get schedulePage_errorLoadingSchedule =>
+      'Greška pri učitavanju voznog reda. Molimo pokušajte ponovno kasnije.';
+
+  @override
+  String get schedulePage_selectStopToViewSchedule =>
+      'Odaberite stanicu za prikaz voznog reda';
 }

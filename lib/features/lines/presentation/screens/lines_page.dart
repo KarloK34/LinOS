@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:linos/core/data/enums/vehicle_type.dart';
 import 'package:linos/core/utils/context_extensions.dart';
-import 'package:linos/features/lines/data/enums/line_type.dart';
+import 'package:linos/core/widgets/vehicle_type_selector.dart';
 import 'package:linos/features/lines/presentation/cubit/lines_map_cubit.dart';
 import 'package:linos/features/lines/presentation/cubit/lines_map_state.dart';
 import 'package:linos/features/lines/presentation/widgets/lines_page_map.dart';
@@ -14,27 +15,27 @@ class LinesPage extends StatefulWidget {
 }
 
 class _LinesPageState extends State<LinesPage> {
-  late LineType _selectedLineType;
+  late VehicleType _selectedLineType;
 
   @override
   void initState() {
     super.initState();
-    _selectedLineType = LineType.tram;
+    _selectedLineType = VehicleType.tram;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<LinesMapCubit>().showTramLines();
     });
   }
 
-  void _onLineTypeSelected(LineType lineType) {
+  void _onLineTypeSelected(VehicleType lineType) {
     setState(() {
       _selectedLineType = lineType;
     });
 
     final cubit = context.read<LinesMapCubit>();
     switch (lineType) {
-      case LineType.tram:
+      case VehicleType.tram:
         cubit.showTramLines();
-      case LineType.bus:
+      case VehicleType.bus:
         cubit.showBusLines();
     }
   }
@@ -47,7 +48,14 @@ class _LinesPageState extends State<LinesPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildLineTypeSelector(),
+            VehicleTypeSelector(
+              isTramSelected: _selectedLineType == VehicleType.tram,
+              isBusSelected: _selectedLineType == VehicleType.bus,
+              onTramSelected: () => _onLineTypeSelected(VehicleType.tram),
+              onBusSelected: () => _onLineTypeSelected(VehicleType.bus),
+              tramTitle: context.l10n.linesPage_tramLinesTitle,
+              busTitle: context.l10n.linesPage_busLinesTitle,
+            ),
             SizedBox(height: 16.0),
             LinesPageMap(selectedLineType: _selectedLineType),
             SizedBox(height: 16.0),
@@ -55,32 +63,6 @@ class _LinesPageState extends State<LinesPage> {
           ],
         ),
       ),
-    );
-  }
-
-  Row _buildLineTypeSelector() {
-    return Row(
-      children: [
-        Expanded(
-          child: _LineTypeTab(
-            lineType: LineType.tram,
-            icon: Icons.train,
-            title: context.l10n.linesPage_tramLinesTitle,
-            isSelected: _selectedLineType == LineType.tram,
-            onTap: () => _onLineTypeSelected(LineType.tram),
-          ),
-        ),
-        const SizedBox(width: 8.0),
-        Expanded(
-          child: _LineTypeTab(
-            lineType: LineType.bus,
-            icon: Icons.directions_bus,
-            title: context.l10n.linesPage_busLinesTitle,
-            isSelected: _selectedLineType == LineType.bus,
-            onTap: () => _onLineTypeSelected(LineType.bus),
-          ),
-        ),
-      ],
     );
   }
 
@@ -105,55 +87,10 @@ class _LinesPageState extends State<LinesPage> {
 
   IconData _getVehicleButtonIcon(bool showingVehicles) {
     if (showingVehicles) return Icons.visibility_off;
-    return _selectedLineType == LineType.bus ? Icons.directions_bus : Icons.train;
+    return _selectedLineType == VehicleType.bus ? Icons.directions_bus : Icons.train;
   }
 
   String _getVehicleButtonText(BuildContext context, bool showingVehicles) {
     return showingVehicles ? context.l10n.linesPage_hideVehicles : context.l10n.linesPage_showVehicles;
-  }
-}
-
-class _LineTypeTab extends StatelessWidget {
-  const _LineTypeTab({
-    required this.lineType,
-    required this.icon,
-    required this.title,
-    required this.isSelected,
-    required this.onTap,
-  });
-
-  final LineType lineType;
-  final IconData icon;
-  final String title;
-  final bool isSelected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = context.theme.colorScheme;
-
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(12.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8.0),
-          border: Border.all(color: colorScheme.primaryContainer, width: 1.0),
-          color: isSelected ? colorScheme.primaryContainer : colorScheme.surface,
-        ),
-        child: Column(
-          children: [
-            Icon(icon, size: 32, color: colorScheme.onPrimaryContainer),
-            Text(
-              title,
-              style: context.theme.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: colorScheme.onPrimaryContainer,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 }

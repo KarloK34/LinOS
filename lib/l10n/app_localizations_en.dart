@@ -123,7 +123,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get schedulePage_selectStopLabel => 'Select Stop';
 
   @override
-  String get schedulePage_tramLineColumn => 'Tram Line';
+  String get schedulePage_originColumn => 'Origin';
 
   @override
   String get schedulePage_destinationColumn => 'Destination';
@@ -651,4 +651,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get linesPage_hideVehicles => 'Hide Vehicles';
+
+  @override
+  String get schedulePage_errorLoadingSchedule =>
+      'Error loading schedule. Please try again.';
+
+  @override
+  String get schedulePage_selectStopToViewSchedule =>
+      'Select a stop to view the schedule.';
 }

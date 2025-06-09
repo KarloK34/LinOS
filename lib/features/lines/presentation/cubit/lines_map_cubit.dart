@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:injectable/injectable.dart';
+import 'package:linos/core/data/enums/vehicle_type.dart';
 import 'package:linos/core/services/osijek_transit_data_service.dart';
 import 'package:linos/core/utils/app_error_handler.dart';
 import 'package:linos/core/utils/app_error_logger.dart';
-import 'package:linos/features/lines/data/enums/line_type.dart';
 import 'package:linos/features/lines/data/models/vehicle_position.dart';
 import 'package:linos/features/lines/data/services/vehicle_simulation_service.dart';
 import 'package:linos/features/lines/presentation/cubit/lines_map_state.dart';
@@ -24,7 +24,7 @@ class LinesMapCubit extends Cubit<LinesMapState> {
   GoogleMapController? _mapController;
   StreamSubscription<Map<String, List<VehiclePosition>>>? _vehicleSubscription;
   bool _showVehicles = false;
-  LineType? _currentLineType;
+  VehicleType? _currentLineType;
 
   void onMapCreated(GoogleMapController controller) {
     _mapController = controller;
@@ -38,14 +38,14 @@ class LinesMapCubit extends Cubit<LinesMapState> {
       final customTramRoutes = OsijekTransitDataService.getTramRoutes();
       final mergedRoutes = <String, List<LatLng>>{...apiTramRoutes, ...customTramRoutes};
 
-      _currentLineType = LineType.tram;
+      _currentLineType = VehicleType.tram;
       final tramPolylines = _createTramPolylines(mergedRoutes);
 
       if (_showVehicles) {
-        _startVehicleSimulation(mergedRoutes, LineType.tram);
+        _startVehicleSimulation(mergedRoutes, VehicleType.tram);
       }
 
-      emit(LinesMapLoaded(polylines: tramPolylines, selectedType: LineType.tram, showVehicles: _showVehicles));
+      emit(LinesMapLoaded(polylines: tramPolylines, selectedType: VehicleType.tram, showVehicles: _showVehicles));
     } catch (e, stackTrace) {
       final errorKey = AppErrorHandler.getErrorKey(e);
       emit(LinesMapError(errorKey, originalError: e));
@@ -59,14 +59,14 @@ class LinesMapCubit extends Cubit<LinesMapState> {
     try {
       final busRoutes = await _transitLinesApiService.getBusLines();
 
-      _currentLineType = LineType.bus;
+      _currentLineType = VehicleType.bus;
       final busPolylines = _createBusPolylines(busRoutes);
 
       if (_showVehicles) {
-        _startVehicleSimulation(busRoutes, LineType.bus);
+        _startVehicleSimulation(busRoutes, VehicleType.bus);
       }
 
-      emit(LinesMapLoaded(polylines: busPolylines, selectedType: LineType.bus, showVehicles: _showVehicles));
+      emit(LinesMapLoaded(polylines: busPolylines, selectedType: VehicleType.bus, showVehicles: _showVehicles));
     } catch (e, stackTrace) {
       final errorKey = AppErrorHandler.getErrorKey(e);
       emit(LinesMapError(errorKey, originalError: e));
@@ -83,14 +83,14 @@ class LinesMapCubit extends Cubit<LinesMapState> {
       _stopVehicleTracking();
     }
 
-    if (_currentLineType == LineType.tram) {
+    if (_currentLineType == VehicleType.tram) {
       showTramLines();
-    } else if (_currentLineType == LineType.bus) {
+    } else if (_currentLineType == VehicleType.bus) {
       showBusLines();
     }
   }
 
-  void _startVehicleSimulation(Map<String, List<LatLng>> routes, LineType lineType) {
+  void _startVehicleSimulation(Map<String, List<LatLng>> routes, VehicleType lineType) {
     _vehicleSimulationService.startSimulation(routes, lineType);
   }
 

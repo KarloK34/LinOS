@@ -30,6 +30,8 @@ import 'package:linos/features/lines/data/services/vehicle_simulation_service.da
     as _i401;
 import 'package:linos/features/lines/presentation/cubit/lines_map_cubit.dart'
     as _i448;
+import 'package:linos/features/schedule/data/repositories/firebase_favorite_stops_repository.dart'
+    as _i721;
 import 'package:linos/features/tickets/data/repositories/firebase_tickets_repository.dart'
     as _i854;
 
@@ -61,6 +63,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i854.FirebaseTicketsRepository>(
       () => _i854.FirebaseTicketsRepository(),
+    );
+    gh.lazySingleton<_i721.FirebaseFavoriteStopsRepository>(
+      () => _i721.FirebaseFavoriteStopsRepository(),
     );
     gh.factoryParam<_i376.AuthRepository, _i59.FirebaseAuth?, dynamic>(
       (firebaseAuth, _) => _i376.AuthRepository(firebaseAuth),

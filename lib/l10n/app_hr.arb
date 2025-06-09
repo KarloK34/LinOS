@@ -36,7 +36,7 @@
     "schedulePage_favoriteStopsTitle": "Omiljene stanice",
     "schedulePage_addFavoriteButton": "Dodaj omiljenu",
     "schedulePage_selectStopLabel": "Odaberi stanicu",
-    "schedulePage_tramLineColumn": "Linija",
+    "schedulePage_originColumn": "Polazište",
     "schedulePage_destinationColumn": "Odredište",
     "schedulePage_departureTimeColumn": "Vrijeme polaska",
     "settingsPage_myProfileTitle": "Moj profil",
@@ -186,5 +186,7 @@
     "homePage_loadingLocation": "Učitavanje Lokacije...",
     "button_settings": "Postavke",
     "linesPage_showVehicles": "Prikaži Vozila",
-    "linesPage_hideVehicles": " Sakrij Vozila"
+    "linesPage_hideVehicles": " Sakrij Vozila",
+    "schedulePage_errorLoadingSchedule": "Greška pri učitavanju voznog reda. Molimo pokušajte ponovno kasnije.",
+    "schedulePage_selectStopToViewSchedule": "Odaberite stanicu za prikaz voznog reda"
 }
