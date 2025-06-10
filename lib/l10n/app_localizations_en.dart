@@ -659,4 +659,26 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get schedulePage_selectStopToViewSchedule =>
       'Select a stop to view the schedule.';
+
+  @override
+  String notification_departureTitle(String stopName) {
+    return '$stopName';
+  }
+
+  @override
+  String notification_tramMessage(String stopName, String time) {
+    return 'Tram arriving at $stopName at $time';
+  }
+
+  @override
+  String notification_busMessage(String stopName, String time) {
+    return 'Bus arriving at $stopName at $time';
+  }
+
+  @override
+  String get notification_channelName => 'Departure Alerts';
+
+  @override
+  String get notification_channelDescription =>
+      'Notifications for upcoming public transport departures';
 }

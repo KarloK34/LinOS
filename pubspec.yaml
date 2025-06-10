@@ -38,6 +38,9 @@ dependencies:
   url_launcher: ^6.3.1
   crypto: ^3.0.6
   dio: ^5.8.0+1
+  flutter_local_notifications: ^19.2.1
+  timezone: ^0.10.1
+  flutter_timezone: ^4.1.1
 
 dev_dependencies:
   flutter_test:
@@ -55,6 +58,12 @@ flutter_native_splash:
 
   android_gravity: center 
   ios_content_mode: scaleAspectFill 
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/png/linos_logo4x.png"
+  min_sdk_android: 21
 
 flutter:
 

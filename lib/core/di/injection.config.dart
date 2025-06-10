@@ -13,6 +13,10 @@ import 'package:firebase_auth/firebase_auth.dart' as _i59;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:linos/core/navigation/app_router_config.dart' as _i494;
+import 'package:linos/core/services/localization_service.dart' as _i443;
+import 'package:linos/core/services/notification_service.dart' as _i992;
+import 'package:linos/core/services/notifications_refresh_service.dart'
+    as _i736;
 import 'package:linos/features/auth/cubit/auth_cubit.dart' as _i53;
 import 'package:linos/features/auth/data/repositories/auth_repository.dart'
     as _i376;
@@ -61,11 +65,20 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i401.VehicleSimulationService>(
       () => _i401.VehicleSimulationService(),
     );
-    gh.lazySingleton<_i854.FirebaseTicketsRepository>(
-      () => _i854.FirebaseTicketsRepository(),
+    gh.lazySingleton<_i443.LocalizationService>(
+      () => _i443.LocalizationService(),
+    );
+    gh.lazySingleton<_i736.NotificationRefreshService>(
+      () => _i736.NotificationRefreshService(),
+    );
+    gh.lazySingleton<_i992.NotificationService>(
+      () => _i992.NotificationService(),
     );
     gh.lazySingleton<_i721.FirebaseFavoriteStopsRepository>(
       () => _i721.FirebaseFavoriteStopsRepository(),
+    );
+    gh.lazySingleton<_i854.FirebaseTicketsRepository>(
+      () => _i854.FirebaseTicketsRepository(),
     );
     gh.factoryParam<_i376.AuthRepository, _i59.FirebaseAuth?, dynamic>(
       (firebaseAuth, _) => _i376.AuthRepository(firebaseAuth),

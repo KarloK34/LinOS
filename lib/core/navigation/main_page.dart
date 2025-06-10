@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:linos/core/di/injection.dart';
+import 'package:linos/core/services/notification_service.dart';
 import 'package:linos/core/utils/app_error_handler.dart';
 import 'package:linos/core/utils/app_error_logger.dart';
 import 'package:linos/core/utils/context_extensions.dart';
@@ -67,6 +68,20 @@ class _MainPageState extends State<MainPage> with WidgetsBindingObserver, Automa
     if (state == AppLifecycleState.resumed) {
       // Refresh the current page when app resumes
       setState(() {});
+      _refreshNotifications();
+    }
+  }
+
+  Future<void> _refreshNotifications() async {
+    final notificationService = getIt<NotificationService>();
+    await notificationService.cleanupExpiredNotifications();
+
+    final favoriteStopsRepo = getIt<FirebaseFavoriteStopsRepository>();
+    final tramStops = await favoriteStopsRepo.getFavoriteTramStops();
+    final busStops = await favoriteStopsRepo.getFavoriteBusStops();
+
+    for (final stop in [...tramStops, ...busStops]) {
+      await notificationService.scheduleNotificationsForFavoriteStop(stop);
     }
   }
 

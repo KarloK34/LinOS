@@ -668,4 +668,26 @@ class AppLocalizationsHr extends AppLocalizations {
   @override
   String get schedulePage_selectStopToViewSchedule =>
       'Odaberite stanicu za prikaz voznog reda';
+
+  @override
+  String notification_departureTitle(String stopName) {
+    return '$stopName';
+  }
+
+  @override
+  String notification_tramMessage(String stopName, String time) {
+    return 'Tramvaj stiže na stanicu $stopName u $time';
+  }
+
+  @override
+  String notification_busMessage(String stopName, String time) {
+    return 'Autobus stiže na stanicu $stopName u $time';
+  }
+
+  @override
+  String get notification_channelName => 'Obavijesti o polascima';
+
+  @override
+  String get notification_channelDescription =>
+      'Obavijesti o nadolazećim polascima javnog prijevoza';
 }

@@ -188,5 +188,37 @@
     "linesPage_showVehicles": "Prikaži Vozila",
     "linesPage_hideVehicles": " Sakrij Vozila",
     "schedulePage_errorLoadingSchedule": "Greška pri učitavanju voznog reda. Molimo pokušajte ponovno kasnije.",
-    "schedulePage_selectStopToViewSchedule": "Odaberite stanicu za prikaz voznog reda"
+    "schedulePage_selectStopToViewSchedule": "Odaberite stanicu za prikaz voznog reda",
+    "notification_departureTitle": "{stopName}",
+    "@notification_departureTitle": {
+        "placeholders": {
+            "stopName": {
+                "type": "String"
+            }
+        }
+    },
+    "notification_tramMessage": "Tramvaj stiže na stanicu {stopName} u {time}",
+    "@notification_tramMessage": {
+        "placeholders": {
+            "stopName": {
+                "type": "String"
+            },
+            "time": {
+                "type": "String"
+            }
+        }
+    },    
+    "notification_busMessage": "Autobus stiže na stanicu {stopName} u {time}",
+    "@notification_busMessage": {
+        "placeholders": {
+            "stopName": {
+                "type": "String"
+            },
+            "time": {
+                "type": "String"
+            }
+        }
+    },
+    "notification_channelName": "Obavijesti o polascima",
+    "notification_channelDescription": "Obavijesti o nadolazećim polascima javnog prijevoza"
 }

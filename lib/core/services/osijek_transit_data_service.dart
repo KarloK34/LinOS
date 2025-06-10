@@ -3,6 +3,17 @@ import 'package:linos/core/data/enums/vehicle_type.dart';
 import 'package:linos/features/schedule/data/models/transit_stop.dart';
 
 class OsijekTransitDataService {
+  static TransitStopSchedule _generateMockSchedule() {
+    final List<DateTime> departureTimes = [];
+    final now = DateTime.now();
+    for (int hour = 7; hour <= 22; hour++) {
+      for (int minute = 0; minute < 60; minute += 2) {
+        departureTimes.add(DateTime(now.year, now.month, now.day, hour, minute, 0));
+      }
+    }
+    return TransitStopSchedule(departureTimes: departureTimes);
+  }
+
   static Map<String, List<LatLng>> getTramRoutes() {
     return {
       '1': [
@@ -27,137 +38,195 @@ class OsijekTransitDataService {
   }
 
   static List<TransitStop> getTramStops() {
+    final String origin = 'Zeleno polje';
+    final String destination = 'Trg Ante Starčevića';
     return [
       TransitStop(
-        id: '1',
+        id: 'tram_stop_1',
         name: 'Zeleno polje',
         latitude: 45.55246068712782,
         longitude: 18.729819674727093,
         vehicleType: VehicleType.tram,
+        schedule: _generateMockSchedule(),
+        origin: origin,
+        destination: destination,
       ),
       TransitStop(
-        id: '2',
+        id: 'tram_stop_2',
         name: 'Donja Tramvajska stanica',
         latitude: 45.553892821324794,
         longitude: 18.72498427806678,
         vehicleType: VehicleType.tram,
+        schedule: _generateMockSchedule(),
+        origin: origin,
+        destination: destination,
       ),
       TransitStop(
-        id: '3',
+        id: 'tram_stop_3',
         name: 'bana Josipa Jelačića',
         latitude: 45.55492143882817,
         longitude: 18.720294827667875,
         vehicleType: VehicleType.tram,
+        schedule: _generateMockSchedule(),
+        origin: origin,
+        destination: destination,
       ),
       TransitStop(
-        id: '4',
+        id: 'tram_stop_4',
         name: 'cara Hadrijana',
         latitude: 45.55595856522575,
         longitude: 18.71662494313781,
         vehicleType: VehicleType.tram,
+        schedule: _generateMockSchedule(),
+        origin: origin,
+        destination: destination,
       ),
       TransitStop(
-        id: '5',
+        id: 'tram_stop_5',
         name: 'KBC',
         latitude: 45.55718881584692,
         longitude: 18.711174085262257,
         vehicleType: VehicleType.tram,
+        schedule: _generateMockSchedule(),
+        origin: origin,
+        destination: destination,
       ),
       TransitStop(
-        id: '6',
+        id: 'tram_stop_6',
         name: 'Remiza',
         latitude: 45.55904098049919,
         longitude: 18.7030606095715,
         vehicleType: VehicleType.tram,
+        schedule: _generateMockSchedule(),
+        origin: origin,
+        destination: destination,
       ),
       TransitStop(
-        id: '7',
+        id: 'tram_stop_7',
         name: 'VIM',
         latitude: 45.558561685960484,
         longitude: 18.69884854392559,
         vehicleType: VehicleType.tram,
+        schedule: _generateMockSchedule(),
+        origin: origin,
+        destination: destination,
       ),
       TransitStop(
-        id: '8',
+        id: 'tram_stop_8',
         name: 'Europska avenija Tvrđa',
         latitude: 45.55883901033378,
         longitude: 18.693897587603054,
         vehicleType: VehicleType.tram,
+        schedule: _generateMockSchedule(),
+        origin: origin,
+        destination: destination,
       ),
       TransitStop(
-        id: '9',
+        id: 'tram_stop_9',
         name: 'Dom zdravlja',
         latitude: 45.55962245049111,
         longitude: 18.690176197400707,
         vehicleType: VehicleType.tram,
+        schedule: _generateMockSchedule(),
+        origin: origin,
+        destination: destination,
       ),
       TransitStop(
-        id: '10',
+        id: 'tram_stop_10',
         name: 'Pošta',
         latitude: 45.560411126920656,
         longitude: 18.685826833247457,
         vehicleType: VehicleType.tram,
+        schedule: _generateMockSchedule(),
+        origin: origin,
+        destination: destination,
       ),
       TransitStop(
-        id: '11',
+        id: 'tram_stop_11',
         name: 'Sakuntala Park',
         latitude: 45.56096092548518,
         longitude: 18.682080945154535,
         vehicleType: VehicleType.tram,
+        schedule: _generateMockSchedule(),
+        origin: origin,
+        destination: destination,
       ),
       TransitStop(
-        id: '12',
+        id: 'tram_stop_12',
         name: 'Trg Ante Starčevića',
         latitude: 45.561510196358114,
         longitude: 18.677260528203842,
         vehicleType: VehicleType.tram,
+        schedule: _generateMockSchedule(),
+        origin: origin,
+        destination: destination,
       ),
     ];
   }
 
   static List<TransitStop> getBusStops() {
+    final String origin = 'Bus Stop 1';
+    final String destination = 'Bus Stop 6';
     return [
       TransitStop(
-        id: '1',
+        id: 'bus_stop_1',
         name: 'Bus Stop 1',
         latitude: 45.55246068712782,
         longitude: 18.729819674727093,
         vehicleType: VehicleType.bus,
+        schedule: _generateMockSchedule(),
+        origin: origin,
+        destination: destination,
       ),
       TransitStop(
-        id: '2',
+        id: 'bus_stop_2',
         name: 'Bus Stop 2',
         latitude: 45.553892821324794,
         longitude: 18.72498427806678,
         vehicleType: VehicleType.bus,
+        schedule: _generateMockSchedule(),
+        origin: origin,
+        destination: destination,
       ),
       TransitStop(
-        id: '3',
+        id: 'bus_stop_3',
         name: 'Bus Stop 3',
         latitude: 45.55492143882817,
         longitude: 18.720294827667875,
         vehicleType: VehicleType.bus,
+        schedule: _generateMockSchedule(),
+        origin: origin,
+        destination: destination,
       ),
       TransitStop(
-        id: '4',
+        id: 'bus_stop_4',
         name: 'Bus Stop 4',
         latitude: 45.55595856522575,
         longitude: 18.71662494313781,
         vehicleType: VehicleType.bus,
+        schedule: _generateMockSchedule(),
+        origin: origin,
+        destination: destination,
       ),
       TransitStop(
-        id: '5',
+        id: 'bus_stop_5',
         name: 'Bus Stop 5',
         latitude: 45.55718881584692,
         longitude: 18.711174085262257,
         vehicleType: VehicleType.bus,
+        schedule: _generateMockSchedule(),
+        origin: origin,
+        destination: destination,
       ),
       TransitStop(
-        id: '6',
+        id: 'bus_stop_6',
         name: 'Bus Stop 6',
         latitude: 45.55904098049919,
         longitude: 18.7030606095715,
         vehicleType: VehicleType.bus,
+        schedule: _generateMockSchedule(),
+        origin: origin,
+        destination: destination,
       ),
     ];
   }

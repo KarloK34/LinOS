@@ -1234,6 +1234,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Select a stop to view the schedule.'**
   String get schedulePage_selectStopToViewSchedule;
+
+  /// No description provided for @notification_departureTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{stopName}'**
+  String notification_departureTitle(String stopName);
+
+  /// No description provided for @notification_tramMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Tram arriving at {stopName} at {time}'**
+  String notification_tramMessage(String stopName, String time);
+
+  /// No description provided for @notification_busMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Bus arriving at {stopName} at {time}'**
+  String notification_busMessage(String stopName, String time);
+
+  /// No description provided for @notification_channelName.
+  ///
+  /// In en, this message translates to:
+  /// **'Departure Alerts'**
+  String get notification_channelName;
+
+  /// No description provided for @notification_channelDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications for upcoming public transport departures'**
+  String get notification_channelDescription;
 }
 
 class _AppLocalizationsDelegate

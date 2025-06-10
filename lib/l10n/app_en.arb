@@ -188,5 +188,37 @@
     "linesPage_showVehicles": "Show Live Vehicles",
     "linesPage_hideVehicles": "Hide Vehicles",
     "schedulePage_errorLoadingSchedule": "Error loading schedule. Please try again.",
-    "schedulePage_selectStopToViewSchedule": "Select a stop to view the schedule."
+    "schedulePage_selectStopToViewSchedule": "Select a stop to view the schedule.",
+    "notification_departureTitle": "{stopName}",
+    "@notification_departureTitle": {
+        "placeholders": {
+            "stopName": {
+                "type": "String"
+            }
+        }
+    },
+    "notification_tramMessage": "Tram arriving at {stopName} at {time}",
+    "@notification_tramMessage": {
+        "placeholders": {
+            "stopName": {
+                "type": "String"
+            },
+            "time": {
+                "type": "String"
+            }
+        }
+    },    
+    "notification_busMessage": "Bus arriving at {stopName} at {time}",
+    "@notification_busMessage": {
+        "placeholders": {
+            "stopName": {
+                "type": "String"
+            },
+            "time": {
+                "type": "String"
+            }
+        }
+    },
+    "notification_channelName": "Departure Alerts",
+    "notification_channelDescription": "Notifications for upcoming public transport departures"
 }

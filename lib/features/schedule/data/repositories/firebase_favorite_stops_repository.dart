@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 import 'package:linos/core/data/enums/vehicle_type.dart';
+import 'package:linos/core/di/injection.dart';
+import 'package:linos/core/services/notification_service.dart';
 import 'package:linos/features/schedule/data/models/transit_stop.dart';
 
 @lazySingleton
@@ -84,12 +86,18 @@ class FirebaseFavoriteStopsRepository {
     final stopData = stop.toJson();
 
     await _favoriteStopsRef.doc(stop.id).set(stopData, SetOptions(merge: true));
+
+    final notificationService = getIt<NotificationService>();
+    await notificationService.scheduleNotificationsForFavoriteStop(stop);
   }
 
   Future<void> removeFavoriteStop(TransitStop stop) async {
     if (_userId.isEmpty) return;
 
     await _favoriteStopsRef.doc(stop.id).delete();
+
+    final notificationService = getIt<NotificationService>();
+    await notificationService.cancelNotificationsForStop(stop.id);
   }
 
   Future<bool> isFavoriteStop(String stopId) async {

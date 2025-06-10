@@ -110,31 +110,29 @@ class _SchedulePageState extends State<SchedulePage> {
           style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8.0),
-        if (favoriteStops.isEmpty)
-          ActionChip(
-            label: Text(context.l10n.schedulePage_addFavoriteButton),
-            avatar: Icon(Icons.add_circle_outline, color: context.theme.colorScheme.primary),
-            onPressed: () => _showAddFavoriteDialog(),
-          )
-        else
-          Wrap(
-            spacing: 8.0,
-            runSpacing: 4.0,
-            children: [
-              ...favoriteStops.map(
-                (stop) => Chip(
-                  label: Text(stop.name),
-                  onDeleted: () => context.read<ScheduleCubit>().toggleFavoriteStop(stop),
-                  deleteIcon: const Icon(Icons.close, size: 18),
-                ),
-              ),
-              ActionChip(
-                label: Text(context.l10n.schedulePage_addFavoriteButton),
-                avatar: Icon(Icons.add_circle_outline, color: context.theme.colorScheme.primary),
-                onPressed: () => _showAddFavoriteDialog(),
-              ),
-            ],
+        SizedBox(
+          height: 40.0,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: favoriteStops.length + 1,
+            separatorBuilder: (context, index) => const SizedBox(width: 8.0),
+            itemBuilder: (context, index) {
+              if (index == favoriteStops.length) {
+                return ActionChip(
+                  label: Text(context.l10n.schedulePage_addFavoriteButton),
+                  avatar: Icon(Icons.add_circle_outline, color: context.theme.colorScheme.primary),
+                  onPressed: () => _showAddFavoriteDialog(),
+                );
+              }
+              final stop = favoriteStops[index];
+              return Chip(
+                label: Text(stop.name),
+                onDeleted: () => context.read<ScheduleCubit>().toggleFavoriteStop(stop),
+                deleteIcon: const Icon(Icons.close, size: 18),
+              );
+            },
           ),
+        ),
       ],
     );
   }
@@ -177,7 +175,15 @@ class _SchedulePageState extends State<SchedulePage> {
     }
 
     // Mock schedule data - in real implementation, this would come from an API
-    final scheduleData = _generateMockSchedule(selectedStop);
+    final scheduleData = selectedStop.schedule.departureTimes
+        .map(
+          (time) => {
+            'origin': selectedStop.origin,
+            'destination': selectedStop.destination,
+            'time': '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}',
+          },
+        )
+        .toList();
 
     return Expanded(
       child: SingleChildScrollView(
@@ -231,23 +237,6 @@ class _SchedulePageState extends State<SchedulePage> {
         ),
       ),
     );
-  }
-
-  List<Map<String, String>> _generateMockSchedule(TransitStop stop) {
-    // This would be replaced with real API call
-    final now = DateTime.now();
-    final schedules = <Map<String, String>>[];
-
-    for (int i = 0; i < 10; i++) {
-      final time = now.add(Duration(minutes: 15 * i));
-      schedules.add({
-        'origin': stop.vehicleType == VehicleType.tram ? 'Zeleno polje' : 'Jug 2',
-        'destination': stop.vehicleType == VehicleType.tram ? 'Trg Ante Starčevića' : 'Centar',
-        'time': '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}',
-      });
-    }
-
-    return schedules;
   }
 
   void _showAddFavoriteDialog() {
