@@ -30,6 +30,18 @@ class AppErrorHandler {
     final errorType = parts.first;
 
     switch (errorType) {
+      case 'error_network_error':
+        return 'error_network_error';
+      case 'error_no_routes_found':
+        return 'error_no_routes_found';
+      case 'error_rate_limit_exceeded':
+        return 'error_rate_limit_exceeded';
+      case 'error_api_key_error':
+        return 'error_api_key_error';
+      case 'error_connection_abort':
+        return 'error_connection_abort';
+      case 'error_api_error':
+        return 'error_api_error';
       case 'insufficient_balance':
         return 'error_insufficientBalance';
       case 'purchase_ticket_failed':
@@ -43,6 +55,9 @@ class AppErrorHandler {
       case 'loading_tickets':
         return 'error_loadingTickets';
       default:
+        if (error.startsWith('error_')) {
+          return error;
+        }
         return 'error_generic';
     }
   }
@@ -115,6 +130,18 @@ class AppErrorHandler {
 
   static String _getLocalizedMessageFromKey(BuildContext context, String key, dynamic originalError) {
     switch (key) {
+      case 'error_network_error':
+        return context.l10n.error_noInternet;
+      case 'error_no_routes_found':
+        return 'No transit routes found for this destination';
+      case 'error_rate_limit_exceeded':
+        return 'Too many requests. Please try again later.';
+      case 'error_api_key_error':
+        return 'Service temporarily unavailable';
+      case 'error_connection_abort':
+        return context.l10n.error_connectionTimeout;
+      case 'error_api_error':
+        return context.l10n.error_serverError;
       case 'error_insufficientBalance':
         return context.l10n.error_insufficientBalance;
       case 'error_purchaseTicketFailed':
@@ -201,5 +228,26 @@ class AppErrorHandler {
         ),
       ),
     );
+  }
+
+  static void showTransitRouteError(BuildContext context, dynamic error, {VoidCallback? onRetry}) {
+    final errorKey = getErrorKey(error);
+
+    if (_isRetryableError(errorKey)) {
+      showErrorDialog(context, error, onRetry: onRetry);
+    } else {
+      showErrorSnackBar(context, error);
+    }
+  }
+
+  static bool _isRetryableError(String errorKey) {
+    return [
+      'error_network_error',
+      'error_connection_abort',
+      'error_connectionTimeout',
+      'error_noInternet',
+      'error_rate_limit_exceeded',
+      'error_api_error',
+    ].contains(errorKey);
   }
 }

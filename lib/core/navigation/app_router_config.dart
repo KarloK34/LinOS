@@ -1,13 +1,15 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
+import 'package:linos/core/di/injection.dart';
 import 'package:linos/core/navigation/main_page.dart';
 import 'package:linos/features/auth/cubit/auth_cubit.dart';
 import 'package:linos/features/auth/cubit/auth_state.dart';
 import 'package:linos/features/auth/presentation/screens/forgot_password_page.dart';
 import 'package:linos/features/auth/presentation/screens/login_page.dart';
 import 'package:linos/features/auth/presentation/screens/register_page.dart';
-import 'package:linos/features/tickets/data/models/ticket.dart';
+import 'package:linos/features/tickets/data/repositories/firebase_tickets_repository.dart';
+import 'package:linos/features/tickets/presentation/cubit/tickets_cubit.dart';
 import 'package:linos/features/tickets/presentation/screens/ticket_history_page.dart';
 
 @singleton
@@ -27,7 +29,10 @@ class AppRouterConfig {
         routes: [
           GoRoute(
             path: 'tickets_history',
-            builder: (context, state) => TicketHistoryPage(tickets: state.extra as List<Ticket>? ?? []),
+            builder: (context, state) => BlocProvider(
+              create: (context) => TicketsCubit(getIt<FirebaseTicketsRepository>()),
+              child: TicketHistoryPage(),
+            ),
           ),
         ],
       ),

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:linos/core/utils/app_error_handler.dart';
 import 'package:linos/features/home/data/models/transit_route.dart';
 import 'package:linos/features/home/data/services/google_directions_api_service.dart';
 import 'package:linos/features/home/presentation/cubit/search_destination_cubit.dart';
@@ -70,11 +71,13 @@ class TransitRouteCubit extends Cubit<TransitRouteState> {
       if (routes.isNotEmpty) {
         emit(TransitRouteLoaded(route: routes.first, alternativeRoutes: routes.skip(1).toList()));
       } else {
-        emit(const TransitRouteError(message: 'No routes found'));
+        emit(const TransitRouteError(message: 'error_no_routes_found'));
       }
     } catch (e) {
       if (isClosed) return;
-      emit(TransitRouteError(message: e.toString()));
+
+      final errorKey = AppErrorHandler.getErrorKey(e);
+      emit(TransitRouteError(message: errorKey));
     }
   }
 

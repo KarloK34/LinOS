@@ -1,7 +1,9 @@
-import 'dart:convert';
+import 'dart:async';
+import 'dart:io';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
 import 'package:linos/features/home/data/enums/route_segment_type.dart';
 import 'package:linos/features/home/data/models/route_segment.dart';
@@ -14,6 +16,23 @@ import 'package:google_polyline_algorithm/google_polyline_algorithm.dart';
 class GoogleDirectionsApiService {
   final String? _apiKey = dotenv.env['MAPS_API_KEY'];
   final String _baseUrl = 'https://maps.googleapis.com/maps/api/directions';
+  late final Dio _dio;
+
+  static const Duration _timeout = Duration(seconds: 15);
+  static const int _maxRetries = 3;
+  static const Duration _retryDelay = Duration(seconds: 2);
+  GoogleDirectionsApiService() {
+    _dio = Dio(BaseOptions(connectTimeout: _timeout, receiveTimeout: _timeout, sendTimeout: _timeout));
+  }
+
+  Future<bool> _hasNetworkConnection() async {
+    try {
+      final connectivityResult = await Connectivity().checkConnectivity();
+      return connectivityResult.isNotEmpty && !connectivityResult.contains(ConnectivityResult.none);
+    } catch (e) {
+      return true;
+    }
+  }
 
   Future<List<TransitRoute>> getTransitDirections({
     required LatLng origin,
@@ -23,43 +42,100 @@ class GoogleDirectionsApiService {
     if (_apiKey == null) {
       throw Exception('MAPS_API_KEY not found in environment variables');
     }
+    if (!(await _hasNetworkConnection())) {
+      throw 'error_network_error';
+    }
 
     final departure = departureTime ?? DateTime.now().add(const Duration(minutes: 5));
 
-    final Uri url = Uri.parse('$_baseUrl/json').replace(
-      queryParameters: {
-        'origin': '${origin.latitude},${origin.longitude}',
-        'destination': '${destination.latitude},${destination.longitude}',
-        'mode': 'transit',
-        'departure_time': (departure.millisecondsSinceEpoch ~/ 1000).toString(),
-        'key': _apiKey,
-        'language': 'hr',
-        'region': 'hr',
-        'alternatives': 'true',
-        'transit_mode': 'bus|tram|rail',
-        'transit_routing_preference': 'fewer_transfers',
-        'units': 'metric',
-      },
-    );
+    for (int attempt = 1; attempt <= _maxRetries; attempt++) {
+      try {
+        final response = await _dio.get(
+          '$_baseUrl/json',
+          queryParameters: {
+            'origin': '${origin.latitude},${origin.longitude}',
+            'destination': '${destination.latitude},${destination.longitude}',
+            'mode': 'transit',
+            'departure_time': (departure.millisecondsSinceEpoch ~/ 1000).toString(),
+            'key': _apiKey,
+            'language': 'hr',
+            'region': 'hr',
+            'alternatives': 'true',
+            'transit_mode': 'bus|tram|rail',
+            'transit_routing_preference': 'fewer_transfers',
+            'units': 'metric',
+          },
+        );
 
-    try {
-      final response = await http.get(url);
+        if (response.statusCode == 200) {
+          final Map<String, dynamic> data = response.data;
 
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> data = json.decode(response.body);
-
-        if (data['status'] == 'OK') {
-          final List<dynamic> routes = data['routes'] ?? [];
-          return routes.map((route) => _parseTransitRoute(route)).toList();
+          if (data['status'] == 'OK') {
+            final List<dynamic> routes = data['routes'] ?? [];
+            return routes.map((route) => _parseTransitRoute(route)).toList();
+          } else {
+            final status = data['status'];
+            switch (status) {
+              case 'ZERO_RESULTS':
+                throw 'error_no_routes_found';
+              case 'OVER_QUERY_LIMIT':
+                if (attempt == _maxRetries) {
+                  throw 'error_rate_limit_exceeded';
+                }
+                await Future.delayed(_retryDelay * attempt * 2);
+                continue;
+              case 'REQUEST_DENIED':
+                throw 'error_api_key_error';
+              default:
+                throw 'error_api_error';
+            }
+          }
         } else {
-          throw Exception('Directions API error: ${data['status']} - ${data['error_message'] ?? 'No routes found'}');
+          if (attempt == _maxRetries) {
+            throw 'error_connection_abort';
+          }
+          await Future.delayed(_retryDelay * attempt);
+          continue;
         }
-      } else {
-        throw Exception('HTTP error: ${response.statusCode}');
+      } on SocketException catch (_) {
+        if (attempt == _maxRetries) {
+          throw 'error_network_error';
+        }
+        await Future.delayed(_retryDelay * attempt);
+      } on DioException catch (e) {
+        if (attempt == _maxRetries) {
+          switch (e.type) {
+            case DioExceptionType.connectionTimeout:
+            case DioExceptionType.sendTimeout:
+            case DioExceptionType.receiveTimeout:
+              throw 'error_connection_abort';
+            case DioExceptionType.connectionError:
+              throw 'error_network_error';
+            default:
+              throw 'error_connection_abort';
+          }
+        }
+        final delayMultiplier = e.type == DioExceptionType.connectionError ? 3 : 1;
+        await Future.delayed(_retryDelay * attempt * delayMultiplier);
+      } on TimeoutException catch (_) {
+        if (attempt == _maxRetries) {
+          throw 'error_connection_abort';
+        }
+        await Future.delayed(_retryDelay * attempt);
+      } on FormatException catch (_) {
+        if (attempt == _maxRetries) {
+          throw 'error_api_error';
+        }
+        await Future.delayed(_retryDelay * attempt);
+      } catch (e) {
+        if (attempt == _maxRetries) {
+          throw 'Failed to fetch transit directions: $e';
+        }
+        await Future.delayed(_retryDelay * attempt);
       }
-    } catch (e) {
-      throw Exception('Failed to fetch transit directions: $e');
     }
+
+    throw 'error_connection_abort';
   }
 
   TransitRoute _parseTransitRoute(Map<String, dynamic> route) {

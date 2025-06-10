@@ -1,55 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:linos/core/utils/context_extensions.dart';
+import 'package:linos/core/utils/app_error_handler.dart';
+import 'package:linos/core/widgets/app_bar_back_button.dart';
+import 'package:linos/core/widgets/error_state.dart';
+import 'package:linos/features/tickets/data/enums/filter_type.dart';
+import 'package:linos/features/tickets/data/enums/sort_type.dart';
 import 'package:linos/features/tickets/data/models/ticket.dart';
-
-enum FilterType {
-  all,
-  singleRide,
-  dailyPass,
-  weeklyPass,
-  monthlyPass;
-
-  String camelCaseName(BuildContext context) {
-    switch (this) {
-      case FilterType.all:
-        return context.l10n.all;
-      case FilterType.singleRide:
-        return context.l10n.singleRide;
-      case FilterType.dailyPass:
-        return context.l10n.dailyPass;
-      case FilterType.weeklyPass:
-        return context.l10n.weeklyPass;
-      case FilterType.monthlyPass:
-        return context.l10n.monthlyPass;
-    }
-  }
-}
-
-enum SortType {
-  newest,
-  oldest,
-  priceHigh,
-  priceLow;
-
-  String camelCaseName(BuildContext context) {
-    switch (this) {
-      case SortType.newest:
-        return context.l10n.ticketHistoryPage_sortNewest;
-      case SortType.oldest:
-        return context.l10n.ticketHistoryPage_sortOldest;
-      case SortType.priceHigh:
-        return context.l10n.ticketHistoryPage_sortPriceHigh;
-      case SortType.priceLow:
-        return context.l10n.ticketHistoryPage_sortPriceLow;
-    }
-  }
-}
+import 'package:linos/features/tickets/presentation/cubit/tickets_cubit.dart';
+import 'package:linos/features/tickets/presentation/cubit/tickets_state.dart';
 
 class TicketHistoryPage extends StatefulWidget {
-  final List<Ticket> tickets;
-
-  const TicketHistoryPage({super.key, required this.tickets});
+  const TicketHistoryPage({super.key});
 
   @override
   State<TicketHistoryPage> createState() => _TicketHistoryPageState();
@@ -61,12 +23,11 @@ class _TicketHistoryPageState extends State<TicketHistoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    final filteredTickets = _getFilteredAndSortedTickets();
-
     return Scaffold(
       appBar: AppBar(
         title: Text(context.l10n.ticketHistoryPage_title),
-        leading: IconButton(icon: Icon(Icons.arrow_back), onPressed: () => context.pop()),
+        centerTitle: true,
+        leading: AppBarBackButton(),
         actions: [
           PopupMenuButton<String>(
             icon: Icon(Icons.sort),
@@ -97,93 +58,144 @@ class _TicketHistoryPageState extends State<TicketHistoryPage> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.all(16),
-            child: Row(
+      body: BlocBuilder<TicketsCubit, TicketsState>(
+        builder: (context, state) {
+          if (state is TicketsInitial || state is TicketsLoading) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [CircularProgressIndicator(), SizedBox(height: 16), Text(context.l10n.ticketHistory_loading)],
+              ),
+            );
+          }
+
+          if (state is TicketsError) {
+            return ErrorState(
+              title: context.l10n.ticketHistory_errorLoadingHistory,
+              message: AppErrorHandler.getLocalizedMessage(context, state.errorKey),
+            );
+          }
+
+          if (state is TicketsLoaded) {
+            final tickets = state.allTickets;
+
+            if (tickets.isEmpty) {
+              return _buildEmptyState();
+            }
+
+            final filteredTickets = _getFilteredAndSortedTickets(tickets);
+
+            return Column(
               children: [
-                Text(context.l10n.ticketHistoryPage_filterLabel, style: context.theme.textTheme.titleSmall),
-                SizedBox(width: 8),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                  child: Row(
+                    children: [
+                      Text(context.l10n.ticketHistoryPage_filterLabel, style: context.theme.textTheme.titleSmall),
+                      SizedBox(width: 12.0),
+                      Expanded(
+                        child: SizedBox(
+                          height: 40,
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children:
+                                [
+                                      context.l10n.all,
+                                      context.l10n.singleRide,
+                                      context.l10n.dailyPass,
+                                      context.l10n.weeklyPass,
+                                      context.l10n.monthlyPass,
+                                    ]
+                                    .map(
+                                      (filter) => Padding(
+                                        padding: EdgeInsets.only(right: 8),
+                                        child: FilterChip(
+                                          label: Text(filter),
+                                          selected: _filterType.camelCaseName(context) == filter,
+                                          onSelected: (selected) {
+                                            setState(
+                                              () => _filterType = FilterType.values.firstWhere(
+                                                (type) => type.camelCaseName(context) == filter,
+                                                orElse: () => FilterType.all,
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    children: [
+                      Text(
+                        '${context.l10n.ticketHistoryPage_ticketsCount} ${filteredTickets.length}',
+                        style: context.theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
+                      ),
+                      Spacer(),
+                      Text(
+                        context.l10n.ticketHistoryPage_totalSpent(
+                          _calculateTotalSpent(filteredTickets).toStringAsFixed(2),
+                        ),
+                        style: context.theme.textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: context.theme.colorScheme.primary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 16),
                 Expanded(
-                  child: Wrap(
-                    spacing: 8,
-                    children:
-                        [
-                              context.l10n.all,
-                              context.l10n.singleRide,
-                              context.l10n.dailyPass,
-                              context.l10n.weeklyPass,
-                              context.l10n.monthlyPass,
-                            ]
-                            .map(
-                              (filter) => FilterChip(
-                                label: Text(filter),
-                                selected: _filterType.camelCaseName(context) == filter,
-                                onSelected: (selected) {
-                                  setState(
-                                    () => _filterType = FilterType.values.firstWhere(
-                                      (type) => type.camelCaseName(context) == filter,
-                                      orElse: () => FilterType.all,
-                                    ),
-                                  );
-                                },
-                              ),
-                            )
-                            .toList(),
-                  ),
+                  child: filteredTickets.isEmpty
+                      ? _buildEmptyFilteredState()
+                      : ListView.builder(
+                          padding: EdgeInsets.symmetric(horizontal: 16),
+                          itemCount: filteredTickets.length,
+                          itemBuilder: (context, index) {
+                            final ticket = filteredTickets[index];
+                            return _HistoryTicketCard(ticket: ticket, showDetailedInfo: true);
+                          },
+                        ),
                 ),
               ],
-            ),
-          ),
+            );
+          }
+          return Center(child: CircularProgressIndicator());
+        },
+      ),
+    );
+  }
 
-          // Tickets count
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              children: [
-                Text(
-                  filteredTickets.length != 1
-                      ? context.l10n.ticketHistoryPage_ticketsCount(filteredTickets.length)
-                      : context.l10n.ticketHistoryPage_ticketsCountPlural(filteredTickets.length),
-                  style: context.theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
-                ),
-                Spacer(),
-                Text(
-                  context.l10n.ticketHistoryPage_totalSpent(_calculateTotalSpent(filteredTickets).toStringAsFixed(2)),
-                  style: context.theme.textTheme.bodyMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: context.theme.colorScheme.primary,
-                  ),
-                ),
-              ],
-            ),
-          ),
-
+  Widget _buildEmptyState() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.history, size: 64, color: Colors.grey),
           SizedBox(height: 16),
-
-          Expanded(
-            child: filteredTickets.isEmpty
-                ? _buildEmptyFilteredState()
-                : ListView.builder(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                    itemCount: filteredTickets.length,
-                    itemBuilder: (context, index) {
-                      final ticket = filteredTickets[index];
-                      return _HistoryTicketCard(ticket: ticket, showDetailedInfo: true);
-                    },
-                  ),
+          Text(
+            context.l10n.ticketHistory_noTicketHistory,
+            style: context.theme.textTheme.titleMedium?.copyWith(color: Colors.grey),
           ),
         ],
       ),
     );
   }
 
-  List<Ticket> _getFilteredAndSortedTickets() {
-    List<Ticket> filtered = widget.tickets;
+  List<Ticket> _getFilteredAndSortedTickets(List<Ticket> tickets) {
+    List<Ticket> filtered = tickets;
 
     if (_filterType != FilterType.all) {
-      filtered = filtered.where((ticket) => ticket.type.typeName == _filterType.camelCaseName(context)).toList();
+      filtered = filtered
+          .where((ticket) => ticket.type.typeName.displayName(context) == _filterType.camelCaseName(context))
+          .toList();
     }
 
     switch (_sortBy) {
@@ -297,7 +309,6 @@ class _HistoryTicketCard extends StatelessWidget {
                 ),
               ],
             ),
-
             if (showDetailedInfo) ...[
               SizedBox(height: 12),
               Divider(height: 1),

@@ -350,18 +350,6 @@ abstract class AppLocalizations {
   /// **'Manage your profile settings'**
   String get settingsPage_profileSettingsSubtitle;
 
-  /// No description provided for @settingsPage_linkedCardsTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Linked Cards'**
-  String get settingsPage_linkedCardsTitle;
-
-  /// No description provided for @settingsPage_linkedCardsSubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Manage your linked cards'**
-  String get settingsPage_linkedCardsSubtitle;
-
   /// No description provided for @settingsPage_purchaseHistoryTitle.
   ///
   /// In en, this message translates to:
@@ -404,71 +392,11 @@ abstract class AppLocalizations {
   /// **'Select your preferred language'**
   String get settingsPage_appLanguageSubtitle;
 
-  /// No description provided for @settingsPage_currencyTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Currency'**
-  String get settingsPage_currencyTitle;
-
-  /// No description provided for @settingsPage_currencySubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Select your preferred currency'**
-  String get settingsPage_currencySubtitle;
-
   /// No description provided for @settingsPage_notificationsTitle.
   ///
   /// In en, this message translates to:
   /// **'Notifications'**
   String get settingsPage_notificationsTitle;
-
-  /// No description provided for @settingsPage_delayNotificationsTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Delay Notifications'**
-  String get settingsPage_delayNotificationsTitle;
-
-  /// No description provided for @settingsPage_delayNotificationsSubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Receive notifications about delays'**
-  String get settingsPage_delayNotificationsSubtitle;
-
-  /// No description provided for @settingsPage_scheduleChangesNotificationsTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Schedule Changes Notifications'**
-  String get settingsPage_scheduleChangesNotificationsTitle;
-
-  /// No description provided for @settingsPage_scheduleChangesNotificationsSubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Receive notifications about schedule changes'**
-  String get settingsPage_scheduleChangesNotificationsSubtitle;
-
-  /// No description provided for @settingsPage_soundAlertsTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Sound Alerts'**
-  String get settingsPage_soundAlertsTitle;
-
-  /// No description provided for @settingsPage_soundAlertsSubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Enable sound alerts for notifications'**
-  String get settingsPage_soundAlertsSubtitle;
-
-  /// No description provided for @settingsPage_specificLineNotificationsTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Specific Line Notifications'**
-  String get settingsPage_specificLineNotificationsTitle;
-
-  /// No description provided for @settingsPage_specificLineNotificationsSubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Receive notifications for specific lines'**
-  String get settingsPage_specificLineNotificationsSubtitle;
 
   /// No description provided for @settingsPage_changeLanguageTitle.
   ///
@@ -481,6 +409,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Select your preferred application language.'**
   String get settingsPage_changeLanguageSubtitle;
+
+  /// No description provided for @settingsPage_transitStopNotificationsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Transit Stop Notifications'**
+  String get settingsPage_transitStopNotificationsTitle;
+
+  /// No description provided for @settingsPage_transitStopNotificationsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive notifications for departures from your favorite stops.'**
+  String get settingsPage_transitStopNotificationsSubtitle;
+
+  /// No description provided for @settingsPage_languageEnglish.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get settingsPage_languageEnglish;
+
+  /// No description provided for @settingsPage_languageCroatian.
+  ///
+  /// In en, this message translates to:
+  /// **'Croatian'**
+  String get settingsPage_languageCroatian;
+
+  /// No description provided for @settingsPage_notificationsEnabledMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications enabled for favorite stops'**
+  String get settingsPage_notificationsEnabledMessage;
+
+  /// No description provided for @settingsPage_permissionRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification permission required'**
+  String get settingsPage_permissionRequired;
+
+  /// No description provided for @settingsPage_permissionDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Permission denied'**
+  String get settingsPage_permissionDenied;
+
+  /// No description provided for @settingsPage_permissionDeniedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Permission Required'**
+  String get settingsPage_permissionDeniedTitle;
+
+  /// No description provided for @settingsPage_permissionDeniedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'To receive notifications, please enable them in your device settings.'**
+  String get settingsPage_permissionDeniedMessage;
+
+  /// No description provided for @settingsPage_notificationsDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications are disabled'**
+  String get settingsPage_notificationsDisabled;
+
+  /// No description provided for @settingsPage_openSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Settings'**
+  String get settingsPage_openSettings;
 
   /// No description provided for @ticketsPage_generatedTicketCodeTitle.
   ///
@@ -734,14 +728,8 @@ abstract class AppLocalizations {
   /// No description provided for @ticketHistoryPage_ticketsCount.
   ///
   /// In en, this message translates to:
-  /// **'{count} ticket'**
-  String ticketHistoryPage_ticketsCount(Object count);
-
-  /// No description provided for @ticketHistoryPage_ticketsCountPlural.
-  ///
-  /// In en, this message translates to:
-  /// **'{count} tickets'**
-  String ticketHistoryPage_ticketsCountPlural(Object count);
+  /// **'Number of Tickets:'**
+  String get ticketHistoryPage_ticketsCount;
 
   /// No description provided for @ticketHistoryPage_totalSpent.
   ///
@@ -1264,6 +1252,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Notifications for upcoming public transport departures'**
   String get notification_channelDescription;
+
+  /// No description provided for @settingsPage_logoutConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to log out?'**
+  String get settingsPage_logoutConfirmation;
+
+  /// No description provided for @button_logOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Log Out'**
+  String get button_logOut;
+
+  /// No description provided for @error_network_error.
+  ///
+  /// In en, this message translates to:
+  /// **'No internet connection. Please check your network settings.'**
+  String get error_network_error;
+
+  /// No description provided for @error_no_routes_found.
+  ///
+  /// In en, this message translates to:
+  /// **'No routes found between these locations'**
+  String get error_no_routes_found;
+
+  /// No description provided for @error_rate_limit_exceeded.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many requests. Please try again later'**
+  String get error_rate_limit_exceeded;
+
+  /// No description provided for @error_api_key_error.
+  ///
+  /// In en, this message translates to:
+  /// **'API configuration error'**
+  String get error_api_key_error;
+
+  /// No description provided for @error_api_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Service temporarily unavailable'**
+  String get error_api_error;
+
+  /// No description provided for @error_connection_abort.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection was interrupted. Please try again.'**
+  String get error_connection_abort;
 }
 
 class _AppLocalizationsDelegate

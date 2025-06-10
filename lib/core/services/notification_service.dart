@@ -130,4 +130,32 @@ class NotificationService {
       }
     }
   }
+
+  Future<bool> areNotificationsEnabled() async {
+    try {
+      final settings = await flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+          ?.areNotificationsEnabled();
+
+      return settings ?? true;
+    } catch (e) {
+      return true;
+    }
+  }
+
+  Future<bool> requestPermissions() async {
+    try {
+      final androidImplementation = flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
+
+      if (androidImplementation != null) {
+        final granted = await androidImplementation.requestNotificationsPermission();
+        return granted ?? false;
+      }
+
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 }

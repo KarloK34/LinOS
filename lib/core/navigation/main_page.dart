@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:linos/core/di/injection.dart';
-import 'package:linos/core/services/notification_service.dart';
+import 'package:linos/core/services/notifications_refresh_service.dart';
 import 'package:linos/core/utils/app_error_handler.dart';
 import 'package:linos/core/utils/app_error_logger.dart';
 import 'package:linos/core/utils/context_extensions.dart';
@@ -18,6 +18,7 @@ import 'package:linos/features/lines/presentation/screens/lines_page.dart';
 import 'package:linos/features/schedule/data/repositories/firebase_favorite_stops_repository.dart';
 import 'package:linos/features/schedule/presentation/cubit/schedule_cubit.dart';
 import 'package:linos/features/schedule/presentation/screens/schedule_page.dart';
+import 'package:linos/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:linos/features/settings/presentation/screens/settings_page.dart';
 import 'package:linos/features/tickets/data/repositories/firebase_tickets_repository.dart';
 import 'package:linos/features/tickets/presentation/cubit/tickets_cubit.dart';
@@ -73,16 +74,8 @@ class _MainPageState extends State<MainPage> with WidgetsBindingObserver, Automa
   }
 
   Future<void> _refreshNotifications() async {
-    final notificationService = getIt<NotificationService>();
-    await notificationService.cleanupExpiredNotifications();
-
-    final favoriteStopsRepo = getIt<FirebaseFavoriteStopsRepository>();
-    final tramStops = await favoriteStopsRepo.getFavoriteTramStops();
-    final busStops = await favoriteStopsRepo.getFavoriteBusStops();
-
-    for (final stop in [...tramStops, ...busStops]) {
-      await notificationService.scheduleNotificationsForFavoriteStop(stop);
-    }
+    final notificationRefreshService = getIt<NotificationRefreshService>();
+    await notificationRefreshService.refreshNotificationsIfEnabled();
   }
 
   @override
@@ -99,6 +92,7 @@ class _MainPageState extends State<MainPage> with WidgetsBindingObserver, Automa
         BlocProvider(create: (context) => TicketsCubit(getIt<FirebaseTicketsRepository>())),
         BlocProvider(create: (context) => getIt<LinesMapCubit>()),
         BlocProvider(create: (context) => ScheduleCubit(getIt<FirebaseFavoriteStopsRepository>())..loadStops()),
+        BlocProvider(create: (context) => SettingsCubit()..loadSettings()),
       ],
       child: Builder(
         builder: (context) => MultiBlocProvider(

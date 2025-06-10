@@ -31,7 +31,7 @@ class LinesMapCubit extends Cubit<LinesMapState> {
   }
 
   Future<void> showTramLines() async {
-    emit(LinesMapLoading());
+    _safeEmit(LinesMapLoading());
 
     try {
       final apiTramRoutes = await _transitLinesApiService.getTramLines();
@@ -45,16 +45,16 @@ class LinesMapCubit extends Cubit<LinesMapState> {
         _startVehicleSimulation(mergedRoutes, VehicleType.tram);
       }
 
-      emit(LinesMapLoaded(polylines: tramPolylines, selectedType: VehicleType.tram, showVehicles: _showVehicles));
+      _safeEmit(LinesMapLoaded(polylines: tramPolylines, selectedType: VehicleType.tram, showVehicles: _showVehicles));
     } catch (e, stackTrace) {
       final errorKey = AppErrorHandler.getErrorKey(e);
-      emit(LinesMapError(errorKey, originalError: e));
+      _safeEmit(LinesMapError(errorKey, originalError: e));
       AppErrorLogger.handleError(errorKey, stackTrace);
     }
   }
 
   Future<void> showBusLines() async {
-    emit(LinesMapLoading());
+    _safeEmit(LinesMapLoading());
 
     try {
       final busRoutes = await _transitLinesApiService.getBusLines();
@@ -66,10 +66,10 @@ class LinesMapCubit extends Cubit<LinesMapState> {
         _startVehicleSimulation(busRoutes, VehicleType.bus);
       }
 
-      emit(LinesMapLoaded(polylines: busPolylines, selectedType: VehicleType.bus, showVehicles: _showVehicles));
+      _safeEmit(LinesMapLoaded(polylines: busPolylines, selectedType: VehicleType.bus, showVehicles: _showVehicles));
     } catch (e, stackTrace) {
       final errorKey = AppErrorHandler.getErrorKey(e);
-      emit(LinesMapError(errorKey, originalError: e));
+      _safeEmit(LinesMapError(errorKey, originalError: e));
       AppErrorLogger.handleError(errorKey, stackTrace);
     }
   }
@@ -124,7 +124,7 @@ class LinesMapCubit extends Cubit<LinesMapState> {
       );
     }
 
-    emit(
+    _safeEmit(
       LinesMapLoaded(
         polylines: currentState.polylines,
         selectedType: currentState.selectedType,
@@ -135,7 +135,6 @@ class LinesMapCubit extends Cubit<LinesMapState> {
   }
 
   double _calculateRotation(VehiclePosition vehicle) {
-    // Calculate bearing between current and next position for realistic rotation
     if (vehicle.currentRouteIndex + 1 < vehicle.routePoints.length) {
       final current = vehicle.currentPosition;
       final next = vehicle.routePoints[vehicle.currentRouteIndex + 1];
@@ -152,7 +151,7 @@ class LinesMapCubit extends Cubit<LinesMapState> {
       await Future.wait([_transitLinesApiService.getTramLines(), _transitLinesApiService.getBusLines()]);
     } catch (e, stackTrace) {
       final errorKey = AppErrorHandler.getErrorKey(e);
-      emit(LinesMapError(errorKey, originalError: e));
+      _safeEmit(LinesMapError(errorKey, originalError: e));
       AppErrorLogger.handleError(errorKey, stackTrace);
     }
   }
@@ -191,6 +190,12 @@ class LinesMapCubit extends Cubit<LinesMapState> {
     });
 
     return polylines;
+  }
+
+  void _safeEmit(LinesMapState state) {
+    if (!isClosed) {
+      emit(state);
+    }
   }
 
   @override

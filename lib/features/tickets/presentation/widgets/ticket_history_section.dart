@@ -59,7 +59,7 @@ class _PurchasedTicketsList extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: OutlinedButton.icon(
-                    onPressed: () => context.go(AppRouterConfig.ticketsHistory, extra: sortedPurchasedTickets),
+                    onPressed: () => context.go(AppRouterConfig.ticketsHistory),
                     icon: Icon(Icons.history),
                     label: Text(context.l10n.ticketsPage_viewTicketHistoryLabel(sortedPurchasedTickets.length - 5)),
                     style: OutlinedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 12)),

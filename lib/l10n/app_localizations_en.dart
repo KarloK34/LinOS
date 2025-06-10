@@ -142,12 +142,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Manage your profile settings';
 
   @override
-  String get settingsPage_linkedCardsTitle => 'Linked Cards';
-
-  @override
-  String get settingsPage_linkedCardsSubtitle => 'Manage your linked cards';
-
-  @override
   String get settingsPage_purchaseHistoryTitle => 'Purchase History';
 
   @override
@@ -171,43 +165,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Select your preferred language';
 
   @override
-  String get settingsPage_currencyTitle => 'Currency';
-
-  @override
-  String get settingsPage_currencySubtitle => 'Select your preferred currency';
-
-  @override
   String get settingsPage_notificationsTitle => 'Notifications';
-
-  @override
-  String get settingsPage_delayNotificationsTitle => 'Delay Notifications';
-
-  @override
-  String get settingsPage_delayNotificationsSubtitle =>
-      'Receive notifications about delays';
-
-  @override
-  String get settingsPage_scheduleChangesNotificationsTitle =>
-      'Schedule Changes Notifications';
-
-  @override
-  String get settingsPage_scheduleChangesNotificationsSubtitle =>
-      'Receive notifications about schedule changes';
-
-  @override
-  String get settingsPage_soundAlertsTitle => 'Sound Alerts';
-
-  @override
-  String get settingsPage_soundAlertsSubtitle =>
-      'Enable sound alerts for notifications';
-
-  @override
-  String get settingsPage_specificLineNotificationsTitle =>
-      'Specific Line Notifications';
-
-  @override
-  String get settingsPage_specificLineNotificationsSubtitle =>
-      'Receive notifications for specific lines';
 
   @override
   String get settingsPage_changeLanguageTitle => 'Change Language';
@@ -215,6 +173,44 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingsPage_changeLanguageSubtitle =>
       'Select your preferred application language.';
+
+  @override
+  String get settingsPage_transitStopNotificationsTitle =>
+      'Transit Stop Notifications';
+
+  @override
+  String get settingsPage_transitStopNotificationsSubtitle =>
+      'Receive notifications for departures from your favorite stops.';
+
+  @override
+  String get settingsPage_languageEnglish => 'English';
+
+  @override
+  String get settingsPage_languageCroatian => 'Croatian';
+
+  @override
+  String get settingsPage_notificationsEnabledMessage =>
+      'Notifications enabled for favorite stops';
+
+  @override
+  String get settingsPage_permissionRequired =>
+      'Notification permission required';
+
+  @override
+  String get settingsPage_permissionDenied => 'Permission denied';
+
+  @override
+  String get settingsPage_permissionDeniedTitle => 'Permission Required';
+
+  @override
+  String get settingsPage_permissionDeniedMessage =>
+      'To receive notifications, please enable them in your device settings.';
+
+  @override
+  String get settingsPage_notificationsDisabled => 'Notifications are disabled';
+
+  @override
+  String get settingsPage_openSettings => 'Open Settings';
 
   @override
   String get ticketsPage_generatedTicketCodeTitle => 'Generated Ticket Code';
@@ -363,14 +359,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ticketHistoryPage_sortPriceLow => 'Price: Low to High';
 
   @override
-  String ticketHistoryPage_ticketsCount(Object count) {
-    return '$count ticket';
-  }
-
-  @override
-  String ticketHistoryPage_ticketsCountPlural(Object count) {
-    return '$count tickets';
-  }
+  String get ticketHistoryPage_ticketsCount => 'Number of Tickets:';
 
   @override
   String ticketHistoryPage_totalSpent(Object amount) {
@@ -681,4 +670,32 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get notification_channelDescription =>
       'Notifications for upcoming public transport departures';
+
+  @override
+  String get settingsPage_logoutConfirmation =>
+      'Are you sure you want to log out?';
+
+  @override
+  String get button_logOut => 'Log Out';
+
+  @override
+  String get error_network_error =>
+      'No internet connection. Please check your network settings.';
+
+  @override
+  String get error_no_routes_found => 'No routes found between these locations';
+
+  @override
+  String get error_rate_limit_exceeded =>
+      'Too many requests. Please try again later';
+
+  @override
+  String get error_api_key_error => 'API configuration error';
+
+  @override
+  String get error_api_error => 'Service temporarily unavailable';
+
+  @override
+  String get error_connection_abort =>
+      'Connection was interrupted. Please try again.';
 }

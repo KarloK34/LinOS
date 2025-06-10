@@ -139,14 +139,7 @@ class AppLocalizationsHr extends AppLocalizations {
 
   @override
   String get settingsPage_profileSettingsSubtitle =>
-      'Upravljajte postavkama svog profila';
-
-  @override
-  String get settingsPage_linkedCardsTitle => 'Povezane kartice';
-
-  @override
-  String get settingsPage_linkedCardsSubtitle =>
-      'Upravljajte svojim povezanim karticama';
+      'Upravljajte svojim profilom';
 
   @override
   String get settingsPage_purchaseHistoryTitle => 'Povijest kupovine';
@@ -171,43 +164,7 @@ class AppLocalizationsHr extends AppLocalizations {
   String get settingsPage_appLanguageSubtitle => 'Odaberite željeni jezik';
 
   @override
-  String get settingsPage_currencyTitle => 'Valuta';
-
-  @override
-  String get settingsPage_currencySubtitle => 'Odaberite željenu valutu';
-
-  @override
   String get settingsPage_notificationsTitle => 'Obavijesti';
-
-  @override
-  String get settingsPage_delayNotificationsTitle => 'Obavijesti o kašnjenju';
-
-  @override
-  String get settingsPage_delayNotificationsSubtitle =>
-      'Primajte obavijesti o kašnjenjima';
-
-  @override
-  String get settingsPage_scheduleChangesNotificationsTitle =>
-      'Obavijesti o promjenama voznog reda';
-
-  @override
-  String get settingsPage_scheduleChangesNotificationsSubtitle =>
-      'Primajte obavijesti o promjenama voznog reda';
-
-  @override
-  String get settingsPage_soundAlertsTitle => 'Zvučna upozorenja';
-
-  @override
-  String get settingsPage_soundAlertsSubtitle =>
-      'Omogućite zvučna upozorenja za obavijesti';
-
-  @override
-  String get settingsPage_specificLineNotificationsTitle =>
-      'Obavijesti za određene linije';
-
-  @override
-  String get settingsPage_specificLineNotificationsSubtitle =>
-      'Primajte obavijesti za određene linije';
 
   @override
   String get settingsPage_changeLanguageTitle => 'Promijeni jezik';
@@ -215,6 +172,46 @@ class AppLocalizationsHr extends AppLocalizations {
   @override
   String get settingsPage_changeLanguageSubtitle =>
       'Odaberite željeni jezik aplikacije.';
+
+  @override
+  String get settingsPage_transitStopNotificationsTitle =>
+      'Obavijesti o stanicama';
+
+  @override
+  String get settingsPage_transitStopNotificationsSubtitle =>
+      'Primajte obavijesti o polascima s vaših omiljenih stanica.';
+
+  @override
+  String get settingsPage_languageEnglish => 'Engleski';
+
+  @override
+  String get settingsPage_languageCroatian => 'Hrvatski';
+
+  @override
+  String get settingsPage_notificationsEnabledMessage =>
+      'Obavijesti su omogućene.';
+
+  @override
+  String get settingsPage_permissionRequired =>
+      'Dozvola za obavijesti je potrebna';
+
+  @override
+  String get settingsPage_permissionDenied =>
+      'Dozvola za obavijesti je odbijena';
+
+  @override
+  String get settingsPage_permissionDeniedTitle =>
+      'Dozvola za obavijesti odbijena';
+
+  @override
+  String get settingsPage_permissionDeniedMessage =>
+      'Molimo omogućite dozvole za obavijesti u postavkama uređaja kako biste primali obavijesti o polascima.';
+
+  @override
+  String get settingsPage_notificationsDisabled => 'Obavijesti su onemogućene';
+
+  @override
+  String get settingsPage_openSettings => 'Otvorite postavke';
 
   @override
   String get ticketsPage_generatedTicketCodeTitle => 'Generirani kod karte';
@@ -364,14 +361,7 @@ class AppLocalizationsHr extends AppLocalizations {
   String get ticketHistoryPage_sortPriceLow => 'Cijena: Niska prema visokoj';
 
   @override
-  String ticketHistoryPage_ticketsCount(Object count) {
-    return '$count karta';
-  }
-
-  @override
-  String ticketHistoryPage_ticketsCountPlural(Object count) {
-    return '$count karata';
-  }
+  String get ticketHistoryPage_ticketsCount => 'Broj karata:';
 
   @override
   String ticketHistoryPage_totalSpent(Object amount) {
@@ -690,4 +680,33 @@ class AppLocalizationsHr extends AppLocalizations {
   @override
   String get notification_channelDescription =>
       'Obavijesti o nadolazećim polascima javnog prijevoza';
+
+  @override
+  String get settingsPage_logoutConfirmation =>
+      'Jeste li sigurni da se želite odjaviti?';
+
+  @override
+  String get button_logOut => 'Odjavi se';
+
+  @override
+  String get error_network_error =>
+      'Nema internetske veze. Molimo provjerite mrežne postavke.';
+
+  @override
+  String get error_no_routes_found =>
+      'Nema pronađenih ruta između ovih lokacija';
+
+  @override
+  String get error_rate_limit_exceeded =>
+      'Previše zahtjeva. Pokušajte ponovno kasnije';
+
+  @override
+  String get error_api_key_error => 'Greška u konfiguraciji API-ja';
+
+  @override
+  String get error_api_error => 'Usluga je privremeno nedostupna';
+
+  @override
+  String get error_connection_abort =>
+      'Veza je prekinuta. Molimo pokušajte ponovno.';
 }

@@ -117,7 +117,6 @@ class TicketsCubit extends Cubit<TicketsState> {
 
     try {
       await _ticketsRepository.purchaseTicket(ticketType);
-      // Real-time listeners will automatically update the state
       emit(currentState.copyWith(purchaseStatus: const RequestSuccess<bool>(true)));
     } catch (e, stackTrace) {
       final errorKey = AppErrorHandler.getErrorKey(e);
@@ -129,7 +128,6 @@ class TicketsCubit extends Cubit<TicketsState> {
   Future<void> addBalance(double amount) async {
     try {
       await _ticketsRepository.addBalance(amount);
-      // Real-time listener will update balance automatically
     } catch (e, stackTrace) {
       final errorKey = AppErrorHandler.getErrorKey(e);
       final currentState = state;
@@ -150,12 +148,31 @@ class TicketsCubit extends Cubit<TicketsState> {
 
     try {
       await _ticketsRepository.useTicket(ticketId);
-      // Real-time listeners will automatically update the state
       emit(currentState.copyWith(useTicketStatus: const RequestSuccess<bool>(true)));
     } catch (e, stackTrace) {
       final errorKey = AppErrorHandler.getErrorKey(e);
       emit(currentState.copyWith(useTicketStatus: RequestError<bool>(errorKey, originalError: e)));
       AppErrorLogger.handleError(e, stackTrace);
+    }
+  }
+
+  List<Ticket> getTicketsHistory() {
+    _ensureTicketsLoaded();
+    final currentState = state;
+    if (currentState is! TicketsLoaded) return [];
+
+    final allTickets = currentState.allTickets;
+
+    if (allTickets.isEmpty) return [];
+
+    final sortedTickets = allTickets..sort((a, b) => b.purchaseDate.compareTo(a.purchaseDate));
+
+    return sortedTickets;
+  }
+
+  void _ensureTicketsLoaded() {
+    if (state is TicketsInitial || state is TicketsLoading) {
+      _startListening();
     }
   }
 
