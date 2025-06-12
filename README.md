@@ -10,12 +10,8 @@ LinOS je moderna Flutter aplikacija za upravljanje javnim prijevozom u gradu Osi
 - [🌐 Lokalizacija](#-lokalizacija)
 - [🔒 Sigurnost](#-sigurnost)
 - [📊 Firebase struktura](#-firebase-struktura)
-- [🧪 Testiranje](#-testiranje)
-- [📱 Deployment](#-deployment)
-- [🤝 Kontribucije](#-kontribucije)
 - [📈 Buduća proširenja](#-buduća-proširenja)
-- [📞 Kontakt i podrška](#-kontakt-i-podrška)
-- [📄 Licenca](#-licenca)
+- [🎓 Akademska napomena](#-akademska-napomena)
 
 ## 📱 Funkcionalnosti
 
@@ -400,7 +396,7 @@ match /users/{userId} {
 - **Asistent**: [Miljenko Švarcmajer]
 - **Student**: [Karlo Kraml]
 
-### 🎯 Učni ciljevi
+### 🎯 Ciljevi
 Ovaj projekt demonstrira:
 - Flutter framework i Dart programski jezik
 - Clean Architecture i SOLID principe
