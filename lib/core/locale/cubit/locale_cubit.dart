@@ -5,7 +5,13 @@ import 'package:linos/l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocaleCubit extends Cubit<Locale> {
-  LocaleCubit() : super(AppLocalizations.supportedLocales.first) {
+  LocaleCubit()
+    : super(
+        AppLocalizations.supportedLocales.firstWhere(
+          (locale) => locale.languageCode == 'hr',
+          orElse: () => AppLocalizations.supportedLocales.first,
+        ),
+      ) {
     _loadLocale();
   }
 
@@ -17,7 +23,11 @@ class LocaleCubit extends Cubit<Locale> {
 
   void _loadLocale() async {
     final prefs = await SharedPreferences.getInstance();
-    final code = prefs.getString('locale') ?? AppLocalizations.supportedLocales.first.languageCode;
+    final code =
+        prefs.getString('locale') ??
+        AppLocalizations.supportedLocales
+            .firstWhere((locale) => locale.languageCode == 'hr', orElse: () => AppLocalizations.supportedLocales.first)
+            .languageCode;
     emit(Locale(code));
   }
 }
