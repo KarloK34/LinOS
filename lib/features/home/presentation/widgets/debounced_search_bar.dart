@@ -20,12 +20,15 @@ class _DebouncedSearchBarState extends State<DebouncedSearchBar> {
   final BehaviorSubject<String> _querySubject = BehaviorSubject<String>.seeded('');
   StreamSubscription<String>? _querySubscription;
   String? _sessionToken;
+  bool _isSettingTextProgrammatically = false;
 
   @override
   void initState() {
     super.initState();
     _searchController.addListener(() {
-      _querySubject.add(_searchController.text);
+      if (!_isSettingTextProgrammatically) {
+        _querySubject.add(_searchController.text);
+      }
     });
 
     _querySubscription = _querySubject.debounceTime(const Duration(milliseconds: 300)).listen((query) {
@@ -55,9 +58,13 @@ class _DebouncedSearchBarState extends State<DebouncedSearchBar> {
       searchController: _searchController,
       isFullScreen: false,
       viewOnClose: () {
-        if (_sessionToken != null) {
-          context.read<SearchDestinationCubit>().clearSearch();
-          _sessionToken = null;
+        // Only clear search if no destination is currently selected
+        final currentState = context.read<SearchDestinationCubit>().state;
+        if (currentState is! SearchDestinationSelected) {
+          if (_sessionToken != null) {
+            context.read<SearchDestinationCubit>().clearSearch();
+            _sessionToken = null;
+          }
         }
         _searchController.clear();
         WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -131,7 +138,9 @@ class _DebouncedSearchBarState extends State<DebouncedSearchBar> {
                           _sessionToken = null;
                         }
                         controller.closeView(place.description);
+                        _isSettingTextProgrammatically = true;
                         _searchController.text = place.description;
+                        _isSettingTextProgrammatically = false;
                       },
                     );
                   }).toList(),
