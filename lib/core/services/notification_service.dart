@@ -72,7 +72,7 @@ class NotificationService {
             importance: Importance.max,
             priority: Priority.high,
             ticker: 'ticker',
-            icon: '@drawable/ic_notification',
+            icon: '@mipmap/ic_launcher',
           );
           final NotificationDetails notificationDetails = NotificationDetails(android: androidDetails);
 

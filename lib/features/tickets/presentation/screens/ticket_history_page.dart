@@ -77,7 +77,7 @@ class _TicketHistoryPageState extends State<TicketHistoryPage> {
           }
 
           if (state is TicketsLoaded) {
-            final tickets = state.allTickets;
+            final tickets = context.read<TicketsCubit>().getTicketsHistory();
 
             if (tickets.isEmpty) {
               return _buildEmptyState();
@@ -256,6 +256,7 @@ class _HistoryTicketCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = context.theme;
     final isExpired = ticket.isExpired;
+    final isActive = ticket.isActive;
 
     return Card(
       elevation: 2,
@@ -297,11 +298,19 @@ class _HistoryTicketCard extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                       decoration: BoxDecoration(
-                        color: isExpired ? Colors.grey : Colors.red,
+                        color: isActive
+                            ? Colors.green
+                            : isExpired
+                            ? Colors.grey
+                            : Colors.red,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Text(
-                        isExpired ? context.l10n.activeTicketCard_expired : context.l10n.ticketHistoryPage_used,
+                        isActive
+                            ? context.l10n.activeTicketCard_active
+                            : isExpired
+                            ? context.l10n.activeTicketCard_expired
+                            : context.l10n.ticketHistoryPage_used,
                         style: TextStyle(color: Colors.white, fontSize: 10),
                       ),
                     ),

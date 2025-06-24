@@ -125,10 +125,13 @@ class _SchedulePageState extends State<SchedulePage> {
                 );
               }
               final stop = favoriteStops[index];
-              return Chip(
-                label: Text(stop.name),
-                onDeleted: () => context.read<ScheduleCubit>().toggleFavoriteStop(stop),
-                deleteIcon: const Icon(Icons.close, size: 18),
+              return GestureDetector(
+                onTap: () => context.read<ScheduleCubit>().selectStop(stop),
+                child: Chip(
+                  label: Text(stop.name),
+                  onDeleted: () => context.read<ScheduleCubit>().toggleFavoriteStop(stop),
+                  deleteIcon: const Icon(Icons.close, size: 18),
+                ),
               );
             },
           ),
@@ -138,7 +141,9 @@ class _SchedulePageState extends State<SchedulePage> {
   }
 
   Widget _buildStopSelector(List<TransitStop> allStops, TransitStop? selectedStop) {
-    final validSelectedStop = selectedStop != null && allStops.contains(selectedStop) ? selectedStop : null;
+    final validSelectedStop = selectedStop != null
+        ? allStops.where((stop) => stop.id == selectedStop.id).firstOrNull
+        : null;
     return DropdownButtonFormField<TransitStop>(
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
