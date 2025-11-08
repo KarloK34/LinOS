@@ -10,7 +10,8 @@ import 'package:linos/features/home/data/models/transit_route.dart';
 
 class HomeMapCubit extends Cubit<HomeMapState> {
   HomeMapCubit() : super(HomeMapInitial()) {
-    fetchUserLocation();
+    // Defer location fetching to avoid blocking initialization
+    Future.microtask(() => fetchUserLocation());
   }
 
   GoogleMapController? _mapController;

@@ -17,9 +17,11 @@ class PopularDestinations extends StatelessWidget {
       children: [
         Text(
           context.l10n.homePage_popularDestinationsTitle,
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        Text(context.l10n.homePage_popularDestinationsSubtitle),
+        const SizedBox(height: 4),
+        Text(context.l10n.homePage_popularDestinationsSubtitle, style: const TextStyle(fontSize: 14)),
+        const SizedBox(height: 8),
         Expanded(
           child: BlocBuilder<PopularDestinationsCubit, List<SearchHistoryItem>>(
             builder: (context, popularDestinations) {
@@ -34,9 +36,9 @@ class PopularDestinations extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final destination = popularDestinations[index];
                     return ListTile(
-                      leading: Icon(Icons.place),
+                      leading: const Icon(Icons.place),
                       title: Text(destination.placeName),
-                      trailing: Icon(Icons.trending_up),
+                      trailing: const Icon(Icons.trending_up),
                       onTap: () {
                         final selectedPlace = SelectedPlace(
                           placeId: destination.placeId,

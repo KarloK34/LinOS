@@ -13,54 +13,76 @@ class ExpandableMapView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: context.screenSize.height * 0.35,
-      child: Stack(
-        children: [
-          BlocBuilder<HomeMapCubit, HomeMapState>(
-            builder: (context, state) {
-              if (state is HomeMapLocationLoaded) {
-                return GoogleMap(
-                  initialCameraPosition: state.initialCameraPosition,
-                  mapType: MapType.normal,
-                  myLocationEnabled: true,
-                  myLocationButtonEnabled: false,
-                  zoomControlsEnabled: false,
-                  onMapCreated: (GoogleMapController controller) {
-                    context.read<HomeMapCubit>().onMapCreated(controller);
-                  },
-                  markers: state.markers.toSet(),
-                  polylines: state.polylines.toSet(),
-                );
-              }
+    return RepaintBoundary(
+      child: SizedBox(
+        height: context.screenSize.height * 0.35,
+        child: Stack(
+          children: [
+            BlocBuilder<HomeMapCubit, HomeMapState>(
+              buildWhen: (previous, current) {
+                // Only rebuild when state type changes or map data changes
+                if (previous.runtimeType != current.runtimeType) return true;
+                if (previous is HomeMapLocationLoaded && current is HomeMapLocationLoaded) {
+                  // Rebuild only if markers or polylines changed
+                  return previous.markers.length != current.markers.length ||
+                      previous.polylines.length != current.polylines.length ||
+                      previous.markers != current.markers ||
+                      previous.polylines != current.polylines;
+                }
+                return false;
+              },
+              builder: (context, state) {
+                if (state is HomeMapLocationLoaded) {
+                  return RepaintBoundary(
+                    child: GoogleMap(
+                      initialCameraPosition: state.initialCameraPosition,
+                      mapType: MapType.normal,
+                      myLocationEnabled: true,
+                      myLocationButtonEnabled: false,
+                      zoomControlsEnabled: false,
+                      onMapCreated: (GoogleMapController controller) {
+                        context.read<HomeMapCubit>().onMapCreated(controller);
+                      },
+                      markers: state.markers.toSet(),
+                      polylines: state.polylines.toSet(),
+                    ),
+                  );
+                }
 
-              if (state is HomeMapLocationError) {
-                return _buildErrorWidget(context, state);
-              }
+                if (state is HomeMapLocationError) {
+                  return _buildErrorWidget(context, state);
+                }
 
-              return Center(child: CircularProgressIndicator());
-            },
-          ),
-          // Only show fullscreen button when map is loaded
-          BlocBuilder<HomeMapCubit, HomeMapState>(
-            builder: (context, state) {
-              if (state is HomeMapLocationLoaded) {
-                return Positioned(
-                  top: 8,
-                  right: 8,
-                  child: FloatingActionButton.small(
-                    onPressed: () {
-                      _showExpandedMap(context);
-                    },
-                    backgroundColor: Colors.white,
-                    child: Icon(Icons.fullscreen, color: Colors.black87),
-                  ),
-                );
-              }
-              return SizedBox.shrink();
-            },
-          ),
-        ],
+                return const Center(child: CircularProgressIndicator());
+              },
+            ),
+            // Only show fullscreen button when map is loaded
+            BlocBuilder<HomeMapCubit, HomeMapState>(
+              buildWhen: (previous, current) {
+                // Only rebuild when state changes to/from loaded state
+                final wasLoaded = previous is HomeMapLocationLoaded;
+                final isLoaded = current is HomeMapLocationLoaded;
+                return wasLoaded != isLoaded;
+              },
+              builder: (context, state) {
+                if (state is HomeMapLocationLoaded) {
+                  return Positioned(
+                    top: 8,
+                    right: 8,
+                    child: FloatingActionButton.small(
+                      onPressed: () {
+                        _showExpandedMap(context);
+                      },
+                      backgroundColor: Colors.white,
+                      child: const Icon(Icons.fullscreen, color: Colors.black87),
+                    ),
+                  );
+                }
+                return const SizedBox.shrink();
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -68,24 +90,26 @@ class ExpandableMapView extends StatelessWidget {
   Widget _buildErrorWidget(BuildContext context, HomeMapLocationError state) {
     final errorMessage = AppErrorHandler.getLocalizedMessage(context, state.errorKey);
 
-    return Container(
-      decoration: BoxDecoration(color: Colors.grey[100], borderRadius: BorderRadius.circular(8)),
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(_getErrorIcon(state.errorKey), size: 48, color: Colors.grey[600]),
-              SizedBox(height: 12),
-              Text(
-                errorMessage,
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.grey[700], fontSize: 14),
-              ),
-              SizedBox(height: 16),
-              _buildErrorAction(context, state.errorKey),
-            ],
+    return RepaintBoundary(
+      child: Container(
+        decoration: BoxDecoration(color: Colors.grey[100], borderRadius: BorderRadius.circular(8)),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(_getErrorIcon(state.errorKey), size: 48, color: Colors.grey[600]),
+                const SizedBox(height: 12),
+                Text(
+                  errorMessage,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(color: Colors.grey, fontSize: 14),
+                ),
+                const SizedBox(height: 16),
+                _buildErrorAction(context, state.errorKey),
+              ],
+            ),
           ),
         ),
       ),
@@ -133,25 +157,38 @@ class ExpandableMapView extends StatelessWidget {
   void _showExpandedMap(BuildContext context) {
     Navigator.of(context).push(
       PageRouteBuilder(
-        pageBuilder: (_, _, _) => Scaffold(
+        pageBuilder: (_, _, __) => Scaffold(
           body: SafeArea(
             child: Stack(
               children: [
                 BlocBuilder<HomeMapCubit, HomeMapState>(
                   bloc: context.read<HomeMapCubit>(),
+                  buildWhen: (previous, current) {
+                    // Only rebuild when state type changes or map data changes
+                    if (previous.runtimeType != current.runtimeType) return true;
+                    if (previous is HomeMapLocationLoaded && current is HomeMapLocationLoaded) {
+                      return previous.markers.length != current.markers.length ||
+                          previous.polylines.length != current.polylines.length ||
+                          previous.markers != current.markers ||
+                          previous.polylines != current.polylines;
+                    }
+                    return false;
+                  },
                   builder: (_, state) {
                     if (state is HomeMapLocationLoaded) {
-                      return GoogleMap(
-                        initialCameraPosition: state.initialCameraPosition,
-                        mapType: MapType.normal,
-                        myLocationEnabled: true,
-                        myLocationButtonEnabled: false,
-                        zoomControlsEnabled: false,
-                        onMapCreated: (GoogleMapController controller) {
-                          context.read<HomeMapCubit>().onMapCreated(controller);
-                        },
-                        markers: state.markers.toSet(),
-                        polylines: state.polylines.toSet(),
+                      return RepaintBoundary(
+                        child: GoogleMap(
+                          initialCameraPosition: state.initialCameraPosition,
+                          mapType: MapType.normal,
+                          myLocationEnabled: true,
+                          myLocationButtonEnabled: false,
+                          zoomControlsEnabled: false,
+                          onMapCreated: (GoogleMapController controller) {
+                            context.read<HomeMapCubit>().onMapCreated(controller);
+                          },
+                          markers: state.markers.toSet(),
+                          polylines: state.polylines.toSet(),
+                        ),
                       );
                     }
 
@@ -159,7 +196,7 @@ class ExpandableMapView extends StatelessWidget {
                       return _buildFullScreenErrorWidget(context, state);
                     }
 
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   },
                 ),
                 Positioned(
@@ -168,14 +205,14 @@ class ExpandableMapView extends StatelessWidget {
                   child: FloatingActionButton.small(
                     onPressed: () => context.pop(),
                     backgroundColor: Colors.white,
-                    child: Icon(Icons.fullscreen_exit, color: Colors.black87),
+                    child: const Icon(Icons.fullscreen_exit, color: Colors.black87),
                   ),
                 ),
               ],
             ),
           ),
         ),
-        transitionsBuilder: (_, animation, _, child) {
+        transitionsBuilder: (_, animation, __, child) {
           return FadeTransition(opacity: animation, child: child);
         },
       ),
@@ -185,22 +222,24 @@ class ExpandableMapView extends StatelessWidget {
   Widget _buildFullScreenErrorWidget(BuildContext context, HomeMapLocationError state) {
     final errorMessage = AppErrorHandler.getLocalizedMessage(context, state.errorKey);
 
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(32.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(_getErrorIcon(state.errorKey), size: 80, color: Colors.grey[600]),
-            SizedBox(height: 24),
-            Text(
-              errorMessage,
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.grey[700], fontSize: 18, fontWeight: FontWeight.w500),
-            ),
-            SizedBox(height: 32),
-            _buildErrorAction(context, state.errorKey),
-          ],
+    return RepaintBoundary(
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(32.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(_getErrorIcon(state.errorKey), size: 80, color: Colors.grey[600]),
+              const SizedBox(height: 24),
+              Text(
+                errorMessage,
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Colors.grey, fontSize: 18, fontWeight: FontWeight.w500),
+              ),
+              const SizedBox(height: 32),
+              _buildErrorAction(context, state.errorKey),
+            ],
+          ),
         ),
       ),
     );

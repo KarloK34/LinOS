@@ -33,13 +33,19 @@ class _DebouncedSearchBarState extends State<DebouncedSearchBar> {
 
     _querySubscription = _querySubject.debounceTime(const Duration(milliseconds: 300)).listen((query) {
       if (!mounted) return;
+      // Don't clear search if we're setting text programmatically (e.g., after selecting a place)
+      if (_isSettingTextProgrammatically) {
+        return;
+      }
       final searchCubit = context.read<SearchDestinationCubit>();
-      if (query.isNotEmpty) {
-        _sessionToken ??= const Uuid().v4();
-        searchCubit.searchPlaces(query, _sessionToken!);
-      } else {
+      final currentState = searchCubit.state;
+      // Don't clear search if a destination is already selected
+      if (query.isEmpty && currentState is! SearchDestinationSelected) {
         _sessionToken = null;
         searchCubit.clearSearch();
+      } else if (query.isNotEmpty) {
+        _sessionToken ??= const Uuid().v4();
+        searchCubit.searchPlaces(query, _sessionToken!);
       }
     });
   }
@@ -132,15 +138,26 @@ class _DebouncedSearchBarState extends State<DebouncedSearchBar> {
                     return ListTile(
                       leading: const Icon(Icons.place),
                       title: Text(place.description),
-                      onTap: () {
+                      onTap: () async {
                         if (_sessionToken != null) {
-                          context.read<SearchDestinationCubit>().selectPlace(place, _sessionToken!);
+                          // Set text first before closing view to prevent viewOnClose from clearing
+                          _isSettingTextProgrammatically = true;
+                          _searchController.text = place.description;
+                          _isSettingTextProgrammatically = false;
+                          // Await selectPlace to ensure state is emitted before closing view
+                          final sessionToken = _sessionToken!;
                           _sessionToken = null;
+                          await context.read<SearchDestinationCubit>().selectPlace(place, sessionToken);
+                          // Close view after state is emitted
+                          if (mounted) {
+                            controller.closeView(place.description);
+                          }
+                        } else {
+                          controller.closeView(place.description);
+                          _isSettingTextProgrammatically = true;
+                          _searchController.text = place.description;
+                          _isSettingTextProgrammatically = false;
                         }
-                        controller.closeView(place.description);
-                        _isSettingTextProgrammatically = true;
-                        _searchController.text = place.description;
-                        _isSettingTextProgrammatically = false;
                       },
                     );
                   }).toList(),

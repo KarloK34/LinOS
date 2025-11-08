@@ -31,9 +31,19 @@ class SearchDestinationCubit extends Cubit<SearchDestinationState> {
   }
 
   Future<void> selectPlace(PlaceSuggestion suggestion, String sessionToken) async {
+    if (suggestion.placeId.isEmpty) {
+      final errorKey = AppErrorHandler.getErrorKey(Exception('Invalid place ID'));
+      emit(SearchDestinationError(errorKey: errorKey, originalError: Exception('Place ID is empty')));
+      return;
+    }
     emit(SearchDestinationLoading());
     try {
       final placeDetails = await _placesApiService.getPlaceDetails(suggestion.placeId, sessionToken: sessionToken);
+
+      if (placeDetails['geometry'] == null || placeDetails['geometry']['location'] == null) {
+        throw Exception('Invalid place details: missing geometry');
+      }
+
       final selectedPlace = SelectedPlace(
         placeId: suggestion.placeId,
         name: suggestion.description,

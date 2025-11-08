@@ -42,8 +42,14 @@ class TransitRouteCubit extends Cubit<TransitRouteState> {
   void _listenToMapLocation() {
     _mapSubscription = _homeMapCubit.stream.listen((state) {
       if (state is HomeMapLocationLoaded) {
-        _currentUserLocation = state.userLocation;
-        _fetchRouteIfReady();
+        final newLocation = state.userLocation;
+        // Only fetch route if user location actually changed
+        if (_currentUserLocation == null ||
+            _currentUserLocation!.latitude != newLocation.latitude ||
+            _currentUserLocation!.longitude != newLocation.longitude) {
+          _currentUserLocation = newLocation;
+          _fetchRouteIfReady();
+        }
       }
     });
   }

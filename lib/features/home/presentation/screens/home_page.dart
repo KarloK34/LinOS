@@ -72,20 +72,38 @@ class _HomePageState extends State<HomePage> {
             },
           ),
           BlocListener<SearchDestinationCubit, SearchDestinationState>(
+            listenWhen: (previous, current) {
+              // Only listen when state actually changes to relevant states
+              return (current is SearchDestinationSelected && previous is! SearchDestinationSelected) ||
+                  (current is SearchDestinationInitial && previous is! SearchDestinationInitial);
+            },
             listener: (context, state) {
               if (state is SearchDestinationSelected) {
-                context.read<PopularDestinationsCubit>().addSearchToHistory(state.selectedPlace);
-                context.read<HomeMapCubit>().addDestinationMarker(
-                  state.selectedPlace.coordinates,
-                  state.selectedPlace.name,
-                );
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  if (context.mounted) {
+                    context.read<PopularDestinationsCubit>().addSearchToHistory(state.selectedPlace);
+                    context.read<HomeMapCubit>().addDestinationMarker(
+                      state.selectedPlace.coordinates,
+                      state.selectedPlace.name,
+                    );
+                  }
+                });
               }
               if (state is SearchDestinationInitial) {
-                context.read<HomeMapCubit>().clearRoute();
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  if (context.mounted) {
+                    context.read<HomeMapCubit>().clearRoute();
+                  }
+                });
               }
             },
           ),
           BlocListener<TransitRouteCubit, TransitRouteState>(
+            listenWhen: (previous, current) {
+              // Only listen when route state actually changes
+              return (current is TransitRouteLoaded && previous is! TransitRouteLoaded) ||
+                  (current is TransitRouteCleared && previous is! TransitRouteCleared);
+            },
             listener: (context, state) {
               if (state is TransitRouteLoaded) {
                 context.read<HomeMapCubit>().updateTransitRoute(state.route);
@@ -98,20 +116,20 @@ class _HomePageState extends State<HomePage> {
         ],
         child: Column(
           children: [
-            ExpandableMapView(),
+            const ExpandableMapView(),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 16.0),
-                    DebouncedSearchBar(),
-                    SizedBox(height: 16.0),
+                    const SizedBox(height: 16.0),
+                    const DebouncedSearchBar(),
+                    const SizedBox(height: 16.0),
                     Expanded(child: PopularDestinations()),
-                    SizedBox(height: 16.0),
+                    const SizedBox(height: 16.0),
                     _buildStartNavigationButton(),
-                    SizedBox(height: 16.0),
+                    const SizedBox(height: 16.0),
                   ],
                 ),
               ),
@@ -139,8 +157,34 @@ class _HomePageState extends State<HomePage> {
 
   BlocBuilder<SearchDestinationCubit, SearchDestinationState> _buildStartNavigationButton() {
     return BlocBuilder<SearchDestinationCubit, SearchDestinationState>(
+      buildWhen: (previous, current) {
+        // Always rebuild when transitioning to SearchDestinationSelected
+        if (current is SearchDestinationSelected && previous is! SearchDestinationSelected) {
+          return true;
+        }
+        // Rebuild when state type changes
+        if (previous.runtimeType != current.runtimeType) {
+          return true;
+        }
+        // Rebuild when both are SearchDestinationSelected but with different places
+        if (previous is SearchDestinationSelected && current is SearchDestinationSelected) {
+          return previous.selectedPlace != current.selectedPlace;
+        }
+        return false;
+      },
       builder: (context, searchState) {
         return BlocBuilder<HomeMapCubit, HomeMapState>(
+          buildWhen: (previous, current) {
+            // Rebuild when state type changes
+            if (previous.runtimeType != current.runtimeType) {
+              return true;
+            }
+            // Rebuild when both are loaded but location changed
+            if (previous is HomeMapLocationLoaded && current is HomeMapLocationLoaded) {
+              return previous.userLocation != current.userLocation;
+            }
+            return false;
+          },
           builder: (context, mapState) {
             final isDestinationSelected = searchState is SearchDestinationSelected;
             final isLocationLoaded = mapState is HomeMapLocationLoaded;
