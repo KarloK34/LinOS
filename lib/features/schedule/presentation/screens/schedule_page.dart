@@ -152,7 +152,7 @@ class _SchedulePageState extends State<SchedulePage> {
         fillColor: context.theme.colorScheme.surface,
       ),
       hint: Text(context.l10n.schedulePage_selectStopLabel, style: context.theme.textTheme.labelLarge),
-      value: validSelectedStop,
+      initialValue: validSelectedStop,
       items: allStops.map<DropdownMenuItem<TransitStop>>((TransitStop stop) {
         return DropdownMenuItem<TransitStop>(value: stop, child: Text(stop.name));
       }).toList(),

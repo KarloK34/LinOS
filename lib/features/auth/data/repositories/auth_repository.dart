@@ -67,6 +67,8 @@ class AuthRepository {
         return 'Email/password accounts are not enabled. Please contact support.';
       case 'network-request-failed':
         return 'Network error. Please check your internet connection.';
+      case 'invalid-credential':
+        return 'The email or password is incorrect.';
       default:
         return 'An error occurred. Please try again.';
     }

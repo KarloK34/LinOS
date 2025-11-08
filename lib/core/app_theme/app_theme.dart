@@ -83,7 +83,7 @@ abstract class AppTheme {
     brightness: Brightness.light,
     textTheme: textTheme.apply(bodyColor: Colors.black, displayColor: Colors.black),
     appBarTheme: AppBarTheme(
-      color: lightColorScheme.surface,
+      backgroundColor: lightColorScheme.surface,
       iconTheme: IconThemeData(color: lightColorScheme.onSurface),
       titleTextStyle: textTheme.headlineSmall?.copyWith(color: lightColorScheme.onSurface),
     ),
@@ -193,7 +193,7 @@ abstract class AppTheme {
     brightness: Brightness.dark,
     textTheme: textTheme.apply(bodyColor: Colors.white, displayColor: Colors.white),
     appBarTheme: AppBarTheme(
-      color: darkColorScheme.surface,
+      backgroundColor: darkColorScheme.surface,
       iconTheme: IconThemeData(color: darkColorScheme.onSurface),
       titleTextStyle: textTheme.headlineSmall?.copyWith(color: darkColorScheme.onSurface),
     ),

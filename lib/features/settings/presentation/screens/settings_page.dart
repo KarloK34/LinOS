@@ -195,17 +195,21 @@ class _LanguageSection extends StatelessWidget {
           children: [
             Text(context.l10n.settingsPage_changeLanguageSubtitle),
             SizedBox(height: 16.0),
-            ...context.supportedLocales.map(
-              (locale) => RadioListTile<Locale>(
-                title: Text(_getLanguageName(locale, context)),
-                value: locale,
-                groupValue: context.locale,
-                onChanged: (Locale? newValue) {
-                  if (newValue != null && newValue != context.locale) {
-                    context.read<LocaleCubit>().changeLocale(newValue);
-                    context.pop();
-                  }
-                },
+            RadioGroup<Locale>(
+              groupValue: context.locale,
+              onChanged: (Locale? newValue) {
+                if (newValue != null && newValue != context.locale) {
+                  context.read<LocaleCubit>().changeLocale(newValue);
+                  context.pop();
+                }
+              },
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: context.supportedLocales
+                    .map(
+                      (locale) => RadioListTile<Locale>(title: Text(_getLanguageName(locale, context)), value: locale),
+                    )
+                    .toList(),
               ),
             ),
           ],
